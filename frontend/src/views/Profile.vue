@@ -24,9 +24,12 @@
 			</ul>
 		</p>
     </div>
-	<div class="container">
-		<router-link to="/editprofile" class="btn btn-primary btn-block" type="submit">
+	<div class="container d-flex justify-content-around">
+		<router-link to="/editprofile" class="btn btn-primary" type="submit">
 			<span>Modifier</span>
+		</router-link>
+		<router-link to="/editaddress" class="btn btn-primary" type="submit">
+			<span>Modifier/Ajouter l'adresse</span>
 		</router-link>
 	</div>
 </template>

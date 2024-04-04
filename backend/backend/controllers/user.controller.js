@@ -5,6 +5,7 @@ const Role = db.role;
 const Address = db.address;
 const Op = db.Sequelize.Op;
 var bcrypt = require("bcryptjs");
+const countries = require('country-region-data/data.json');
 
 exports.allAccess = (req, res) => {
 	res.status(200).send("Public Content.");
@@ -28,6 +29,12 @@ exports.adminBoard = (req, res) => {
 exports.moderatorBoard = (req, res) => {
 	res.status(200).send("Moderator Content.");
 };
+
+exports.getCountryList = (req, res) => {
+	// c'est pas idéal,
+	// il faut une table pour les pays et une pour les régions et les associer avec hasMany et belongsTo
+	res.status(200).send({countries:countries});
+}
 
 exports.editAddress = (req, res) => {
 	const userId = req.body.user.id;

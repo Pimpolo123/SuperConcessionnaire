@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require("cors");
-const app = express()
+const app = express();
 const PORT = process.env.PORT || 8080;
 
 const db = require("./backend/models");
@@ -33,7 +33,7 @@ app.listen(PORT, () => {
 // SEULEMENT EN DEV !!! 
 // PROD : 
 // db.sequelize.sync();
-// et créer les roles manuellement
+// et créer tout manuellement
 db.sequelize.sync({force: true}).then(() => {
     console.log('Drop and Resync Db');
     initial();

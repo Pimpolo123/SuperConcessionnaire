@@ -68,16 +68,22 @@ exports.signin = (req, res) => {
 			for (let i = 0; i < roles.length; i++) {
 				authorities.push("ROLE_" + roles[i].name.toUpperCase());
 			}
-			res.status(200).send({
-				id: user.id,
-				username: user.username,
-				email: user.email,
-				birthdate: user.birthdate,
-				name:user.name,
-				surname: user.surname,
-				roles: authorities,
-				accessToken: token
-			});
+			user.getAddress().then(address => {
+				if(address == null){
+					address = {};
+				}
+				res.status(200).send({
+					id: user.id,
+					username: user.username,
+					email: user.email,
+					birthdate: user.birthdate,
+					name:user.name,
+					surname: user.surname,
+					roles: authorities,
+					accessToken: token,
+					address: address
+				});
+			})
 		});
     })
     .catch(err => {

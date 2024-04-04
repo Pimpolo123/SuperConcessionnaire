@@ -32,7 +32,10 @@ db.role.belongsToMany(db.user, {
 db.user.belongsToMany(db.role, {
   	through: "user_roles"
 });
+
+//addresse a une colonne userId
 db.user.hasOne(db.address);
+db.address.belongsTo(db.user);
 
 db.ROLES = ["user", "admin", "moderator"];
 

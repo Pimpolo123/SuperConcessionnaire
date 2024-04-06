@@ -3,6 +3,8 @@ const config = require("../config/auth.config");
 const User = db.user;
 const Role = db.role;
 const Address = db.address;
+const Country = db.country;
+const Region = db.region;
 const Op = db.Sequelize.Op;
 var bcrypt = require("bcryptjs");
 const countries = require('country-region-data/data.json');
@@ -33,13 +35,12 @@ exports.moderatorBoard = (req, res) => {
 exports.getCountryList = (req, res) => {
 	// c'est pas idéal,
 	// il faut une table pour les pays et une pour les régions et les associer avec hasMany et belongsTo
-	res.status(200).send({countries:countries});
+	Country.findAll().then(countries => {
+		res.status(200).send(countries);
+	});
 }
 
 exports.editAddress = (req, res) => {
-	const userId = req.body.user.id;
-	console.log(userId); 
-
 	User.findOne({
 		where: {
 			id: req.body.user.id
@@ -59,9 +60,38 @@ exports.editAddress = (req, res) => {
 		})
 		.then(address => {
 			user.setAddress(address.id);
-			return res.status(200).send({message: "Nickel"});
+			var authorities = [];
+			user.getRoles().then(roles => {
+				for (let i = 0; i < roles.length; i++) {
+					authorities.push("ROLE_" + roles[i].name.toUpperCase());
+				}
+				return res.status(200).send({
+					id: user.id,
+					username: user.username,
+					email: user.email,
+					birthdate: user.birthdate,
+					name: user.name,
+					surname: user.surname,
+					roles: authorities,
+					message: "Adresse modifiée avec succès",
+					accessToken: req.headers["x-access-token"],
+					address: {
+						id: address.id,
+						country: address.country,
+						region: address.region,
+						city: address.city,
+						postcode: address.postcode,
+						street: address.street,
+						housenumber: address.housenumber,
+						boxnumber: address.boxnumber,
+						userId: user.id
+					}
+				});
+			})
 		});
-	})
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
 };
 
 exports.editProfile = (req, res) => {

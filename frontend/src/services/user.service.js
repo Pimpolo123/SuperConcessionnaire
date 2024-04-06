@@ -20,6 +20,41 @@ class UserService {
 		return axios.get(API_URL + 'test/admin', { headers: authHeader() });
 	}
 
+	getCountryList(){
+		return axios.get(API_URL + 'getcountrylist', { headers: authHeader() });
+	}
+
+	editAddress(user) {
+		return axios
+			.post(API_URL + 'editaddress', {
+				user: {
+					id: user.id,
+					username: user.username,
+					email: user.email,
+					password: user.password,
+					birthdate: user.birthdate,
+					name: user.name,
+					surname: user.surname
+				},
+				address: {
+					country: user.address.country,
+					region: user.address.region,
+					city: user.address.city,
+					postcode: user.address.postcode,
+					street: user.address.street,
+					housenumber: user.address.housenumber,
+					boxnumber: user.address.boxnumber
+				}
+			},{
+				headers: authHeader(user.accessToken)
+			}).then(response => {
+				if (response.data) {
+					localStorage.setItem('user', JSON.stringify(response.data));
+				}
+				return response.data;
+			});
+	}
+
 	editProfile(user, newpassword) {
 		return axios
 			.post(API_URL + 'editprofile', {
@@ -33,7 +68,6 @@ class UserService {
 			},{
 				headers: authHeader(user.accessToken)
 			}).then(response => {
-				console.log(response)
 				if (response.data) {
 					localStorage.setItem('user', JSON.stringify(response.data));
 				}

@@ -5,3 +5,5 @@
 /backend/node_modules/*
 /backend/backend/node_modules/*
 /backend/backend/config/*
+backend/backend/config/db.config.js
+/.idea/*

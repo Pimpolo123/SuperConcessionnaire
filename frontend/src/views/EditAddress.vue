@@ -8,20 +8,28 @@
         />
         <Form @submit="onSubmit">
             <div class="form-row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="country">Pays : </label>
-                    <Field name="country" v-model="user.address.country" class="form-control bg-light" />
+                    <Field name="country" v-model="country" class="form-select bg-light" as="select" @input="setSelectedCountry">
+                        <option value="" disabled><p v-if="user.address.country">{{ user.address.country }}</p></option>
+                        <option v-for="country in countryList" :value="country.countryName">{{ country.countryName }}</option>
+                    </Field>
                     <ErrorMessage name="country" class="form-control text-danger"/>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="region">Région :</label>
                     <Field name="region" v-model="user.address.region" class="form-control bg-light" />
                     <ErrorMessage name="region" class="form-control text-danger"/>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="city">Ville :</label>
                     <Field name="city" v-model="user.address.city" class="form-control bg-light"/>
                     <ErrorMessage name="city" class="form-control text-danger"/>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="postcode">Code postal :</label>
+                    <Field name="postcode" v-model="user.address.postcode" class="form-control bg-light"/>
+                    <ErrorMessage name="postcode" class="form-control text-danger"/>
                 </div>
             </div>
             <div class="form-row">
@@ -66,6 +74,7 @@
   
 <script>
     import { Form, Field, ErrorMessage } from 'vee-validate';
+    import vSelect from 'vue-select';
     import User from '../models/user';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
     import UserService from '../services/user.service';
@@ -84,19 +93,28 @@
                 message: '',
                 isValid: true,
                 fieldType: 'password',
+                countryList: [],
+                country: ''
             };
         },
         components: {
             Form,
             Field,
             ErrorMessage,
-            FontAwesomeIcon
+            FontAwesomeIcon,
+            vSelect
         },
         mounted() {
+            this.$store.dispatch('user/getcountrylist').then(
+                res => {
+                    this.countryList = this.sortByKey(res.data, 'countryName');
+                    // console.log(JSON.parse(JSON.stringify(res.data)));
+                    // console.log(this.books);
+                }
+            )
         },
         methods: {
             onSubmit(values) {
-                console.log('VALUES', values);
                 this.submitted = true;
                 for (const v in values) {
                   if(!v){
@@ -104,7 +122,8 @@
                   }
                 }
                 if(this.isValid){
-                    this.$store.dispatch('user/editaddress', {user: this.user, address: this.user.address}).then(
+                    console.log('user editaddress vue',this.user);
+                    this.$store.dispatch('user/editaddress', this.user).then(
                         data => {
                             this.message = data.message;
                             this.successful = true;
@@ -130,12 +149,25 @@
                     this.fieldType = "text";
                 } else 
                     this.fieldType = "password";
+            },
+            sortByKey(array, key) {
+                return array.sort(function(a, b) {
+                    var x = a[key];
+                    var y = b[key];
+                    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+                });
+            },
+            setSelectedCountry(country) {
+                console.log(country.target.value);
+                this.user.address.country = country.target.value;
+                return true;
             }
         },
     };
 </script>
 
 <style scoped>
+    @import "vue-select/dist/vue-select.css";
     label {
         display: block;
         margin-top: 10px;

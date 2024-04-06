@@ -5,6 +5,8 @@ const PORT = process.env.PORT || 8080;
 
 const db = require("./backend/models");
 const Role = db.role;
+const Country = db.country;
+const Region = db.region;
 const Address = db.address;
 const User = db.user;
 const Op = db.Sequelize.Op;
@@ -27,7 +29,7 @@ require('./backend/routes/auth.routes')(app);
 require('./backend/routes/users.routes')(app);
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}.`);
+    console.log(`Serveur en ligne sur le port ${PORT}.`);
   });
 
 // SEULEMENT EN DEV !!! 
@@ -40,6 +42,8 @@ db.sequelize.sync({force: true}).then(() => {
   });
 
 function initial() {
+	const countries = require('country-region-data/data.json');
+
     Role.create({
 		id: 1,
 		name: "user"
@@ -54,6 +58,31 @@ function initial() {
 		id: 3,
 		name: "admin"
     });
+
+	console.log("Roles créés");
+
+	for (const key in countries) {
+		if (Object.hasOwnProperty.call(countries, key)) {
+			let c = countries[key];
+			Country.create({
+				countryName: c.countryName,
+				countryShortCode: c.countryShortCode
+			}).then(country => {
+				for (const key in c.regions) {
+					if (Object.hasOwnProperty.call(c.regions, key)) {
+						const r = c.regions[key];
+						Region.create({
+							regionName: r.name,
+							regionShortCode: r.shortCode
+						}).then(region => {
+							region.setCountry([country.id])
+						})
+					}
+				}
+			})
+		}
+	}
+
 
 	// User.create({
 	// 	username: "jf",

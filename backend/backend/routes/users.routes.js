@@ -47,4 +47,10 @@ module.exports = function(app) {
         [authJwt.verifyToken],
         controller.getCountryList
     );
+
+    app.post(
+        "/getregionlist",
+        [authJwt.verifyToken],
+        controller.getRegionList
+    );
 };

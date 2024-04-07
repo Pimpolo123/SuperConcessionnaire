@@ -7,7 +7,7 @@ const Country = db.country;
 const Region = db.region;
 const Op = db.Sequelize.Op;
 var bcrypt = require("bcryptjs");
-const countries = require('country-region-data/data.json');
+const testCountries = require('country-region-data/data.json');
 
 exports.allAccess = (req, res) => {
 	res.status(200).send("Public Content.");
@@ -33,12 +33,23 @@ exports.moderatorBoard = (req, res) => {
 };
 
 exports.getCountryList = (req, res) => {
-	// c'est pas idéal,
-	// il faut une table pour les pays et une pour les régions et les associer avec hasMany et belongsTo
 	Country.findAll().then(countries => {
 		res.status(200).send(countries);
 	});
+	// res.status(200).send(testCountries);
 }
+
+exports.getRegionList = (req, res) => {
+	Country.findOne({
+		where: {
+			id: req.body.id
+		}
+	}).then(country => {
+		country.getRegions([country.id]).then(regions => {
+			res.status(200).send(regions);
+		})
+	});
+};
 
 exports.editAddress = (req, res) => {
 	User.findOne({

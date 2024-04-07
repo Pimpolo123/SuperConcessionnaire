@@ -36,11 +36,19 @@ export const user = {
 		getcountrylist({ commit }) {
 			return UserService.getCountryList().then(
 				countries => {
-					commit('editSuccess');
 					return Promise.resolve(countries);
 				},
 				error => {
-					commit('editFailure');
+					return Promise.reject(error);
+				}
+			)
+		},
+		getregionlist({ commit }, data) {
+			return UserService.getRegionList(data).then(
+				regions => {
+					return Promise.resolve(regions);
+				},
+				error => {
 					return Promise.reject(error);
 				}
 			)

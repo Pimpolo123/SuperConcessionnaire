@@ -12,14 +12,17 @@
                     <label for="country">Pays : </label>
                     <Field name="country" v-model="country" class="form-select bg-light" as="select" @input="setSelectedCountry">
                         <option value="" disabled><p v-if="user.address.country">{{ user.address.country }}</p></option>
-                        <option v-for="country in countryList" :value="country.countryName">{{ country.countryName }}</option>
+                        <option v-for="country in countryList" :value="country.id">{{ country.countryName }}</option>
                     </Field>
                     <ErrorMessage name="country" class="form-control text-danger"/>
                 </div>
                 <div class="form-group col-md-3">
                     <label for="region">Région :</label>
-                    <Field name="region" v-model="user.address.region" class="form-control bg-light" />
-                    <ErrorMessage name="region" class="form-control text-danger"/>
+                    <Field name="region" class="form-select bg-light" as="select" @input="setSelectedRegion">
+                        <option value="" disabled><p v-if="user.address.region">{{ user.address.region }}</p></option>
+                        <option v-for="region in regionList" :value="region.id">{{ region.regionName }}</option>
+                    </Field>
+                    <ErrorMessage name="country" class="form-control text-danger"/>
                 </div>
                 <div class="form-group col-md-3">
                     <label for="city">Ville :</label>
@@ -94,6 +97,7 @@
                 isValid: true,
                 fieldType: 'password',
                 countryList: [],
+                regionList: [],
                 country: ''
             };
         },
@@ -108,8 +112,6 @@
             this.$store.dispatch('user/getcountrylist').then(
                 res => {
                     this.countryList = this.sortByKey(res.data, 'countryName');
-                    // console.log(JSON.parse(JSON.stringify(res.data)));
-                    // console.log(this.books);
                 }
             )
         },
@@ -158,8 +160,19 @@
                 });
             },
             setSelectedCountry(country) {
-                console.log(country.target.value);
-                this.user.address.country = country.target.value;
+                this.user.address.country = this.countryList.find(
+                    element => element.id === parseInt(country.target.value)).countryName;
+
+                this.$store.dispatch('user/getregionlist', {id:parseInt(country.target.value)}).then(
+                    res => {
+                        this.regionList = res;
+                    }
+                )
+                return true;
+            },
+            setSelectedRegion(region) {
+                this.user.address.region = this.regionList.find(
+                    element => element.id === parseInt(region.target.value)).regionName;
                 return true;
             }
         },

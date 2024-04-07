@@ -24,6 +24,17 @@ class UserService {
 		return axios.get(API_URL + 'getcountrylist', { headers: authHeader() });
 	}
 
+	getRegionList(data){
+		return axios
+			.post(API_URL + 'getregionlist', {
+				id: data.id
+			},{ 
+				headers: authHeader()
+			}).then(res => {
+				return res.data;
+			});
+	}
+
 	editAddress(user) {
 		return axios
 			.post(API_URL + 'editaddress', {

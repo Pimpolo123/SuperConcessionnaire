@@ -6,6 +6,12 @@
           src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
           class="profile-img-card"
         />
+        <FileUpload mode="basic" name="demo[]" url="/api/upload" accept="image/*" fileLimit="1"
+            :maxFileSize="5000000" @upload="onUpload" class="btn btn-primary btn-block" chooseLabel="Choisir une image"
+            @select="onSelect"
+            invalidFileSizeMessage="Taille de fichier invalide, le fichier doit faire moins de {1}"
+            invalidFileTypeMessage="{0} : Type de fichier invalide, le fichier doit être une image">
+        </FileUpload>
         <Form @submit="onSubmit">
             <div class="form-group">
                 <label for="username">Nom d'utilisateur :</label>
@@ -28,9 +34,9 @@
                 <ErrorMessage name="name" class="form-control text-danger"/>
             </div>
             <div class="form-group">
-                <label for="phone">Numéro de téléphone :</label>
-                <Field name="phone" v-model="user.phonenumber" type="username" :rules="validatePhone" class="form-control bg-light"/>
-                <ErrorMessage name="phone" class="form-control text-danger"/>
+                <label for="phonenumber">Numéro de téléphone :</label>
+                <Field name="phonenumber" v-model="user.phonenumber" type="username" :rules="validatePhone" class="form-control bg-light"/>
+                <ErrorMessage name="phonenumber" class="form-control text-danger"/>
             </div>
             <div class="form-group">
                 <label for="birthdate">Date de naissance :</label>
@@ -75,6 +81,8 @@
     import User from '../models/user';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
     import { defineRule } from 'vee-validate';
+    import FileUpload from 'primevue/fileupload';
+    import 'primevue/resources/themes/bootstrap4-light-purple/theme.css'
 
     defineRule('confirmed', (value, [target]) => {
         if (value === target) {
@@ -94,6 +102,10 @@
                 message: '',
                 date: ref(new Date()),
                 fieldType: "password",
+                pictureObject: {
+                    file: '',
+                    username: ''
+                },
                 format: (date) => {
                     const day = date.getDate();
                     const month = date.getMonth() + 1;
@@ -111,7 +123,8 @@
             Field,
             ErrorMessage,
             Datepicker,
-            FontAwesomeIcon
+            FontAwesomeIcon,
+            FileUpload
         },
         methods: {
             onSubmit(values) {
@@ -123,7 +136,18 @@
                   }
                 }
                 if(this.isValid){
-                    console.log(this.date.getTime());
+                    this.pictureObject.username = this.user.username;
+                    this.$store.dispatch('user/uploadpicture', this.pictureObject).then(
+                        data => {
+                            console.log(data);
+                        },
+                        error => {
+                        this.message = (error.response && error.response.data.message) ||
+                            error.message ||
+                            error.toString();
+                            this.successful = false;
+                        }
+                    )
                     this.$store.dispatch('auth/register', this.user).then(
                         data => {
                             this.message = data.message;
@@ -137,6 +161,13 @@
                         }
                     )
                 }
+            },
+            onUpload(value){
+                console.log(value);
+            },
+            onSelect(value){
+                this.pictureObject.file = value.files[0];
+                console.log(this.pictureObject.file);
             },
             validateEmail(value) {
                 if (!value) {

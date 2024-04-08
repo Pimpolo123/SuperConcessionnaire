@@ -1,11 +1,6 @@
 <template>
     <div class="col-md-12">
       <div class="card ml-5 mr-5">
-        <img
-          id="profile-img"
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          class="profile-img-card"
-        />
         <Form @submit="onSubmit">
             <div class="form-row">
                 <div class="form-group col-md-3">
@@ -78,13 +73,8 @@
 <script>
     import { Form, Field, ErrorMessage } from 'vee-validate';
     import vSelect from 'vue-select';
-    import User from '../models/user';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-    import UserService from '../services/user.service';
-    import { ref } from 'vue';
-    import Datepicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css';
-    import { defineRule } from 'vee-validate';
     export default {
         name: 'EditAddress',
         data() {
@@ -106,7 +96,7 @@
             Field,
             ErrorMessage,
             FontAwesomeIcon,
-            vSelect
+            vSelect,
         },
         mounted() {
             this.$store.dispatch('user/getcountrylist').then(

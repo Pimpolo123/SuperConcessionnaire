@@ -6,6 +6,7 @@ const Address = db.address;
 const Country = db.country;
 const Region = db.region;
 const Op = db.Sequelize.Op;
+const fs = require('fs');
 var bcrypt = require("bcryptjs");
 const testCountries = require('country-region-data/data.json');
 
@@ -30,6 +31,14 @@ exports.adminBoard = (req, res) => {
   
 exports.moderatorBoard = (req, res) => {
 	res.status(200).send("Moderator Content.");
+};
+
+exports.uploadProfilePicture = (req, res) => {
+	if(!req.file || !req.body) {
+		res.status(500).send({ message: "Erreur : Fichier ou informations manquantes" });
+	}
+	fs.renameSync(req.file.path, req.file.path.replace('undefined', req.body.username));
+    res.status(200).send("Photo mise en ligne");
 };
 
 exports.getCountryList = (req, res) => {
@@ -127,7 +136,8 @@ exports.editProfile = (req, res) => {
 
 		user.surname = req.body.surname;
 		user.name = req.body.name;
-		user.birthdate = req.body.birthdate;		
+		user.birthdate = req.body.birthdate;
+		user.phonenumber = req.body.phonenumber;			
 		if(req.body.newpassword){
 			user.password = bcrypt.hashSync(req.body.newpassword, 8)
 		}
@@ -145,6 +155,7 @@ exports.editProfile = (req, res) => {
 				birthdate: user.birthdate,
 				name: user.name,
 				surname: user.surname,
+				phonenumber: user.phonenumber,
 				roles: authorities,
 				message: "Profil modifié avec succès",
 				accessToken: req.headers["x-access-token"],

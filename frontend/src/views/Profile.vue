@@ -1,14 +1,15 @@
 <template>
     <div class="container" v-if="currentUser !== null">
       <header class="jumbotron">
+		<img
+          id="profile-img"
+          :src="imgSrc"
+          class="profile-img-card mb-2 img-max"
+        />
         <h3>
           <strong>Profil de {{currentUser.surname + ' ' + currentUser.name}}</strong>
         </h3>
 		</header>
-		<!-- <p>
-			<strong>Token:</strong>
-			{{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
-		</p> -->
 		<p>
 			<strong>Nom d'utilisateur :</strong>
 			{{currentUser.username}}
@@ -45,7 +46,9 @@
         name: 'Profile',
 		data() {
             return {
-				userRoles: []
+				user: JSON.parse(localStorage.getItem('user')),
+				userRoles: [],
+				imgSrc: ''
             };
         },
         computed: {
@@ -63,6 +66,18 @@
             if (!this.currentUser) {
                 this.$router.push('/login');
             }
+			if(!this.user.imgUrl){
+                this.imgSrc = "//ssl.gstatic.com/accounts/ui/avatar_2x.png";
+            } else {
+                this.imgSrc = 'data:image/png;base64,' + this.user.imgUrl;
+            }
         }
     };
 </script>
+
+<style scoped>
+.img-max {
+  max-width: 20vw;
+  width:100%;
+}
+</style>

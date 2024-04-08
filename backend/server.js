@@ -34,15 +34,16 @@ app.listen(PORT, () => {
 
 // SEULEMENT EN DEV !!! 
 // PROD : 
-db.sequelize.sync();
+// db.sequelize.sync();
 // et créer tout manuellement
-// db.sequelize.sync({force: true}).then(() => {
-//     console.log('Drop and Resync Db');
-//     initial();
-// });
+db.sequelize.sync({force: true}).then(() => {
+    console.log('Drop and Resync Db');
+    initial();
+});
 
 function initial() {
-	const countries = require('country-region-data/data.json');
+	let countries = require('country-region-data/data.json');
+	countries = countries.slice(0, 10); 
 
     Role.create({
 		id: 1,

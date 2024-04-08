@@ -1,5 +1,6 @@
 const { authJwt } = require("../middleware");
 const controller = require("../controllers/user.controller");
+const upload = require('../middleware/verifyFile')
 
 module.exports = function(app) {
     app.use(function(req, res, next) {
@@ -53,4 +54,6 @@ module.exports = function(app) {
         [authJwt.verifyToken],
         controller.getRegionList
     );
+
+    app.post('/uploadpicture', upload.single('file'), controller.uploadProfilePicture);
 };

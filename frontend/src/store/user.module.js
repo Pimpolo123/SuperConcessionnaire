@@ -52,6 +52,16 @@ export const user = {
 					return Promise.reject(error);
 				}
 			)
+		},
+		uploadpicture({ commit }, pictureObject) {
+			return UserService.uploadPicture(pictureObject).then(
+				res => {
+					return Promise.resolve(res);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
 		}
 	},
 	mutations: {

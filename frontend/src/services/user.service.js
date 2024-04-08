@@ -24,6 +24,18 @@ class UserService {
 		return axios.get(API_URL + 'getcountrylist', { headers: authHeader() });
 	}
 
+	uploadPicture(pictureObject){
+		var formData = new FormData();
+		formData.append("file", pictureObject.file);
+		formData.append("username", pictureObject.username);
+		return axios
+			.post(API_URL + 'uploadpicture', formData, { 
+					headers: authHeader(), 'Content-Type': 'multipart/form-data'
+				}).then(res => {
+					return res.data;
+				});
+	}
+
 	getRegionList(data){
 		return axios
 			.post(API_URL + 'getregionlist', {
@@ -73,6 +85,7 @@ class UserService {
 				email: user.email,
 				password: user.password,
 				birthdate: user.birthdate,
+				phonenumber: user.phonenumber,
 				name: user.name,
 				surname: user.surname,
 				newpassword: newpassword,

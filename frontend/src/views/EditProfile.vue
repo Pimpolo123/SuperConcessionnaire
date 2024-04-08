@@ -3,7 +3,7 @@
       <div class="card card-container">
         <img
           id="profile-img"
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+          :src="imgSrc"
           class="profile-img-card"
         />
         <Form @submit="onSubmit">
@@ -28,9 +28,9 @@
                 <ErrorMessage name="name" class="form-control text-danger"/>
             </div>
             <div class="form-group">
-                <label for="phone">Numéro de téléphone :</label>
-                <Field name="phone" v-model="user.phonenumber" type="username" :rules="validatePhone" class="form-control bg-light"/>
-                <ErrorMessage name="phone" class="form-control text-danger"/>
+                <label for="phonenumber">Numéro de téléphone :</label>
+                <Field name="phonenumber" v-model="user.phonenumber" :rules="validatePhone" class="form-control bg-light"/>
+                <ErrorMessage name="phonenumber" class="form-control text-danger"/>
             </div>
             <div class="form-group">
                 <label for="birthdate">Date de naissance :</label>
@@ -102,6 +102,7 @@
                 newpassword: undefined,
                 isValid: true,
                 fieldType: 'password',
+                imgSrc: '',
                 format: (date) => {
                     const day = date.getDate();
                     const month = date.getMonth() + 1;
@@ -119,6 +120,11 @@
             FontAwesomeIcon
         },
         mounted() {
+            if(!this.user.imgUrl){
+                this.imgSrc = "//ssl.gstatic.com/accounts/ui/avatar_2x.png";
+            } else {
+                this.imgSrc = 'data:image/png;base64,' + this.user.imgUrl;
+            }
         },
         methods: {
             onSubmit(values) {

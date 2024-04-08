@@ -2,6 +2,7 @@ const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
 const Role = db.role;
+const fs = require('fs');
 
 const Op = db.Sequelize.Op;
 
@@ -79,9 +80,11 @@ exports.signin = (req, res) => {
 					birthdate: user.birthdate,
 					name:user.name,
 					surname: user.surname,
+					phonenumber: user.phonenumber,
 					roles: authorities,
 					accessToken: token,
-					address: address
+					address: address,
+					imgUrl: base64_encode(user.username)
 				});
 			})
 		});
@@ -90,3 +93,13 @@ exports.signin = (req, res) => {
       res.status(500).send({ message: err.message });
     });
 };
+
+function base64_encode(fileUsername) {
+	const files = fs.readdirSync('../pictures');
+	for (const file of files) {
+        if (file.startsWith(fileUsername)) {
+            var bitmap = fs.readFileSync('../pictures/' + file);
+    		return Buffer.from(bitmap).toString('base64');
+        }
+    }
+}

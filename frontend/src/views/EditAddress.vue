@@ -26,24 +26,24 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label for="city">Ville :</label>
-                    <Field name="city" v-model="user.address.city" class="form-control bg-light"/>
+                    <Field name="city" v-model="user.address.city" :rules="validateCity" class="form-control bg-light"/>
                     <ErrorMessage name="city" class="form-control text-danger"/>
                 </div>
                 <div class="form-group col-md-3">
                     <label for="postcode">Code postal :</label>
-                    <Field name="postcode" v-model="user.address.postcode" class="form-control bg-light"/>
+                    <Field name="postcode" v-model="user.address.postcode" :rules="validatePostcode" class="form-control bg-light"/>
                     <ErrorMessage name="postcode" class="form-control text-danger"/>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="street">Rue :</label>
-                    <Field name="street" v-model="user.address.street" class="form-control bg-light"/>
+                    <Field name="street" v-model="user.address.street" :rules="validateStreet" class="form-control bg-light"/>
                     <ErrorMessage name="street" class="form-control text-danger"/>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="housenumber">Numéro :</label>
-                    <Field name="housenumber" v-model="user.address.housenumber" class="form-control bg-light"/>
+                    <Field name="housenumber" v-model="user.address.housenumber" :rules="validateHouseNumber" class="form-control bg-light"/>
                     <ErrorMessage name="housenumber" class="form-control text-danger"/>
                 </div>
                 <div class="form-group col-md-4">
@@ -143,6 +143,46 @@
             validatePassword(value){
                 if(!value){
                     return "Entrez votre mot de passe actuel pour confirmer"
+                }
+                return true;
+            },
+            validateCity(value){
+                const regex = /^[a-zA-Z]+$/i;
+                if(!value){
+                    return "Veuillez saisir une ville"
+                }
+                if (!regex.test(value)) {
+                    return "Nom de ville invalide";
+                }
+                return true;
+            },
+            validatePostcode(value){
+                const regex = /^[0-9]{3,7}\b$/i;
+                if(!value){
+                    return "Veuillez saisir un code postal"
+                }
+                if (!regex.test(value)) {
+                    return "Code postal invalide";
+                }
+                return true;
+            },
+            validateStreet(value){
+                const regex = /^[a-zA-Z ]{2,100}$/i;
+                if (!regex.test(value)) {
+                    return "Format du nom de rue invalide";
+                }
+                if(!value){
+                    return "Veuillez saisir un nom de rue"
+                }
+                return true;
+            },
+            validateHouseNumber(value){
+                const regex = /^[0-9]{1,4}\b$/i;
+                if(!value){
+                    return "Veuillez saisir un numéro de maison"
+                }
+                if (!regex.test(value)) {
+                    return "Numéro de maison invalide";
                 }
                 return true;
             },

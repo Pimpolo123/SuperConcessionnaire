@@ -39,7 +39,7 @@ db.sequelize.sync();
 // db.sequelize.sync({force: true}).then(() => {
 //     console.log('Drop and Resync Db');
 //     initial();
-//   });
+// });
 
 function initial() {
 	const countries = require('country-region-data/data.json');

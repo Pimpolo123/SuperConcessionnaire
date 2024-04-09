@@ -28,9 +28,6 @@ module.exports = (sequelize, Sequelize) => {
         phonenumber: {
             type: Sequelize.STRING
         },
-        pictureFilename: {
-            type: Sequelize.STRING
-        },
         banned: {
             type: Sequelize.BOOLEAN,
             defaultValue: false

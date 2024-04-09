@@ -2,6 +2,9 @@ const express = require('express')
 const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 8080;
+const fs = require('fs');
+const path = require('path');
+const pictureDir = '../pictures'
 
 const db = require("./backend/models");
 const Role = db.role;
@@ -14,6 +17,17 @@ const Op = db.Sequelize.Op;
 var corsOptions = {
     origin: "http://localhost:8081"
   };  
+
+
+fs.readdir(pictureDir, (err, files) => {
+	if (err) throw err;
+
+	for (const file of files) {
+		fs.unlink(path.join(pictureDir, file), (err) => {
+			if (err) throw err;
+		});
+	}
+});
 
 app.use(cors(corsOptions));
 

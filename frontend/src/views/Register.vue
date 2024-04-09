@@ -1,13 +1,8 @@
 <template>
     <div class="col-md-12">
       <div class="card card-container">
-        <img
-          id="profile-img"
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          class="profile-img-card"
-        />
-        <FileUpload mode="basic" name="demo[]" url="/api/upload" accept="image/*" fileLimit="1"
-            :maxFileSize="5000000" @upload="onUpload" class="btn btn-primary btn-block" chooseLabel="Choisir une image"
+        <FileUpload mode="basic" accept="image/*" fileLimit="1"
+            :maxFileSize="5000000" class="btn btn-primary btn-block" chooseLabel="Choisir une image"
             @select="onSelect"
             invalidFileSizeMessage="Taille de fichier invalide, le fichier doit faire moins de {1}"
             invalidFileTypeMessage="{0} : Type de fichier invalide, le fichier doit être une image">
@@ -83,6 +78,7 @@
     import { defineRule } from 'vee-validate';
     import FileUpload from 'primevue/fileupload';
     import 'primevue/resources/themes/bootstrap4-light-purple/theme.css'
+    const reader = new FileReader();
 
     defineRule('confirmed', (value, [target]) => {
         if (value === target) {
@@ -136,18 +132,20 @@
                   }
                 }
                 if(this.isValid){
-                    this.pictureObject.username = this.user.username;
-                    this.$store.dispatch('user/uploadpicture', this.pictureObject).then(
-                        data => {
-                            console.log(data);
-                        },
-                        error => {
-                        this.message = (error.response && error.response.data.message) ||
-                            error.message ||
-                            error.toString();
-                            this.successful = false;
-                        }
-                    )
+                    if(this.pictureObject.file){
+                        this.pictureObject.username = this.user.username;
+                        this.$store.dispatch('user/uploadpicture', this.pictureObject).then(
+                            data => {
+                                console.log(data);
+                            },
+                            error => {
+                            this.message = (error.response && error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                                this.successful = false;
+                            }
+                        )
+                    }
                     this.$store.dispatch('auth/register', this.user).then(
                         data => {
                             this.message = data.message;
@@ -162,12 +160,8 @@
                     )
                 }
             },
-            onUpload(value){
-                console.log(value);
-            },
             onSelect(value){
                 this.pictureObject.file = value.files[0];
-                console.log(this.pictureObject.file);
             },
             validateEmail(value) {
                 if (!value) {

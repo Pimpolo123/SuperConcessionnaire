@@ -43,7 +43,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="boxnumber">Numéro de boîte :</label>
-                    <Field name="boxnumber" v-model="user.address.boxnumber" class="form-control bg-light" />
+                    <Field name="boxnumber" v-model="user.address.boxnumber" :rules="validateBoxNumber" class="form-control bg-light" />
                     <ErrorMessage name="boxnumber" class="form-control text-danger"/>
                 </div>
             </div>
@@ -173,6 +173,17 @@
                 }
                 if (!regex.test(value)) {
                     return "Numéro de maison invalide";
+                }
+                return true;
+            },
+            validateBoxNumber(value){
+                if(!value){
+                    value = '';
+                }
+                const regex = /^$/i;
+                const regexFull = /^[0-9]{0,4}\b$/i;
+                if (!regex.test(value) && !regexFull.test(value)) {
+                    return "Numéro de boite invalide";
                 }
                 return true;
             },

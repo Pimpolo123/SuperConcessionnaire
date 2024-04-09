@@ -77,7 +77,7 @@
 
 <style scoped>
 .img-max {
-  max-width: 20vw;
+  max-width: 15vw;
   width:100%;
 }
 </style>

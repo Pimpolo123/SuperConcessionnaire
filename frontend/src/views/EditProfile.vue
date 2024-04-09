@@ -1,87 +1,107 @@
 <template>
-    <div class="col-md-12">
-      <div class="card card-container">
-        <img
-          id="profile-img"
-          :src="imgSrc"
-          class="profile-img-card"
-        />
-        <Form @submit="onSubmit">
-            <div class="form-group">
-                <label for="username">Nom d'utilisateur :</label>
-                <Field name="username" type="username" v-model="user.username" class="form-control bg-light" :disabled=true />
-                <ErrorMessage name="username" class="form-control text-danger"/>
-            </div>
-            <div class="form-group">
-                <label for="email">Email :</label>
-                <Field name="email" type="email" v-model="user.email" class="form-control bg-light" :disabled=true />
-                <ErrorMessage name="email" class="form-control text-danger"/>
-            </div>
-            <div class="form-group">
-                <label for="surname">Prénom :</label>
-                <Field name="surname" v-model="user.surname" type="username" :rules="validateName" class="form-control bg-light"/>
-                <ErrorMessage name="surname" class="form-control text-danger"/>
-            </div>
-            <div class="form-group">
-                <label for="name">Nom :</label>
-                <Field name="name" v-model="user.name" type="username" :rules="validateName" class="form-control bg-light"/>
-                <ErrorMessage name="name" class="form-control text-danger"/>
-            </div>
-            <div class="form-group">
-                <label for="phonenumber">Numéro de téléphone :</label>
-                <Field name="phonenumber" v-model="user.phonenumber" :rules="validatePhone" class="form-control bg-light"/>
-                <ErrorMessage name="phonenumber" class="form-control text-danger"/>
-            </div>
-            <div class="form-group">
-                <label for="birthdate">Date de naissance :</label>
-                <Datepicker name="birthdate" v-model="user.birthdate" menu-class-name="dp-custom-input" :format="format" :enable-time-picker="false"/>
-            </div>
-            <div class="form-group">
-                <label for="password">Mot de passe :</label>
-                <div class="d-flex">
-                    <Field name="password" :type="fieldType" :rules="validatePassword" v-model="user.password" class="form-control bg-light" placeholder=" Mot de passe actuel" />
-                    <button type="button" @click="switchVisibility" class="btn btn-primary ml-2"><font-awesome-icon icon="fa-solid fa-eye"/></button>
+    <div class="d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card ml-5 mr-5">
+                <img
+                id="profile-img"
+                :src="imgSrc"
+                class="profile-img-card"
+                />
+                <div class="d-flex justify-content-center">
+                    <FileUpload mode="basic" accept="image/*"
+                        :maxFileSize="5000000" class="btn btn-primary btn-flex " chooseLabel="Choisir une image"
+                        @select="onSelect"
+                        invalidFileSizeMessage="Taille de fichier invalide, le fichier doit faire moins de {1}"
+                        invalidFileTypeMessage="{0} : Type de fichier invalide, le fichier doit être une image">
+                    </FileUpload>
                 </div>
-                <ErrorMessage name="password" class="form-control text-danger"/>
-            </div>
-            <div class="form-group">
-                <div class="d-flex">
-                    <Field name="newpassword" :type="fieldType" v-model="newpassword" class="form-control bg-light" placeholder=" Nouveau mot de passe" />
-                    <button type="button" @click="switchVisibility" class="btn btn-primary ml-2"><font-awesome-icon icon="fa-solid fa-eye"/></button>
+                <div class="d-flex justify-content-center">
+                    <div v-if="picture">La photo changera lors de la prochaine connexion</div>
                 </div>
-                <ErrorMessage name="confirm" class="form-control text-danger"/>
+                <Form @submit="onSubmit">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="username">Nom d'utilisateur :</label>
+                            <Field name="username" type="username" v-model="user.username" class="form-control bg-light" :disabled=true />
+                            <ErrorMessage name="username" class="form-control text-danger"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="email">Email :</label>
+                            <Field name="email" type="email" v-model="user.email" class="form-control bg-light" :disabled=true />
+                            <ErrorMessage name="email" class="form-control text-danger"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="surname">Prénom :</label>
+                            <Field name="surname" v-model="user.surname" type="username" :rules="validateName" class="form-control bg-light"/>
+                            <ErrorMessage name="surname" class="form-control text-danger"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="name">Nom :</label>
+                            <Field name="name" v-model="user.name" type="username" :rules="validateName" class="form-control bg-light"/>
+                            <ErrorMessage name="name" class="form-control text-danger"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="phonenumber">Numéro de téléphone :</label>
+                            <Field name="phonenumber" v-model="user.phonenumber" :rules="validatePhone" class="form-control bg-light"/>
+                            <ErrorMessage name="phonenumber" class="form-control text-danger"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="birthdate">Date de naissance :</label>
+                            <Datepicker name="birthdate" v-model="user.birthdate" menu-class-name="dp-custom-input" :format="format" :enable-time-picker="false"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <div class="d-flex">
+                                    <Field name="newpassword" :type="fieldType" v-model="newpassword" class="form-control bg-light" placeholder=" Nouveau mot de passe" />
+                                    <button type="button" @click="switchVisibility" class="btn btn-primary ml-2"><font-awesome-icon icon="fa-solid fa-eye"/></button>
+                                </div>
+                                <ErrorMessage name="confirm" class="form-control text-danger"/>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="d-flex">
+                                    <Field name="confirm" :type="fieldType" rules="confirmed:@newpassword" class="form-control bg-light" placeholder="Confirmation"/>
+                                    <button type="button" @click="switchVisibility" class="btn btn-primary ml-2"><font-awesome-icon icon="fa-solid fa-eye"/></button>
+                                </div>
+                                <ErrorMessage name="confirm" class="form-control text-danger"/>
+                            </div>
+                        </div>
+                        <label for="password">Mot de passe :</label>
+                        <div class="d-flex">
+                            <Field name="password" :type="fieldType" :rules="validatePassword" v-model="user.password" class="form-control bg-light" placeholder=" Mot de passe actuel" />
+                            <button type="button" @click="switchVisibility" class="btn btn-primary ml-2"><font-awesome-icon icon="fa-solid fa-eye"/></button>
+                        </div>
+                        <ErrorMessage name="password" class="form-control text-danger"/>
+                    </div>
+                    <div class="form-group d-flex justify-content-center">
+                        <button class="btn btn-primary btn-flex" type="submit">
+                            <span>Enregistrer</span>
+                        </button>
+                    </div>
+                </Form>
+                <div
+                v-if="message"
+                class="alert mt-2"
+                :class="successful ? 'alert-success' : 'alert-danger'"
+                >{{message}}</div>
             </div>
-            <div class="form-group">
-                <div class="d-flex">
-                    <Field name="confirm" :type="fieldType" rules="confirmed:@newpassword" class="form-control bg-light" placeholder="Confirmation"/>
-                    <button type="button" @click="switchVisibility" class="btn btn-primary ml-2"><font-awesome-icon icon="fa-solid fa-eye"/></button>
-                </div>
-                <ErrorMessage name="confirm" class="form-control text-danger"/>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-primary btn-block" type="submit">
-                    <span>Enregistrer</span>
-                </button>
-            </div>
-        </Form>
-        <div
-          v-if="message"
-          class="alert mt-2"
-          :class="successful ? 'alert-success' : 'alert-danger'"
-        >{{message}}</div>
-      </div>
+        </div>
     </div>
 </template>
   
 <script>
-    import UserService from '../services/user.service';
-    import { ref } from 'vue';
     import Datepicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css';
     import { Form, Field, ErrorMessage } from 'vee-validate';
-    import User from '../models/user';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
     import { defineRule } from 'vee-validate';
+    import FileUpload from 'primevue/fileupload';
+    import 'primevue/resources/themes/bootstrap4-light-purple/theme.css'
     
     defineRule('confirmed', (value, [target]) => {
         if (value === target) {
@@ -99,10 +119,15 @@
                 submitted: false,
                 successful: false,
                 message: '',
+                picture: false,
                 newpassword: undefined,
                 isValid: true,
                 fieldType: 'password',
                 imgSrc: '',
+                pictureObject: {
+                    file: '',
+                    username: ''
+                },
                 format: (date) => {
                     const day = date.getDate();
                     const month = date.getMonth() + 1;
@@ -117,7 +142,8 @@
             Field,
             ErrorMessage,
             Datepicker,
-            FontAwesomeIcon
+            FontAwesomeIcon,
+            FileUpload
         },
         mounted() {
             if(!this.user.imgUrl){
@@ -140,7 +166,21 @@
                         data => {
                             this.message = data.message;
                             this.successful = true;
-                            setTimeout( () => this.$router.push('/profile'), 1500);
+                            if(this.pictureObject.file && this.successful == true){
+                                this.pictureObject.username = this.user.username;
+                                this.$store.dispatch('user/uploadpicture', this.pictureObject).then(
+                                    data => {
+                                        console.log(data);
+                                    },
+                                    error => {
+                                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+                                    }
+                                )
+                            }
+                            setTimeout( () => this.$router.push('/profile'), 2000);
                         },
                         error => {
                             this.message = (error.response && error.response.data.message) ||
@@ -150,6 +190,10 @@
                         }
                     )
                 }
+            },
+            onSelect(value){
+                this.picture = true;
+                this.pictureObject.file = value.files[0];
             },
             validatePassword(value){
                 if(!value){

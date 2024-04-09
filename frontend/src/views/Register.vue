@@ -1,7 +1,7 @@
 <template>
     <div class="col-md-12">
       <div class="card card-container">
-        <FileUpload mode="basic" accept="image/*" fileLimit="1"
+        <FileUpload mode="basic" accept="image/*"
             :maxFileSize="5000000" class="btn btn-primary btn-block" chooseLabel="Choisir une image"
             @select="onSelect"
             invalidFileSizeMessage="Taille de fichier invalide, le fichier doit faire moins de {1}"
@@ -78,7 +78,6 @@
     import { defineRule } from 'vee-validate';
     import FileUpload from 'primevue/fileupload';
     import 'primevue/resources/themes/bootstrap4-light-purple/theme.css'
-    const reader = new FileReader();
 
     defineRule('confirmed', (value, [target]) => {
         if (value === target) {
@@ -132,24 +131,24 @@
                   }
                 }
                 if(this.isValid){
-                    if(this.pictureObject.file){
-                        this.pictureObject.username = this.user.username;
-                        this.$store.dispatch('user/uploadpicture', this.pictureObject).then(
-                            data => {
-                                console.log(data);
-                            },
-                            error => {
-                            this.message = (error.response && error.response.data.message) ||
-                                error.message ||
-                                error.toString();
-                                this.successful = false;
-                            }
-                        )
-                    }
                     this.$store.dispatch('auth/register', this.user).then(
                         data => {
                             this.message = data.message;
                             this.successful = true;
+                            if(this.pictureObject.file && this.successful == true){
+                                this.pictureObject.username = this.user.username;
+                                this.$store.dispatch('user/uploadpicture', this.pictureObject).then(
+                                    data => {
+                                        console.log(data);
+                                    },
+                                    error => {
+                                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+                                    }
+                                )
+                            }
                         },
                         error => {
                         this.message = (error.response && error.response.data.message) ||
@@ -157,7 +156,7 @@
                             error.toString();
                             this.successful = false;
                         }
-                    )
+                    );
                 }
             },
             onSelect(value){
@@ -200,8 +199,12 @@
                 return true;
             },
             validatePhone(value){
-                const regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/i;
-                if (!regex.test(value)) {
+                if(!value){
+                    value = '';
+                }
+                const regex = /^$/i;
+                const regex1 = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/i;
+                if (!regex.test(value) && !regex1.test(value)) {
                     return "Numéro de téléphone invalide";
                 }
                 return true;

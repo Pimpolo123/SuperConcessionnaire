@@ -7,6 +7,7 @@ const Country = db.country;
 const Region = db.region;
 const Op = db.Sequelize.Op;
 const fs = require('fs');
+const path = require('path');
 var bcrypt = require("bcryptjs");
 const testCountries = require('country-region-data/data.json');
 
@@ -34,18 +35,25 @@ exports.moderatorBoard = (req, res) => {
 };
 
 exports.uploadProfilePicture = (req, res) => {
+	//Faire un pictureId dans la table users pour delete meme si l'extension change
+	if(req.file.size > 5000000){
+		res.status(500).send({ message: "Erreur : Fichier trop gros" });
+	}
+
 	if(!req.file || !req.body) {
 		res.status(500).send({ message: "Erreur : Fichier ou informations manquantes" });
 	}
+
 	fs.renameSync(req.file.path, req.file.path.replace('undefined', req.body.username));
-    res.status(200).send("Photo mise en ligne");
+    res.status(200).send("Profil modifié, la photo changera lors de la prochaine connexion");
 };
 
 exports.getCountryList = (req, res) => {
 	Country.findAll().then(countries => {
 		res.status(200).send(countries);
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
 	});
-	// res.status(200).send(testCountries);
 }
 
 exports.getRegionList = (req, res) => {
@@ -57,6 +65,8 @@ exports.getRegionList = (req, res) => {
 		country.getRegions([country.id]).then(regions => {
 			res.status(200).send(regions);
 		})
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
 	});
 };
 

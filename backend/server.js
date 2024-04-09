@@ -41,6 +41,7 @@ app.get("/", (req, res) => {
 
 require('./backend/routes/auth.routes')(app);
 require('./backend/routes/users.routes')(app);
+require('./backend/routes/admin.routes')(app);
 
 app.listen(PORT, () => {
     console.log(`Serveur en ligne sur le port ${PORT}.`);

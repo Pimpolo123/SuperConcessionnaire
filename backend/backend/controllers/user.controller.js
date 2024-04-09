@@ -26,10 +26,6 @@ exports.userBoard = (req, res) => {
 	})
 };
   
-exports.adminBoard = (req, res) => {
-	res.status(200).send("Admin Content.");
-};
-  
 exports.moderatorBoard = (req, res) => {
 	res.status(200).send("Moderator Content.");
 };
@@ -45,7 +41,7 @@ exports.uploadProfilePicture = (req, res) => {
 	}
 
 	fs.renameSync(req.file.path, req.file.path.replace('undefined', req.body.username));
-    res.status(200).send("Profil modifié, la photo changera lors de la prochaine connexion");
+    res.status(200).send("La photo changera lors de la prochaine connexion");
 };
 
 exports.getCountryList = (req, res) => {

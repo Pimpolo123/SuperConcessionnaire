@@ -19,7 +19,8 @@
         mounted() {
         UserService.getAdminBoard().then(
             response => {
-            this.content = response.data;
+                console.log(response);
+                this.content = response.data;
             },
             error => {
             this.content =

@@ -17,7 +17,7 @@ class UserService {
 	}
 
 	getAdminBoard() {
-		return axios.get(API_URL + 'test/admin', { headers: authHeader() });
+		return axios.get(API_URL + 'admin/board', { headers: authHeader() });
 	}
 
 	getCountryList(){

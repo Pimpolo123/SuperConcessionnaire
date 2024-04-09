@@ -25,12 +25,6 @@ module.exports = function(app) {
         controller.moderatorBoard
     );
 
-    app.get(
-        "/test/admin",
-        [authJwt.verifyToken, authJwt.isAdmin],
-        controller.adminBoard
-    );
-
     app.post(
         "/editprofile",
         [authJwt.verifyToken],

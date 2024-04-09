@@ -32,9 +32,7 @@ isAdmin = (req, res, next) => {
         }
       }
 
-      res.status(403).send({
-        message: "Requiert le rôle Admin"
-      });
+      res.status(403).send("Requiert le rôle Admin");
       return;
     });
   });
@@ -50,9 +48,7 @@ isModerator = (req, res, next) => {
         }
       }
 
-      res.status(403).send({
-        message: "Requiert le rôle Moderator"
-      });
+      res.status(403).send("Requiert le rôle Modérateur");
     });
   });
 };
@@ -72,9 +68,7 @@ isModeratorOrAdmin = (req, res, next) => {
         }
       }
 
-      res.status(403).send({
-        message: "Requiert le rôle Admin ou Moderator"
-      });
+      res.status(403).send("Requiert le rôle Admin ou Modérateur");
     });
   });
 };

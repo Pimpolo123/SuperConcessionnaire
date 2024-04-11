@@ -53,32 +53,34 @@
         </div>
 
         <Dialog v-model:visible="userDialog" :style="{width: '450px'}" header="Détails de l'utilisateur" :modal="true" class="p-fluid">
-            <img v-if="product.image" :src="`https://primefaces.org/cdn/primevue/images/product/${product.image}`" :alt="product.image" class="block m-auto pb-3" />
             <div class="field">
-                <label for="name">Name</label>
-                <InputText id="name" v-model.trim="product.name" required="true" autofocus :invalid="submitted && !product.name" />
-                <small class="p-error" v-if="submitted && !product.name">Name is required.</small>
+                <FloatLabel class="mt-5">
+                    <label for="username">Nom d'utilisateur</label>
+                    <InputText id="username" v-model.trim="user.username" required="true" autofocus :invalid="submitted && !user.username"/>
+                    <small class="p-error" v-if="submitted && !user.username">Name is required.</small>
+                </FloatLabel>
             </div>
             <div class="field">
-                <label for="description">Description</label>
-                <Textarea id="description" v-model="product.description" required="true" rows="3" cols="20" />
+                <FloatLabel class="mt-5">
+                    <label for="name">Nom</label>
+                    <InputText id="name" v-model.trim="user.name" required="true" autofocus :invalid="submitted && !user.name"/>
+                    <small class="p-error" v-if="submitted && !user.name">Name is required.</small>
+                </FloatLabel>
+            </div>
+            <div class="field">
+                <FloatLabel class="mt-5">
+                    <label for="surname">Prénom</label>
+                    <InputText id="surname" v-model.trim="user.surname" required="true" autofocus :invalid="submitted && !user.surname"/>
+                    <small class="p-error" v-if="submitted && !user.surname">Name is required.</small>
+                </FloatLabel>
             </div>
 
             <div class="field">
-				<label for="inventoryStatus" class="mb-3">Inventory Status</label>
-				<Dropdown id="inventoryStatus" v-model="product.inventoryStatus" :options="statuses" optionLabel="label" placeholder="Select a Status">
-					<template #value="slotProps">
-						<div v-if="slotProps.value && slotProps.value.value">
-                            <Tag :value="slotProps.value.value" :severity="getStatusLabel(slotProps.value.label)" />
-                        </div>
-                        <div v-else-if="slotProps.value && !slotProps.value.value">
-                            <Tag :value="slotProps.value" :severity="getStatusLabel(slotProps.value)" />
-                        </div>
-						<span v-else>
-							{{slotProps.placeholder}}
-						</span>
-					</template>
-				</Dropdown>
+                <FloatLabel class="mt-5">
+                    <label for="roles" class="mb-3">Rôles</label>
+                    <MultiSelect name="roles" v-model="user.roles" :options="roles" optionLabel="label" :value="user.roles"
+                        placeholder="Sélectionner les roles" :maxSelectedLabels="3" class="w-full md:w-20rem" />
+                </FloatLabel>
 			</div>
 
             <div class="field">
@@ -125,8 +127,8 @@
                 <span v-if="user">Etes-vous sûr de vouloir supprimer <b>{{user.username}}</b>?</span>
             </div>
             <template #footer>
-                <Button label="No" icon="pi pi-times" text @click="deleteUserDialog = false"/>
-                <Button label="Yes" icon="pi pi-check" text @click="deleteUser" />
+                <Button label="Non" icon="pi pi-times" text @click="deleteUserDialog = false"/>
+                <Button label="Oui" icon="pi pi-check" text @click="deleteUser" />
             </template>
         </Dialog>
 
@@ -136,19 +138,30 @@
                 <span v-if="user">Etes-vous sûr de vouloir bannir <b>{{user.username}}</b>?</span>
             </div>
             <template #footer>
-                <Button label="No" icon="pi pi-times" text @click="banUserDialog = false"/>
-                <Button label="Yes" icon="pi pi-check" text @click="banUser" />
+                <Button label="Non" icon="pi pi-times" text @click="banUserDialog = false"/>
+                <Button label="Oui" icon="pi pi-check" text @click="banUser" />
             </template>
         </Dialog>
 
         <Dialog v-model:visible="deleteUsersDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
             <div class="confirmation-content">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                <span v-if="product">Are you sure you want to delete the selected products?</span>
+                <span v-if="user">Etes-vous sûr de vouloir supprimer les utilisateurs sélectionnés ?</span>
             </div>
             <template #footer>
-                <Button label="No" icon="pi pi-times" text @click="deleteProductsDialog = false"/>
-                <Button label="Yes" icon="pi pi-check" text @click="selectedUsers" />
+                <Button label="Non" icon="pi pi-times" text @click="deleteUsersDialog = false"/>
+                <Button label="Oui" icon="pi pi-check" text @click="deleteSelectedUsers" />
+            </template>
+        </Dialog>
+
+        <Dialog v-model:visible="banUsersDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
+            <div class="confirmation-content">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                <span v-if="user">Etes-vous sûr de vouloir supprimer les utilisateurs sélectionnés ?</span>
+            </div>
+            <template #footer>
+                <Button label="Non" icon="pi pi-times" text @click="banUsersDialog = false"/>
+                <Button label="Oui" icon="pi pi-check" text @click="banSelectedUsers" />
             </template>
         </Dialog>
 	</div>
@@ -171,7 +184,9 @@ import InputNumber from 'primevue/inputnumber';
 import Dialog from 'primevue/dialog';
 import Tooltip from 'primevue/tooltip';
 import Toast from 'primevue/toast';
-import 'primeicons/primeicons.css'
+import FloatLabel from 'primevue/floatlabel';
+import MultiSelect from 'primevue/multiselect';
+import 'primeicons/primeicons.css';
 
 
 export default {
@@ -183,15 +198,17 @@ export default {
             deleteUsersDialog: false,
             banUserDialog: false,
             banUsersDialog: false,
+            product: '',
             user: {},
             selectedUsers: null,
             filters: {},
             submitted: false,
             imgSrc: "",
-            statuses: [
-				{label: 'INSTOCK', value: 'instock'},
-				{label: 'LOWSTOCK', value: 'lowstock'},
-				{label: 'OUTOFSTOCK', value: 'outofstock'}
+            roles: [
+                //a remplacer par getRoles
+				{label: 'Admin', value: 'ROLE_ADMIN'},
+				{label: 'Modérateur', value: 'ROLE_MODERATOR'},
+				{label: 'Utilisateur', value: 'ROLE_USER'}
             ]
         }
     },
@@ -202,7 +219,6 @@ export default {
         this.$store.dispatch('admin/getallusers').then(
             res => {
                 this.data = res;
-                console.log('DATA', this.data);
             }
         );
     },
@@ -221,14 +237,11 @@ export default {
         InputNumber, 
         Dialog,
         Tooltip,
-        Toast
+        Toast,
+        FloatLabel,
+        MultiSelect
     },
     methods: {
-        formatCurrency(value) {
-            if(value)
-				return value.toLocaleString('en-US', {style: 'currency', currency: 'USD'});
-			return;
-        },
         openNew() {
             this.product = {};
             this.submitted = false;
@@ -260,9 +273,10 @@ export default {
                 this.user = {};
             }
         },
-        editProduct(user) {
+        editUser(user) {
             this.user = {...user};
             this.userDialog = true;
+            console.log('DATA', this.data);
         },
         confirmDeleteUser(user) {
             this.user = user;
@@ -314,13 +328,28 @@ export default {
             this.$refs.dt.exportCSV();
         },
         confirmDeleteSelected() {
-            this.deleteProductsDialog = true;
+            this.deleteUsersDialog = true;
         },
         deleteSelectedUsers() {
-            this.users = this.users.filter(val => !this.selectedUsers.includes(val));
-            this.deleteProductsDialog = false;
+            //faire la requète ici (delete users) (boucle et envoyer liste de userId)
+            this.data = this.data.filter(val => !this.selectedUsers.includes(val));
+            this.deleteUsersDialog = false;
             this.selectedUsers = null;
-            this.$toast.add({severity:'success', summary: 'Successful', detail: 'Utilisateurs Supprimés', life: 3000});
+            this.$toast.add({severity:'success', summary: 'Succès', detail: 'Utilisateurs Supprimés', life: 3000});
+        },
+        confirmBanSelected(){
+            this.banUsersDialog = true;
+        },
+        banSelectedUsers(){
+            //faire la requète ici (userId.banned = true)
+            this.data.forEach(d => {
+                if(this.selectedUsers.includes(d)){
+                    d.user.banned = true
+                }
+            });
+            this.banUsersDialog = false;
+            this.selectedUsers = null;
+            this.$toast.add({severity:'success', summary: 'Succès', detail: 'Utilisateurs Bannis', life: 3000});
         },
         initFilters() {
             this.filters = {
@@ -330,6 +359,14 @@ export default {
         },
         getStatusLabel(status) {
             if(status){
+                return 'danger';
+            } else {
+                return 'success';
+            }
+        },
+        getRoleLabel(status) {
+            console.log(status);
+            if(status ){
                 return 'danger';
             } else {
                 return 'success';

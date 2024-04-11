@@ -3,11 +3,8 @@
       <nav class="navbar navbar-expand-lg bg-primary">
         <div class="container">
           <h3 class="navbar-brand mb-0 mt-0">SC2000</h3>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-          </button>
+          <Button label="Menu" icon="pi pi-caret-down" class="navbar-toggler p-button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          </Button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
@@ -70,7 +67,10 @@
 </template>
   
 <script>
-    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+    import 'primeicons/primeicons.css';
+    import Button from 'primevue/button';
+
     export default {
         computed: {
         currentUser() {
@@ -90,7 +90,8 @@
         }
         },
 		components: {
-            FontAwesomeIcon
+            FontAwesomeIcon,
+            Button
         },
         methods: {
             logOut() {

@@ -11,31 +11,33 @@ var bcrypt = require("bcryptjs");
 exports.getAllUsers = (req, res) => {
     var userList = [];
 
-User.findAll().then(users => {
-    var promises = users.map(user => {
-        var authorities = [];
-        return user.getRoles().then(roles => {
-            roles.forEach(role => {
-                authorities.push("ROLE_" + role.name.toUpperCase());
-            });
-            return user.getAddress().then(address => {
-                
-                if (address == null) {
-                    address = {};
-                }
-                userList.push({
-                    user: user,
-                    address: address,
-                    roles: authorities,
-                    imgUrl: base64_encode(user.username)
+    User.findAll({
+        where : { id: {[Op.ne]: req.body.userId}}
+        }).then(users => {
+        var promises = users.map(user => {
+            var authorities = [];
+            return user.getRoles().then(roles => {
+                roles.forEach(role => {
+                    authorities.push("ROLE_" + role.name.toUpperCase());
+                });
+                return user.getAddress().then(address => {
+                    
+                    if (address == null) {
+                        address = {};
+                    }
+                    userList.push({
+                        user: user,
+                        address: address,
+                        roles: authorities,
+                        imgUrl: base64_encode(user.username)
+                    });
                 });
             });
         });
+        Promise.all(promises).then(() => {
+            res.status(200).send(userList);
+        });
     });
-    Promise.all(promises).then(() => {
-        res.status(200).send(userList);
-    });
-});
 };
 
 exports.adminBoard = (req, res) => {

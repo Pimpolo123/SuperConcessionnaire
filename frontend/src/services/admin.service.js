@@ -5,8 +5,11 @@ const API_URL = 'http://localhost:8080/admin/';
 
 class AdminService {
     getAllUsers() {
+        const currentUser = JSON.parse(localStorage.getItem('user'));
         return axios
-            .get(API_URL + 'getallusers', { headers: authHeader() })
+            .post(API_URL + 'getallusers', {
+                userId: currentUser.id
+            } , { headers: authHeader() })
             .then(response => {
                 return response.data;
             });

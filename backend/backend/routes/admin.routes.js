@@ -10,9 +10,9 @@ module.exports = function(app) {
         next();
     });
 
-    app.get(
+    app.post(
         "/admin/getallusers",
-        [authJwt.verifyToken],
+        [authJwt.verifyToken, authJwt.isAdmin],
         controller.getAllUsers
     );
 

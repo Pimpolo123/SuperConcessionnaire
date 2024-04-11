@@ -38,6 +38,11 @@
 <script>
 	import { toRaw } from 'vue';
 
+	const ROLE_MAPPINGS = {
+		"ROLE_USER": "Utilisateur",
+		"ROLE_MODERATOR": "Modérateur",
+		"ROLE_ADMIN": "Administrateur"
+	}
     const DB_ROLES = ["ROLE_USER", "ROLE_ADMIN", "ROLE_MODERATOR"];
 	const visualRoles = ["Utilisateur", "Administrateur", "Modérateur"];
 	const userRoles = [];
@@ -57,11 +62,9 @@
             }
         },
         mounted() {
-            for (const r in this.$store.state.auth.user.roles){
-            	const raw = toRaw(this.$store.state.auth.user.roles);
-				if(DB_ROLES.includes(raw[r])){
-					this.userRoles.push(visualRoles[r]);
-				}
+			const raw = toRaw(this.$store.state.auth.user.roles);
+            for (const r in raw){
+				this.userRoles.push(ROLE_MAPPINGS[raw[r]]);
 			}
             if (!this.currentUser) {
                 this.$router.push('/login');

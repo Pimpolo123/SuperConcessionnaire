@@ -12,7 +12,7 @@ module.exports = function(app) {
 
     app.get(
         "/admin/getallusers",
-        [authJwt.verifyToken, authJwt.isModeratorOrAdmin],
+        [authJwt.verifyToken],
         controller.getAllUsers
     );
 

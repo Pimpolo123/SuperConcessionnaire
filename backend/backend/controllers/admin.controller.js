@@ -9,9 +9,33 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
 exports.getAllUsers = (req, res) => {
-    User.findAll().then(users=> {
-        res.status(200).send(users);
+    var userList = [];
+
+User.findAll().then(users => {
+    var promises = users.map(user => {
+        var authorities = [];
+        return user.getRoles().then(roles => {
+            roles.forEach(role => {
+                authorities.push("ROLE_" + role.name.toUpperCase());
+            });
+            return user.getAddress().then(address => {
+                
+                if (address == null) {
+                    address = {};
+                }
+                userList.push({
+                    user: user,
+                    address: address,
+                    roles: authorities,
+                    imgUrl: base64_encode(user.username)
+                });
+            });
+        });
     });
+    Promise.all(promises).then(() => {
+        res.status(200).send(userList);
+    });
+});
 };
 
 exports.adminBoard = (req, res) => {
@@ -21,9 +45,10 @@ exports.adminBoard = (req, res) => {
 function base64_encode(fileUsername) {
 	const files = fs.readdirSync('../pictures');
 	for (const file of files) {
-        if (file.startsWith(fileUsername)) {
+        if (file.split('.')[0] == fileUsername) {
             var bitmap = fs.readFileSync('../pictures/' + file);
     		return Buffer.from(bitmap).toString('base64');
         }
     }
+    return '';
 }

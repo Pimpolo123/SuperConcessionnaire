@@ -81,6 +81,7 @@ exports.signin = (req, res) => {
 					name:user.name,
 					surname: user.surname,
 					phonenumber: user.phonenumber,
+					banned: user.banned,
 					roles: authorities,
 					accessToken: token,
 					address: address,
@@ -97,9 +98,10 @@ exports.signin = (req, res) => {
 function base64_encode(fileUsername) {
 	const files = fs.readdirSync('../pictures');
 	for (const file of files) {
-        if (file.startsWith(fileUsername)) {
+        if (file.split('.')[0] == fileUsername) {
             var bitmap = fs.readFileSync('../pictures/' + file);
     		return Buffer.from(bitmap).toString('base64');
         }
     }
+	return '';
 }

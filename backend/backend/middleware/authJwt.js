@@ -34,6 +34,8 @@ isAdmin = (req, res, next) => {
 
       res.status(403).send("Requiert le rôle Admin");
       return;
+    }).catch(err => {
+      res.status(500).send({ message: err.message });
     });
   });
 };
@@ -50,6 +52,8 @@ isModerator = (req, res, next) => {
 
       res.status(403).send("Requiert le rôle Modérateur");
     });
+  }).catch(err => {
+    res.status(500).send({ message: err.message });
   });
 };
 
@@ -70,6 +74,8 @@ isModeratorOrAdmin = (req, res, next) => {
 
       res.status(403).send("Requiert le rôle Admin ou Modérateur");
     });
+  }).catch(err => {
+    res.status(500).send({ message: err.message });
   });
 };
 

@@ -101,13 +101,12 @@
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
     import { defineRule } from 'vee-validate';
     import FileUpload from 'primevue/fileupload';
-    import 'primevue/resources/themes/bootstrap4-light-purple/theme.css'
     
     defineRule('confirmed', (value, [target]) => {
         if (value === target) {
             return true;
         }
-        return 'Les mots de passe ne sont pas identique';
+        return 'Les mots de passe ne sont pas identiques';
     });
 
     export default {

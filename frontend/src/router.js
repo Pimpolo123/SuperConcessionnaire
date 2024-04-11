@@ -55,6 +55,11 @@ export const router = createRouter({
             path: '/editaddress',
             name: 'editaddress',
             component: () => import('./views/EditAddress.vue')
+        },
+        {
+            path: '/manageusers',
+            name: 'manageusers',
+            component: () => import('./views/UserManagement.vue')
         }
     ]
 });

@@ -44,7 +44,7 @@
                 </Column>
                 <Column :exportable="false" style="min-width:8rem">
                     <template #body="slotProps">
-                        <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editUser(slotProps.data.user)" v-tooltip.top="'Editer l\'utilisateur'"/>
+                        <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editUser(slotProps.data)" v-tooltip.top="'Editer l\'utilisateur'"/>
                         <Button icon="pi pi-trash" outlined rounded class="mr-2" severity="danger" @click="confirmDeleteUser(slotProps.data.user)" v-tooltip.top="'Supprimer l\'utilisateur'"/>
                         <Button icon="pi pi-ban" outlined rounded severity="danger" @click="confirmBanUser(slotProps.data.user)" v-tooltip.top="'Bannir l\'utilisateur'"/>
                     </template>
@@ -52,72 +52,94 @@
             </DataTable>
         </div>
 
-        <Dialog v-model:visible="userDialog" :style="{width: '450px'}" header="Détails de l'utilisateur" :modal="true" class="p-fluid">
+        <Dialog v-model:visible="userDialog" :style="{width: '450px'}" header="Détails de l'utilisateur" :modal="true" class="p-fluid" @after-hide="hideDialog">
             <div class="field">
                 <FloatLabel class="mt-5">
                     <label for="username">Nom d'utilisateur</label>
-                    <InputText id="username" v-model.trim="user.username" required="true" autofocus :invalid="submitted && !user.username"/>
-                    <small class="p-error" v-if="submitted && !user.username">Name is required.</small>
+                    <InputText id="username" v-model.trim="user.username" disabled />
+                    <small class="p-error" v-if="submitted && !user.username">Nom d'utilisateur requis.</small>
                 </FloatLabel>
             </div>
             <div class="field">
                 <FloatLabel class="mt-5">
                     <label for="name">Nom</label>
                     <InputText id="name" v-model.trim="user.name" required="true" autofocus :invalid="submitted && !user.name"/>
-                    <small class="p-error" v-if="submitted && !user.name">Name is required.</small>
+                    <small class="p-error" v-if="submitted && !user.name">Nom requis.</small>
                 </FloatLabel>
             </div>
             <div class="field">
                 <FloatLabel class="mt-5">
                     <label for="surname">Prénom</label>
-                    <InputText id="surname" v-model.trim="user.surname" required="true" autofocus :invalid="submitted && !user.surname"/>
-                    <small class="p-error" v-if="submitted && !user.surname">Name is required.</small>
+                    <InputText id="surname" v-model.trim="user.surname" required="true" :invalid="submitted && !user.surname"/>
+                    <small class="p-error" v-if="submitted && !user.surname">Prénom requis.</small>
                 </FloatLabel>
             </div>
-
+            <div class="field">
+                <FloatLabel class="mt-5">
+                    <label for="phonenumber">Numéro de téléphone</label>
+                    <InputText id="phonenumber" v-model.trim="user.phonenumber" required="true" :invalid="submitted && !user.phonenumber"/>
+                    <small class="p-error" v-if="submitted && !user.phonenumber">Numéro requis.</small>
+                </FloatLabel>
+            </div>
             <div class="field">
                 <FloatLabel class="mt-5">
                     <label for="roles" class="mb-3">Rôles</label>
-                    <MultiSelect name="roles" v-model="user.roles" :options="roles" optionLabel="label" :value="user.roles"
+                    <MultiSelect name="roles" v-model="userRoles" :options="roles" optionLabel="label"
                         placeholder="Sélectionner les roles" :maxSelectedLabels="3" class="w-full md:w-20rem" />
                 </FloatLabel>
 			</div>
 
-            <div class="field">
-                <label class="mb-3">Category</label>
-                <div class="formgrid grid">
-                    <div class="field-radiobutton col-6">
-                        <RadioButton id="category1" name="category" value="Accessories" v-model="product.category" />
-                        <label for="category1">Accessories</label>
-                    </div>
-                    <div class="field-radiobutton col-6">
-                        <RadioButton id="category2" name="category" value="Clothing" v-model="product.category" />
-                        <label for="category2">Clothing</label>
-                    </div>
-                    <div class="field-radiobutton col-6">
-                        <RadioButton id="category3" name="category" value="Electronics" v-model="product.category" />
-                        <label for="category3">Electronics</label>
-                    </div>
-                    <div class="field-radiobutton col-6">
-                        <RadioButton id="category4" name="category" value="Fitness" v-model="product.category" />
-                        <label for="category4">Fitness</label>
-                    </div>
+            <Panel header="Adresse" class="mt-3 mb-3" :collapsed=true toggleable @toggle="addressToggle">
+                <div class="field">
+                    <label for="country">Pays</label>
+                    <Dropdown v-model="selectedCountry" :options="countryList" optionLabel="countryName" placeholder="Sélectionnez un pays" 
+                    class="w-full md:w-14rem" :invalid="submitted && addressRequired && !address.country" @change="getRegions"/>
+                    <small class="p-error" v-if="submitted && addressRequired && !address.country">Pays requis.</small>
                 </div>
-            </div>
-
-            <div class="formgrid grid">
-                <div class="field col">
-                    <label for="price">Price</label>
-                    <InputNumber id="price" v-model="product.price" mode="currency" currency="USD" locale="en-US" />
+                <div class="field">
+                    <label for="region">Région</label>
+                    <Dropdown v-model="selectedRegion" :options="regionList" optionLabel="regionName" placeholder="Sélectionnez une région" 
+                    class="w-full md:w-14rem" :invalid="submitted && addressRequired && !address.region"/>
+                    <small class="p-error" v-if="submitted && addressRequired && !address.region">Région requise.</small>
                 </div>
-                <div class="field col">
-                    <label for="quantity">Quantity</label>
-                    <InputNumber id="quantity" v-model="product.quantity" integeronly />
+                <div class="field">
+                    <FloatLabel class="mt-4">
+                        <label for="city">Ville</label>
+                        <InputText id="city" v-model.trim="address.city" :required="addressRequired" :invalid="submitted && addressRequired && !address.city"/>
+                        <small class="p-error" v-if="submitted && addressRequired && !address.city">Ville requise.</small>
+                    </FloatLabel>
                 </div>
-            </div>
+                <div class="field">
+                    <FloatLabel class="mt-4">
+                        <label for="postcode">Code Postal</label>
+                        <InputNumber id="postcode" v-model.trim="address.postcode" required="true" :invalid="submitted && addressRequired && !address.postcode" integeronly/>
+                        <small class="p-error" v-if="submitted && addressRequired && !address.postcode">Code postal requis.</small>
+                    </FloatLabel>
+                </div>
+                <div class="field">
+                    <FloatLabel class="mt-4">
+                        <label for="street">Rue</label>
+                        <InputText id="street" v-model.trim="address.street" required="true" :invalid="submitted && addressRequired && !address.street"/>
+                        <small class="p-error" v-if="submitted && addressRequired && !address.street">Nom de rue requis.</small>
+                    </FloatLabel>
+                </div>
+                <div class="field">
+                    <FloatLabel class="mt-4">
+                        <label for="housenumber">Numéro de maison</label>
+                        <InputNumber id="housenumber" v-model.trim="address.housenumber" required="true" :invalid="submitted && addressRequired && !address.housenumber" integeronly/>
+                        <small class="p-error" v-if="submitted && addressRequired && !address.housenumber">Numéro de maison requis.</small>
+                    </FloatLabel>
+                </div>
+                <div class="field">
+                    <FloatLabel class="mt-4">
+                        <label for="boxnumber">Numéro de boîte</label>
+                        <InputNumber id="boxnumber" v-model.trim="address.boxnumber" required="true" integeronly/>
+                    </FloatLabel>
+                </div>
+            </Panel>
             <template #footer>
-                <Button label="Cancel" icon="pi pi-times" text @click="hideDialog"/>
-                <Button label="Save" icon="pi pi-check" text @click="saveProduct" />
+                <Button label="Annuler" icon="pi pi-times" text @click="hideDialog"/>
+                <Button label="Sauvegarder" icon="pi pi-check" text @click="saveUser" />
             </template>
         </Dialog>
 
@@ -186,24 +208,31 @@ import Tooltip from 'primevue/tooltip';
 import Toast from 'primevue/toast';
 import FloatLabel from 'primevue/floatlabel';
 import MultiSelect from 'primevue/multiselect';
+import Panel from 'primevue/panel';
 import 'primeicons/primeicons.css';
 
 
 export default {
     data() {
         return {
-            data: null,
+            data: [],
             userDialog: false,
             deleteUserDialog: false,
             deleteUsersDialog: false,
             banUserDialog: false,
             banUsersDialog: false,
-            product: '',
             user: {},
+            userRoles: [],
+            address: {},
+            addressRequired: false,
             selectedUsers: null,
             filters: {},
+            selectedCountry: {},
+            selectedRegion: {},
+            countryList: [],
+            regionList: [],
             submitted: false,
-            imgSrc: "",
+            imgUrl: "",
             roles: [
                 //a remplacer par getRoles
 				{label: 'Admin', value: 'ROLE_ADMIN'},
@@ -239,44 +268,102 @@ export default {
         Tooltip,
         Toast,
         FloatLabel,
-        MultiSelect
+        MultiSelect,
+        Panel
     },
     methods: {
         openNew() {
-            this.product = {};
             this.submitted = false;
             this.userDialog = true;
         },
         hideDialog() {
             this.userDialog = false;
+            this.selectedRegion = {};
+            this.selectedCountry = {};
             this.submitted = false;
         },
-        saveProduct() {
+        saveUser() {
             this.submitted = true;
 
-			if (this.product?.name?.trim()) {
-                if (this.product.id) {
-                    this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value: this.product.inventoryStatus;
-                    this.products[this.findIndexById(this.product.id)] = this.product;
-                    this.$toast.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
-                }
-                else {
-                    this.product.id = this.createId();
-                    this.product.code = this.createId();
-                    this.product.image = 'product-placeholder.svg';
-                    this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-                    this.products.push(this.product);
-                    this.$toast.add({severity:'success', summary: 'Successful', detail: 'Product Created', life: 3000});
-                }
+            var dataToEdit = this.data.find((d) => d.user.id === this.user.id);
+            var index = this.data.indexOf(dataToEdit);
 
-                this.userDialog = false;
-                this.user = {};
+            //validation et suppression des données
+            if(dataToEdit){
+                if(this.user?.name?.trim() && this.user?.surname?.trim() && this.user?.phonenumber?.trim()){
+                    if(this.addressRequired &&
+                            this.address?.country?.trim() &&
+                            this.address?.region?.trim() &&
+                            this.address?.city?.trim() &&
+                            this.address?.postcode &&
+                            this.address?.street &&
+                            this.address?.housenumber){
+
+                        this.address.country = this.selectedCountry.countryName;
+                        this.address.region = this.selectedRegion.regionName;
+                        dataToEdit.address = this.address;
+                        dataToEdit.roles = this.userRoles;
+                        dataToEdit.imgUrl = this.imgUrl;
+                        dataToEdit.user = this.user;
+                        
+                        //juste pour le front
+                        //pour le back ce serait trop lourd avec bcp d'users
+                        //juste envoyer dataToEdit et faire le traitement dans le back
+                        this.data.splice(index, 1, dataToEdit);
+
+                        this.userDialog = false;
+                        this.user = {};
+                        this.address = {};
+                        this.selectedRegion = '';
+                        this.selectedCountry = '';
+                        this.imgUrl = '';
+                    } else if(!this.addressRequired) {
+                        dataToEdit.address = this.address;
+                        dataToEdit.roles = this.userRoles;
+                        dataToEdit.imgUrl = this.imgUrl;
+                        dataToEdit.user = this.user;
+
+                        //juste pour le front
+                        //pour le back ce serait trop lourd avec bcp d'users
+                        //juste envoyer dataToEdit et faire le traitement dans le back
+                        this.data.splice(index, 1, dataToEdit);
+
+                        this.userDialog = false;
+                        this.user = {};
+                        this.address = {};
+                        this.imgUrl = '';
+                    }
+                } else {
+                    this.$toast.add({severity:'error', summary: 'Erreur', detail: 'Informations obligatoires manquantes', life: 3000});
+                }
+            } else {
+                this.$toast.add({severity:'error', summary: 'Erreur', detail: 'Aucun utilisateur à modifier détecté', life: 3000});
             }
         },
-        editUser(user) {
-            this.user = {...user};
+        editUser(data) {
+            this.$store.dispatch('user/getcountrylist').then(
+                res => {
+                    this.countryList = this.sortByKey(res.data, 'countryName');
+                    if(Object.keys(this.selectedCountry).length == 0 && data.address.country){
+                        this.selectedCountry = this.countryList.find((c) => c.countryName == data.address.country);
+                        this.$store.dispatch('user/getregionlist', {id:this.selectedCountry.id}).then(
+                        res => {
+                            this.regionList = res;
+                            if(this.selectedRegion){
+                                if(Object.keys(this.selectedRegion).length == 0 && this.address.region){
+                                    this.selectedRegion = this.regionList.find((r) => r.regionName == this.address.region);
+                                }
+                            }
+                        });
+                    }
+                }
+            );
+        
+            this.user = {...data.user};
+            this.address = {...data.address};
+            this.imgUrl = {...data.imgUrl};
+            this.userRoles = this.roles.filter(r => data.roles.includes(r.value));
             this.userDialog = true;
-            console.log('DATA', this.data);
         },
         confirmDeleteUser(user) {
             this.user = user;
@@ -304,25 +391,6 @@ export default {
             this.banUserDialog = false;
             this.user = {};
             this.$toast.add({severity:'success', summary: 'Succès', detail: 'Utilisateur banni', life: 3000});
-        },
-        findIndexById(id) {
-            let index = -1;
-            for (let i = 0; i < this.products.length; i++) {
-                if (this.products[i].id === id) {
-                    index = i;
-                    break;
-                }
-            }
-
-            return index;
-        },
-        createId() {
-            let id = '';
-            var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            for ( var i = 0; i < 5; i++ ) {
-                id += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return id;
         },
         exportCSV() {
             this.$refs.dt.exportCSV();
@@ -357,6 +425,10 @@ export default {
                 name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
             }
         },
+        addressToggle(collapsed){
+            this.addressRequired = !collapsed.value;
+            this.submitted = false;
+        },
         getStatusLabel(status) {
             if(status){
                 return 'danger';
@@ -380,12 +452,27 @@ export default {
             }
         },
         getImageSource(imgUrl){
-            if(!imgUrl){
+            if(!imgUrl || Object.keys(imgUrl).length == 0){
                 return "//ssl.gstatic.com/accounts/ui/avatar_2x.png";
             } else {
                 return 'data:image/png;base64,' + imgUrl;
             }
-        }
+        },
+        getRegions(country){
+            this.$store.dispatch('user/getregionlist', {id:parseInt(country.value.id)}).then(
+                res => {
+                    this.regionList = res;
+                }
+            );
+            return true;
+        },
+        sortByKey(array, key) {
+            return array.sort(function(a, b) {
+                var x = a[key];
+                var y = b[key];
+                return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+            });
+        },
     }
 }
 </script>

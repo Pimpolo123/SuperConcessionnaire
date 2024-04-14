@@ -13,6 +13,7 @@ const Region = db.region;
 const Address = db.address;
 const User = db.user;
 const Op = db.Sequelize.Op;
+var bcrypt = require("bcryptjs");
 
 var corsOptions = {
     origin: "http://localhost:8081"
@@ -73,6 +74,40 @@ function initial() {
     Role.create({
 		id: 3,
 		name: "admin"
+    });
+
+	User.create({
+		username:"jf",
+		email: "jf@jf.com",
+		password: bcrypt.hashSync("toto", 8),
+		name: "toto",
+		surname: "toto",
+		birthdate: "2000-12-31",
+		phonenumber: "0476091162"
+	}).then(user => {
+        user.setRoles([3])
+    });
+
+	User.create({
+		username:"jf2",
+		email: "jf2@jf.com",
+		password: bcrypt.hashSync("toto", 8),
+		name: "tata",
+		surname: "tata",
+		birthdate: "2000-12-31",
+		phonenumber: "0476091162"
+	}).then(user => {
+        user.setRoles([1, 2])
+    });
+
+	User.create({
+		username:"jf3",
+		email: "jf3@jf.com",
+		password: bcrypt.hashSync("toto", 8),
+		name: "titi",
+		surname: "titi",
+	}).then(user => {
+        user.setRoles([1])
     });
 
 	console.log("Roles créés");

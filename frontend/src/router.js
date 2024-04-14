@@ -34,7 +34,7 @@ export const router = createRouter({
         {
             path: '/admin',
             name: 'admin',
-            component: () => import('./views/BoardAdmin.vue')
+            component: () => import('./views/AdminPanel.vue')
         },
         {
             path: '/mod',

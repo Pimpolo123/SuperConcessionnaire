@@ -56,7 +56,7 @@
             <div class="field">
                 <FloatLabel class="mt-5">
                     <label for="username">Nom d'utilisateur</label>
-                    <InputText id="username" v-model.trim="user.username" disabled />
+                    <InputText id="username" v-model.trim="user.username" autofocus :disabled="isExistingUser" />
                     <small class="p-error" v-if="submitted && !user.username">Nom d'utilisateur requis.</small>
                 </FloatLabel>
             </div>
@@ -93,14 +93,14 @@
                 <div class="field">
                     <label for="country">Pays</label>
                     <Dropdown v-model="selectedCountry" :options="countryList" optionLabel="countryName" placeholder="Sélectionnez un pays" 
-                    class="w-full md:w-14rem" :invalid="submitted && addressRequired && !address.country" @change="getRegions"/>
-                    <small class="p-error" v-if="submitted && addressRequired && !address.country">Pays requis.</small>
+                    class="w-full md:w-14rem" :invalid="submitted && addressRequired && !selectedCountry" @change="getRegions"/>
+                    <small class="p-error" v-if="submitted && addressRequired && !selectedCountry">Pays requis.</small>
                 </div>
                 <div class="field">
                     <label for="region">Région</label>
                     <Dropdown v-model="selectedRegion" :options="regionList" optionLabel="regionName" placeholder="Sélectionnez une région" 
-                    class="w-full md:w-14rem" :invalid="submitted && addressRequired && !address.region"/>
-                    <small class="p-error" v-if="submitted && addressRequired && !address.region">Région requise.</small>
+                    class="w-full md:w-14rem" :invalid="submitted && addressRequired && !selectedRegion"/>
+                    <small class="p-error" v-if="submitted && addressRequired && !selectedRegion">Région requise.</small>
                 </div>
                 <div class="field">
                     <FloatLabel class="mt-4">
@@ -112,7 +112,7 @@
                 <div class="field">
                     <FloatLabel class="mt-4">
                         <label for="postcode">Code Postal</label>
-                        <InputNumber id="postcode" v-model.trim="address.postcode" required="true" :invalid="submitted && addressRequired && !address.postcode" integeronly/>
+                        <InputNumber id="postcode" v-model.trim="address.postcode" required="true" :invalid="submitted && addressRequired && !address.postcode" integeronly type="number"/>
                         <small class="p-error" v-if="submitted && addressRequired && !address.postcode">Code postal requis.</small>
                     </FloatLabel>
                 </div>
@@ -227,11 +227,12 @@ export default {
             addressRequired: false,
             selectedUsers: null,
             filters: {},
-            selectedCountry: {},
-            selectedRegion: {},
+            selectedCountry: '',
+            selectedRegion: '',
             countryList: [],
             regionList: [],
             submitted: false,
+            isExistingUser: true,
             imgUrl: "",
             roles: [
                 //a remplacer par getRoles
@@ -273,71 +274,96 @@ export default {
     },
     methods: {
         openNew() {
+            this.$store.dispatch('user/getcountrylist').then(
+                res => {
+                    this.countryList = this.sortByKey(res.data, 'countryName');
+                }
+            );
+            this.isExistingUser = false;
             this.submitted = false;
             this.userDialog = true;
         },
         hideDialog() {
             this.userDialog = false;
-            this.selectedRegion = {};
-            this.selectedCountry = {};
+            this.user = {};
+            this.address = {};
+            this.imgUrl = '';
+            this.userRoles = [];
+            this.selectedRegion = '';
+            this.selectedCountry = '';
             this.submitted = false;
         },
         saveUser() {
             this.submitted = true;
-
+            var newData = {};
             var dataToEdit = this.data.find((d) => d.user.id === this.user.id);
             var index = this.data.indexOf(dataToEdit);
+            console.log(this.submitted);
+            console.log(this.addressRequired);
+            console.log(!this.selectedCountry);
+            console.log(this.selectedCountry);
 
             //validation et suppression des données
-            if(dataToEdit){
-                if(this.user?.name?.trim() && this.user?.surname?.trim() && this.user?.phonenumber?.trim()){
-                    if(this.addressRequired &&
-                            this.address?.country?.trim() &&
-                            this.address?.region?.trim() &&
-                            this.address?.city?.trim() &&
-                            this.address?.postcode &&
-                            this.address?.street &&
-                            this.address?.housenumber){
-
-                        this.address.country = this.selectedCountry.countryName;
-                        this.address.region = this.selectedRegion.regionName;
+            if(this.user?.name?.trim() && this.user?.surname?.trim() && this.user?.phonenumber?.trim() && this.user?.username?.trim()){
+                if(this.addressRequired &&
+                        (this.address?.country?.trim() || this.selectedCountry) &&
+                        (this.address?.region?.trim() || this.selectedRegion) &&
+                        this.address?.city?.trim() &&
+                        this.address?.postcode &&
+                        this.address?.street &&
+                        this.address?.housenumber){
+                    this.address.country = this.selectedCountry.countryName;
+                    this.address.region = this.selectedRegion.regionName;
+                    
+                    if(dataToEdit && this.isExistingUser) {
                         dataToEdit.address = this.address;
                         dataToEdit.roles = this.userRoles;
                         dataToEdit.imgUrl = this.imgUrl;
                         dataToEdit.user = this.user;
-                        
                         //juste pour le front
                         //pour le back ce serait trop lourd avec bcp d'users
                         //juste envoyer dataToEdit et faire le traitement dans le back
                         this.data.splice(index, 1, dataToEdit);
-
-                        this.userDialog = false;
-                        this.user = {};
-                        this.address = {};
-                        this.selectedRegion = '';
-                        this.selectedCountry = '';
-                        this.imgUrl = '';
-                    } else if(!this.addressRequired) {
-                        dataToEdit.address = this.address;
-                        dataToEdit.roles = this.userRoles;
-                        dataToEdit.imgUrl = this.imgUrl;
-                        dataToEdit.user = this.user;
-
-                        //juste pour le front
-                        //pour le back ce serait trop lourd avec bcp d'users
-                        //juste envoyer dataToEdit et faire le traitement dans le back
-                        this.data.splice(index, 1, dataToEdit);
-
-                        this.userDialog = false;
-                        this.user = {};
-                        this.address = {};
-                        this.imgUrl = '';
                     }
-                } else {
-                    this.$toast.add({severity:'error', summary: 'Erreur', detail: 'Informations obligatoires manquantes', life: 3000});
+                    if(!this.isExistingUser) {
+                        newData.address = this.address;
+                        newData.roles = this.userRoles;
+                        newData.imgUrl = this.imgUrl;
+                        newData.user = this.user;
+                        this.data.push(newData);
+                    }
+                    this.userDialog = false;
+                    this.user = {};
+                    this.address = {};
+                    this.selectedRegion = '';
+                    this.selectedCountry = '';
+                    this.imgUrl = '';
+                } else if(!this.addressRequired) {
+                    if(dataToEdit && this.isExistingUser) {
+                        dataToEdit.address = this.address;
+                        dataToEdit.roles = this.userRoles;
+                        dataToEdit.imgUrl = this.imgUrl;
+                        dataToEdit.user = this.user;
+                        //juste pour le front
+                        //pour le back ce serait trop lourd avec bcp d'users
+                        //juste envoyer dataToEdit et faire le traitement dans le back
+                        this.data.splice(index, 1, dataToEdit);
+                    }
+                    if(!this.isExistingUser) {
+                        newData.address = this.address;
+                        newData.roles = this.userRoles;
+                        newData.imgUrl = this.imgUrl;
+                        newData.user = this.user;
+                        this.data.push(newData);
+                    }
+
+                    this.userDialog = false;
+                    this.user = {};
+                    this.address = {};
+                    this.imgUrl = '';
                 }
             } else {
-                this.$toast.add({severity:'error', summary: 'Erreur', detail: 'Aucun utilisateur à modifier détecté', life: 3000});
+                this.$toast.add({severity:'error', summary: 'Erreur', detail: 'Informations obligatoires manquantes', life: 3000});
             }
         },
         editUser(data) {

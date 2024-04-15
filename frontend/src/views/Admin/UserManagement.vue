@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="isAdmin()">
         <div class="card">
             <Toolbar class="mb-4">
                 <template #start>
@@ -46,7 +46,7 @@
                     <template #body="slotProps">
                         <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editUser(slotProps.data)" v-tooltip.top="'Editer l\'utilisateur'"/>
                         <Button icon="pi pi-trash" outlined rounded class="mr-2" severity="danger" @click="confirmDeleteUser(slotProps.data.user)" v-tooltip.top="'Supprimer l\'utilisateur'"/>
-                        <Button icon="pi pi-ban" outlined rounded severity="danger" @click="confirmBanUser(slotProps.data.user)" v-tooltip.top="'Bannir l\'utilisateur'"/>
+                        <Button icon="pi pi-ban" outlined rounded severity="danger" @click="confirmBanUser(slotProps.data.user)" v-tooltip.top="getTooltip(slotProps.data.user)"/>
                     </template>
                 </Column>
             </DataTable>
@@ -165,6 +165,17 @@
             </template>
         </Dialog>
 
+        <Dialog v-model:visible="unbanUserDialog" :style="{width: '450px'}" header="Confirmation" :modal="true">
+            <div class="confirmation-content">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                <span v-if="user">Etes-vous sûr de vouloir débannir <b>{{user.username}}</b>?</span>
+            </div>
+            <template #footer>
+                <Button label="Non" icon="pi pi-times" text @click="unbanUserDialog = false"/>
+                <Button label="Oui" icon="pi pi-check" text @click="unbanUser" />
+            </template>
+        </Dialog>
+
         <Dialog v-model:visible="deleteUsersDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
             <div class="confirmation-content">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
@@ -217,11 +228,14 @@ export default {
     data() {
         return {
             data: [],
+            currentUser: JSON.parse(localStorage.getItem('user')),
             userDialog: false,
             deleteUserDialog: false,
             deleteUsersDialog: false,
             banUserDialog: false,
             banUsersDialog: false,
+            unbanUserDialog: false,
+            banTooltip: '',
             user: {},
             userRoles: [],
             address: {},
@@ -250,6 +264,12 @@ export default {
         this.$store.dispatch('admin/getallusers').then(
             res => {
                 this.data = res;
+            },
+            error => {
+                this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
             }
         );
     },
@@ -299,10 +319,6 @@ export default {
             var newData = {};
             var dataToEdit = this.data.find((d) => d.user.id === this.user.id);
             var index = this.data.indexOf(dataToEdit);
-            console.log(this.submitted);
-            console.log(this.addressRequired);
-            console.log(!this.selectedCountry);
-            console.log(this.selectedCountry);
 
             //validation et suppression des données
             if(this.user?.name?.trim() && this.user?.surname?.trim() && this.user?.phonenumber?.trim() && this.user?.username?.trim()){
@@ -396,7 +412,11 @@ export default {
         },
         confirmBanUser(user){
             this.user = user;
-            this.banUserDialog = true;
+            if(!user.banned){
+                this.banUserDialog = true;
+            } else {
+                this.unbanUserDialog = true;
+            }
         },
         deleteUser() {
             //faire la requète ici(delete userID)
@@ -416,6 +436,18 @@ export default {
             this.banUserDialog = false;
             this.user = {};
             this.$toast.add({severity:'success', summary: 'Succès', detail: 'Utilisateur banni', life: 3000});
+        },
+        unbanUser(){
+            //faire la requète ici(userId.banned = true)
+            this.user.banned = false;
+            this.data.forEach(d => {
+                if(d.user.id == this.user.id){
+                    d.user = this.user;
+                }
+            });
+            this.unbanUserDialog = false;
+            this.user = {};
+            this.$toast.add({severity:'success', summary: 'Succès', detail: 'Utilisateur débanni', life: 3000});
         },
         exportCSV() {
             this.$refs.dt.exportCSV();
@@ -462,7 +494,6 @@ export default {
             }
         },
         getRoleLabel(status) {
-            console.log(status);
             if(status ){
                 return 'danger';
             } else {
@@ -498,7 +529,19 @@ export default {
                 return ((x < y) ? -1 : ((x > y) ? 1 : 0));
             });
         },
+        isAdmin() {
+            if (this.currentUser && this.currentUser.roles) {
+                return this.currentUser.roles.includes('ROLE_ADMIN');
+            }
+            return false;
+        },
+        getTooltip(user) {
+            if(user.banned){
+                return 'Débannir l\'utilisateur'
+            } else {
+                return 'Bannir l\'utilisateur'
+            }
+        }
     }
 }
 </script>
-

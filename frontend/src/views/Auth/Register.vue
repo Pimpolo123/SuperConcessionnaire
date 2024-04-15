@@ -9,22 +9,22 @@
         </FileUpload>
         <Form @submit="onSubmit">
             <div class="form-group">
-                <label for="username">Nom d'utilisateur :</label>
+                <label for="username">Nom d'utilisateur* :</label>
                 <Field name="username" type="username" :rules="validateUsername" v-model="user.username" class="form-control bg-light"/>
                 <ErrorMessage name="username" class="form-control text-danger"/>
             </div>
             <div class="form-group">
-                <label for="email">Email :</label>
+                <label for="email">Email* :</label>
                 <Field name="email" type="email" :rules="validateEmail" v-model="user.email" class="form-control bg-light"/>
                 <ErrorMessage name="email" class="form-control text-danger"/>
             </div>
             <div class="form-group">
-                <label for="surname">Prénom :</label>
+                <label for="surname">Prénom* :</label>
                 <Field name="surname" v-model="user.surname" type="username" :rules="validateName" class="form-control bg-light"/>
                 <ErrorMessage name="surname" class="form-control text-danger"/>
             </div>
             <div class="form-group">
-                <label for="name">Nom :</label>
+                <label for="name">Nom* :</label>
                 <Field name="name" v-model="user.name" type="username" :rules="validateName" class="form-control bg-light"/>
                 <ErrorMessage name="name" class="form-control text-danger"/>
             </div>
@@ -38,7 +38,7 @@
                 <Datepicker name="birthdate" v-model="user.birthdate" menu-class-name="dp-custom-input" :format="format" :enable-time-picker="false"/>
             </div>
             <div class="form-group">
-                <label for="password">Mot de passe :</label>
+                <label for="password">Mot de passe* :</label>
                 <div class="d-flex">
                     <Field name="password" :type="fieldType" :rules="validatePassword" v-model="user.password" class="form-control bg-light"/>
                     <button type="button" @click="switchVisibility" class="btn btn-primary ml-2"><font-awesome-icon icon="fa-solid fa-eye"/></button>
@@ -46,7 +46,7 @@
                 <ErrorMessage name="password" class="form-control text-danger"/>
             </div>
             <div class="form-group">
-                <label for="confirm">Confirmation :</label>
+                <label for="confirm">Confirmation* :</label>
                 <div class="d-flex">
                     <Field name="confirm" :type="fieldType" rules="confirmed:@password" class="form-control bg-light"/>
                     <button type="button" @click="switchVisibility" class="btn btn-primary ml-2"><font-awesome-icon icon="fa-solid fa-eye"/></button>
@@ -176,9 +176,9 @@
                 if(!value){
                     return "Ce champ est obligatoire"
                 }
-                const regex = /^[A-Z0-9._%+-@]{4,20}\b$/i;
+                const regex = /^[A-Z0-9._%+-@]{3,20}\b$/i;
                 if (!regex.test(value)) {
-                    return "Nom d'utilisateur invalide. Le nom doit faire entre 4 et 20 caractères et ne peut pas se terminer par un symbole (._%+-@)";
+                    return "Nom d'utilisateur invalide. Le nom doit faire entre 3 et 20 caractères et ne peut pas se terminer par un symbole (._%+-@)";
                 }
                 return true;
             },
@@ -192,9 +192,9 @@
                 if(!value){
                     return "Ce champ est obligatoire"
                 }
-                const regex = /^.{4,20}\b$/i;
+                const regex = /^.{3,20}\b$/i;
                 if (!regex.test(value)) {
-                    return "Nom d'utilisateur invalide. Le nom doit faire entre 4 et 20 caractères et ne peut pas se terminer par un symbole (._%+-@)";
+                    return "Nom d'utilisateur invalide. Le nom doit faire entre 3 et 20 caractères et ne peut pas se terminer par un symbole (._%+-@)";
                 }
                 return true;
             },

@@ -75,17 +75,29 @@ exports.editAddress = (req, res) => {
 		if (!user) {
 			return res.status(404).send({message: "L'utilisateur n'existe pas"});
 		}
-		Address.create({
-			country: req.body.address.country,
-			region: req.body.address.region,
-			city: req.body.address.city,
-			postcode: req.body.address.postcode,
-			street: req.body.address.street,
-			housenumber: req.body.address.housenumber,
-			boxnumber: req.body.address.boxnumber
-		})
-		.then(address => {
-			user.setAddress(address.id);
+		Address.findOrCreate({
+			where: {userId: user.id},
+			defaults: {
+				country: req.body.address.country,
+				region: req.body.address.region,
+				city: req.body.address.city,
+				postcode: req.body.address.postcode,
+				street: req.body.address.street,
+				housenumber: req.body.address.housenumber,
+				boxnumber: req.body.address.boxnumber
+			}
+		}).then(address => {
+			//address : array avec [1] = created ou non
+			if(!address[1]){
+				address[0].country = req.body.address.country,
+				address[0].region = req.body.address.region,
+				address[0].city = req.body.address.city,
+				address[0].postcode = req.body.address.postcode,
+				address[0].street = req.body.address.street,
+				address[0].housenumber = req.body.address.housenumber,
+				address[0].boxnumber = req.body.address.boxnumber
+				address[0].save();
+			}
 			var authorities = [];
 			user.getRoles().then(roles => {
 				for (let i = 0; i < roles.length; i++) {
@@ -102,14 +114,14 @@ exports.editAddress = (req, res) => {
 					message: "Adresse modifiée avec succès",
 					accessToken: req.headers["x-access-token"],
 					address: {
-						id: address.id,
-						country: address.country,
-						region: address.region,
-						city: address.city,
-						postcode: address.postcode,
-						street: address.street,
-						housenumber: address.housenumber,
-						boxnumber: address.boxnumber,
+						id: address[0].id,
+						country: address[0].country,
+						region: address[0].region,
+						city: address[0].city,
+						postcode: address[0].postcode,
+						street: address[0].street,
+						housenumber: address[0].housenumber,
+						boxnumber: address[0].boxnumber,
 						userId: user.id
 					}
 				});

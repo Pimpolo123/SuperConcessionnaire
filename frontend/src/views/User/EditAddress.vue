@@ -42,7 +42,7 @@
                     <ErrorMessage name="housenumber" class="form-control text-danger"/>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="boxnumber">Numéro de boîte :</label>
+                    <label for="boxnumber">Numéro de boîte (optionnel) :</label>
                     <Field name="boxnumber" v-model="user.address.boxnumber" :rules="validateBoxNumber" class="form-control bg-light" />
                     <ErrorMessage name="boxnumber" class="form-control text-danger"/>
                 </div>

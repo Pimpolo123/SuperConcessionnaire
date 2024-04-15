@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
-      <header class="jumbotron">
+    <header v-if="!isAdmin()" class="jumbotron">
         <h3>{{content}}</h3>
-      </header>
+    </header>
+    <div v-if="isAdmin()" class="container">
       <TabMenu :model="tabItems" />
       <UserManagement v-if="currentTab == 'userManagement'"></UserManagement>
       <h1 v-if="currentTab == 'stockManagement'">stockstockstock</h1>
@@ -19,6 +19,7 @@
         data() {
             return {
                 content: '',
+                currentUser: JSON.parse(localStorage.getItem('user')),
                 currentTab: 'userManagement',
                 tabItems: [
                     {
@@ -45,16 +46,25 @@
         mounted() {
         UserService.getAdminBoard().then(
             response => {
-                console.log(response);
                 this.content = response.data;
             },
             error => {
-            this.content =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
+                // this.$router.push('/home');
+                this.content =
+                    (error.response && error.response.data) ||
+                    error.message ||
+                    error.toString();
             }
         );
+        },
+        methods: {
+            isAdmin() {
+                console.log(this.currentUser);
+                if (this.currentUser && this.currentUser.roles) {
+                    return this.currentUser.roles.includes('ROLE_ADMIN');
+                }
+                return false;
+            },
         }
     };
 </script>

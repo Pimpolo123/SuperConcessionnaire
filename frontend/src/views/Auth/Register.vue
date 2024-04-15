@@ -73,7 +73,7 @@
     import Datepicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css';
     import { Form, Field, ErrorMessage } from 'vee-validate';
-    import User from '../models/user';
+    import User from '../../models/user';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
     import { defineRule } from 'vee-validate';
     import FileUpload from 'primevue/fileupload';

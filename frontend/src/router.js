@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from './views/Home.vue';
-import Login from './views/Login.vue';
-import Register from './views/Register.vue';
+import Login from './views/Auth/Login.vue';
+import Register from './views/Auth/Register.vue';
 
 // Vue.use(Router);
 
@@ -29,12 +29,12 @@ export const router = createRouter({
         {
             path: '/profile',
             name: 'profile',
-            component: () => import('./views/Profile.vue')
+            component: () => import('./views/User/Profile.vue')
         },
         {
             path: '/admin',
             name: 'admin',
-            component: () => import('./views/AdminPanel.vue')
+            component: () => import('./views/Admin/AdminPanel.vue')
         },
         {
             path: '/mod',
@@ -49,17 +49,12 @@ export const router = createRouter({
         {
             path: '/editprofile',
             name: 'editprofile',
-            component: () => import('./views/EditProfile.vue')
+            component: () => import('./views/User/EditProfile.vue')
         },
         {
             path: '/editaddress',
             name: 'editaddress',
-            component: () => import('./views/EditAddress.vue')
-        },
-        {
-            path: '/manageusers',
-            name: 'manageusers',
-            component: () => import('./views/UserManagement.vue')
+            component: () => import('./views/User/EditAddress.vue')
         }
     ]
 });

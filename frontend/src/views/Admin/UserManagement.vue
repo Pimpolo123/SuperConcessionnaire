@@ -213,6 +213,7 @@ import 'primeicons/primeicons.css';
 
 
 export default {
+    name: "UserManagement",
     data() {
         return {
             data: [],
@@ -375,10 +376,8 @@ export default {
                         this.$store.dispatch('user/getregionlist', {id:this.selectedCountry.id}).then(
                         res => {
                             this.regionList = res;
-                            if(this.selectedRegion){
-                                if(Object.keys(this.selectedRegion).length == 0 && this.address.region){
-                                    this.selectedRegion = this.regionList.find((r) => r.regionName == this.address.region);
-                                }
+                            if(Object.keys(this.selectedRegion).length == 0 && this.address.region){
+                                this.selectedRegion = this.regionList.find((r) => r.regionName == this.address.region);
                             }
                         });
                     }

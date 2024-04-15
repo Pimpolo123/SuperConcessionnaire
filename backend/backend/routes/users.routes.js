@@ -49,5 +49,11 @@ module.exports = function(app) {
         controller.getRegionList
     );
 
+    app.post(
+        "/deleteuser",
+        [authJwt.verifyToken],
+        controller.deleteUser
+    );
+
     app.post('/uploadpicture', upload.single('file'), controller.uploadProfilePicture);
 };

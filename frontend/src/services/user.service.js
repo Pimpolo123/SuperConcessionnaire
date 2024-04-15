@@ -16,6 +16,17 @@ class UserService {
 		return axios.get(API_URL + 'test/mod', { headers: authHeader() });
 	}
 
+	deleteUser(data) {
+		return axios
+			.post(API_URL + 'deleteuser', {
+				id: data.id
+			},{ 
+				headers: authHeader()
+			}).then(res => {
+				return res.data;
+			});
+	}
+
 	getAdminBoard() {
 		return axios.get(API_URL + 'admin/board', { headers: authHeader() });
 	}

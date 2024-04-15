@@ -62,6 +62,16 @@ export const user = {
 					return Promise.reject(error);
 				}
 			)
+		},
+		deleteuser({ commit }, data) {
+			return UserService.deleteUser(data).then(
+				res => {
+					return Promise.resolve(res);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
 		}
 	},
 	mutations: {

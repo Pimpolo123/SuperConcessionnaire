@@ -30,6 +30,15 @@ exports.moderatorBoard = (req, res) => {
 	res.status(200).send("Moderator Content.");
 };
 
+exports.deleteUser = (req, res) => {
+	User.destroy({
+		where: {
+			id: req.body.id
+		}
+	})
+	res.status(200).send("Compte supprimé");
+};
+
 exports.uploadProfilePicture = (req, res) => {
 	//Faire un pictureId dans la table users pour delete meme si l'extension change
 	if(req.file.size > 5000000){

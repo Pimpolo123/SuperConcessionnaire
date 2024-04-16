@@ -1,4 +1,5 @@
 const express = require('express')
+require("dotenv").config();
 const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -45,8 +46,8 @@ require('./backend/routes/users.routes')(app);
 require('./backend/routes/admin.routes')(app);
 
 app.listen(PORT, () => {
-    console.log(`Serveur en ligne sur le port ${PORT}.`);
-  });
+    console.log(`Serveur en ligne sur le porte ${PORT}.`);
+});
 
 // SEULEMENT EN DEV !!! 
 // PROD : 
@@ -133,38 +134,4 @@ function initial() {
 			});
 		};
 	};
-
-
-	// User.create({
-	// 	username: "jf",
-	// 	email: "jf@jf.com",
-	// 	password: "toto",
-	// 	name: "toto",
-	// 	surname: "toto",
-	// });
-	// Address.create({
-	// 	id: 1,
-	// 	country: "Belgique",
-	// 	region: "Hainaut",
-	// 	city: "Mons",
-	// 	postcode: 730,
-	// 	street: "Chemin de la Poterie",
-	// 	housenumber: 52
-    // })
-	// .then(address => {
-    //     address.setUser([1]);
-    // });
-
-	// User.create({
-	// 	username: "jf",
-	// 	email: "jf@jf.com",
-	// 	password: "toto",
-	// 	name: "toto",
-	// 	surname: "toto",
-	// })
-    // .then(user => {
-    //     user.setRoles([1]);
-	// 	user.setAddress([1]);
-    // });
-	
   }

@@ -15,6 +15,9 @@ services:
     build: backend
     ports:
       - 8080:8080
+    depends_on:
+      database:
+        condition: service_healthy
     volumes:
       - backend:/backend
       - /backend/node_modules
@@ -26,8 +29,6 @@ services:
       - DB_PORT=5432
     networks:
       - back-net
-    depends_on:
-      - database
   database:
     image: postgres
     restart: always
@@ -43,6 +44,11 @@ services:
       - POSTGRES_PASSWORD=Test123*
       - POSTGRES_USER=postgres
       - POSTGRES_DB=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 1s
+      timeout: 5s
+      retries: 5
 
 volumes:
   backend:

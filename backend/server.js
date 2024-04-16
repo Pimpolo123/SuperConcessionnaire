@@ -46,7 +46,7 @@ require('./backend/routes/users.routes')(app);
 require('./backend/routes/admin.routes')(app);
 
 app.listen(PORT, () => {
-    console.log(`Serveur en ligne sur le porte ${PORT}.`);
+    console.log(`Serveur en ligne sur le port ${PORT}.`);
 });
 
 // SEULEMENT EN DEV !!! 

@@ -56,8 +56,22 @@
             <div class="field">
                 <FloatLabel class="mt-5">
                     <label for="username">Nom d'utilisateur</label>
-                    <InputText id="username" v-model.trim="user.username" autofocus :disabled="isExistingUser" />
+                    <InputText id="username" v-model.trim="user.username" autofocus :disabled="isExistingUser" :invalid="submitted && !user.username"/>
                     <small class="p-error" v-if="submitted && !user.username">Nom d'utilisateur requis.</small>
+                </FloatLabel>
+            </div>
+            <div class="field">
+                <FloatLabel class="mt-5">
+                    <label for="email">Email</label>
+                    <InputText id="email" v-model.trim="user.email" autofocus :disabled="isExistingUser" :invalid="submitted && !user.email"/>
+                    <small class="p-error" v-if="submitted && !user.email">Email requis.</small>
+                </FloatLabel>
+            </div>
+            <div class="field" v-if="!isExistingUser">
+                <FloatLabel class="mt-5">
+                    <label for="password">Mot de passe</label>
+                    <Password id="password" v-model.trim="user.password" autofocus :disabled="isExistingUser" :feedback="false"/>
+                    <small class="p-error" v-if="(submitted && !user.password) || isExistingUser">Mot de passe requis.</small>
                 </FloatLabel>
             </div>
             <div class="field">
@@ -220,6 +234,7 @@ import Toast from 'primevue/toast';
 import FloatLabel from 'primevue/floatlabel';
 import MultiSelect from 'primevue/multiselect';
 import Panel from 'primevue/panel';
+import Password from 'primevue/password';
 import 'primeicons/primeicons.css';
 
 
@@ -251,9 +266,9 @@ export default {
             imgUrl: "",
             roles: [
                 //a remplacer par getRoles
-				{label: 'Admin', value: 'ROLE_ADMIN'},
-				{label: 'Modérateur', value: 'ROLE_MODERATOR'},
-				{label: 'Utilisateur', value: 'ROLE_USER'}
+				{label: 'Admin', value: 'ROLE_ADMIN', id:3},
+				{label: 'Modérateur', value: 'ROLE_MODERATOR', id:2},
+				{label: 'Utilisateur', value: 'ROLE_USER', id:1}
             ]
         }
     },
@@ -291,7 +306,8 @@ export default {
         Toast,
         FloatLabel,
         MultiSelect,
-        Panel
+        Panel,
+        Password
     },
     methods: {
         openNew() {
@@ -321,7 +337,7 @@ export default {
             var index = this.data.indexOf(dataToEdit);
 
             //validation et suppression des données
-            if(this.user?.name?.trim() && this.user?.surname?.trim() && this.user?.phonenumber?.trim() && this.user?.username?.trim()){
+            if(this.user?.name?.trim() && this.user?.surname?.trim() && this.user?.phonenumber?.trim() && this.user?.username?.trim() && this.user?.password?.trim() && this.user?.email?.trim()){
                 if(this.addressRequired &&
                         (this.address?.country?.trim() || this.selectedCountry) &&
                         (this.address?.region?.trim() || this.selectedRegion) &&
@@ -347,8 +363,10 @@ export default {
                         newData.roles = this.userRoles;
                         newData.imgUrl = this.imgUrl;
                         newData.user = this.user;
+                        newData.user.roles = 
                         this.data.push(newData);
                     }
+                    this.isExistingUser = true;
                     this.userDialog = false;
                     this.user = {};
                     this.address = {};
@@ -361,9 +379,17 @@ export default {
                         dataToEdit.roles = this.userRoles;
                         dataToEdit.imgUrl = this.imgUrl;
                         dataToEdit.user = this.user;
-                        //juste pour le front
-                        //pour le back ce serait trop lourd avec bcp d'users
-                        //juste envoyer dataToEdit et faire le traitement dans le back
+                        dataToEdit.user.roles = this.userRoles.map(role => role.id);
+                        dataToEdit.user.accessToken = this.currentUser.accessToken;
+                        console.log(this.currentUser);
+                        this.$store.dispatch('admin/editprofile', dataToEdit).then(
+                            data => {
+                                this.$toast.add({severity:'success', summary: 'Succès', detail: data.message, life: 3000});
+                            },
+                            error => {
+                                this.$toast.add({severity:'error', summary: 'Erreur', detail: error.response.data.message, life: 3000});
+                            }
+                        );
                         this.data.splice(index, 1, dataToEdit);
                     }
                     if(!this.isExistingUser) {
@@ -371,9 +397,19 @@ export default {
                         newData.roles = this.userRoles;
                         newData.imgUrl = this.imgUrl;
                         newData.user = this.user;
+                        newData.user.roles = this.userRoles.map(role => role.id);
                         this.data.push(newData);
+                        this.$store.dispatch('auth/register', newData.user).then(
+                            data => {
+                                this.$toast.add({severity:'success', summary: 'Succès', detail: data.message, life: 3000});
+                            },
+                            error => {
+                                this.$toast.add({severity:'error', summary: 'Erreur', detail: error.message, life: 3000});
+                            }
+                        );
                     }
 
+                    this.isExistingUser = true;
                     this.userDialog = false;
                     this.user = {};
                     this.address = {};
@@ -384,6 +420,7 @@ export default {
             }
         },
         editUser(data) {
+            this.isExistingUser = true;
             this.$store.dispatch('user/getcountrylist').then(
                 res => {
                     this.countryList = this.sortByKey(res.data, 'countryName');

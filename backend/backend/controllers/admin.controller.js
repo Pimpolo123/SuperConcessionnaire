@@ -44,6 +44,38 @@ exports.adminBoard = (req, res) => {
 	res.status(200).send("Admin Content.");
 };
 
+exports.editProfile = (req, res) => {
+	User.findOne({
+		where: {
+			username: req.body.username
+		}
+	}).then(user => {
+		if (!user) {
+			return res.status(404).send({message: "L'utilisateur n'existe pas"});
+		}
+
+		user.surname = req.body.surname;
+		user.name = req.body.name;
+		user.birthdate = req.body.birthdate;
+		user.phonenumber = req.body.phonenumber;
+        user.setRoles(req.body.roles);
+		user.save();
+
+		var authorities = [];
+		user.getRoles().then(roles => {
+			for (let i = 0; i < roles.length; i++) {
+				authorities.push("ROLE_" + roles[i].name.toUpperCase());
+			}
+			return res.status(200).send({
+				message: "Profil modifié avec succès",
+				accessToken: req.headers["x-access-token"],
+			});
+		});
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+};
+
 function base64_encode(fileUsername) {
 	const files = fs.readdirSync('../pictures');
 	for (const file of files) {

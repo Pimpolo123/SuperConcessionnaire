@@ -28,6 +28,7 @@ class AdminService {
 				phonenumber: user.phonenumber,
 				name: user.name,
 				surname: user.surname,
+                roles: user.roles
 			},{
 				headers: authHeader(user.accessToken)
 			}).then(response => {

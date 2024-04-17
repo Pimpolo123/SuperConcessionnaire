@@ -1,6 +1,7 @@
 import axios from 'axios';
+require("dotenv").config();
 
-const API_URL = 'http://localhost:8080/auth/';
+const API_URL = `http://${process.env.SERVER_HOST}:8080/`;
 
 class AuthService {
   login(user) {

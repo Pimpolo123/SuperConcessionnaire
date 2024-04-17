@@ -6,5 +6,6 @@
 /backend/backend/node_modules/*
 /backend/backend/config/*
 /backend/backend/config/db.config.js
+/backend/.env
 /.idea/*
 /pictures/*

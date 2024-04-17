@@ -1,7 +1,9 @@
 const express = require('express')
 const cors = require("cors");
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT_BACK = process.env.PORT_BACK || 8080;
+const PORT_FRONT = process.env.PORT_FRONT;
+const HOST = process.env.SERVER_HOST;
 const fs = require('fs');
 const path = require('path');
 const pictureDir = '../pictures'
@@ -16,7 +18,7 @@ const Op = db.Sequelize.Op;
 var bcrypt = require("bcryptjs");
 
 var corsOptions = {
-    origin: "http://localhost:8081"
+    origin: `http://${HOST}:${PORT_FRONT}`
   };  
 
 
@@ -44,9 +46,9 @@ require('./backend/routes/auth.routes')(app);
 require('./backend/routes/users.routes')(app);
 require('./backend/routes/admin.routes')(app);
 
-app.listen(PORT, () => {
-    console.log(`Serveur en ligne sur le port ${PORT}.`);
-  });
+app.listen(PORT_BACK, () => {
+    console.log(`Serveur en ligne sur le port ${PORT_BACK}.`);
+});
 
 // SEULEMENT EN DEV !!! 
 // PROD : 
@@ -133,38 +135,4 @@ function initial() {
 			});
 		};
 	};
-
-
-	// User.create({
-	// 	username: "jf",
-	// 	email: "jf@jf.com",
-	// 	password: "toto",
-	// 	name: "toto",
-	// 	surname: "toto",
-	// });
-	// Address.create({
-	// 	id: 1,
-	// 	country: "Belgique",
-	// 	region: "Hainaut",
-	// 	city: "Mons",
-	// 	postcode: 730,
-	// 	street: "Chemin de la Poterie",
-	// 	housenumber: 52
-    // })
-	// .then(address => {
-    //     address.setUser([1]);
-    // });
-
-	// User.create({
-	// 	username: "jf",
-	// 	email: "jf@jf.com",
-	// 	password: "toto",
-	// 	name: "toto",
-	// 	surname: "toto",
-	// })
-    // .then(user => {
-    //     user.setRoles([1]);
-	// 	user.setAddress([1]);
-    // });
-	
   }

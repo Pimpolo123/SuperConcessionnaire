@@ -1,7 +1,8 @@
 import axios from 'axios';
 import authHeader from './auth-header';
+require("dotenv").config();
 
-const API_URL = 'http://localhost:8080/';
+const API_URL = `http://${process.env.SERVER_HOST}:8080/`;
 
 class UserService {
 	getPublicContent() {

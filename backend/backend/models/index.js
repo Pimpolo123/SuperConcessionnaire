@@ -46,6 +46,10 @@ db.address.belongsTo(db.user);
 db.country.hasMany(db.region);
 db.region.belongsTo(db.country);
 
-db.ROLES = ["user", "admin", "moderator"];
+db.ROLES = [
+	{name:"user", id:1},
+	{name:"moderator", id:2},
+	{name:"admin", id:3},
+];
 
 module.exports = db;

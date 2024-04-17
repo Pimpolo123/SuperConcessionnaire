@@ -36,7 +36,7 @@ checkUserDuplicate = (req, res, next) => {
 checkRolesExists = (req, res, next) => {
     if (req.body.roles) {
       for (let i = 0; i < req.body.roles.length; i++) {
-        if (!ROLES.includes(req.body.roles[i])) {
+        if (!ROLES.filter((r) => req.body.roles.includes(r.id))[0]) {
           res.status(400).send({
             message: "Erreur : le role n'existe pas :  " + req.body.roles[i]
           });

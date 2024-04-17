@@ -31,7 +31,8 @@ class AuthService {
             birthdate: user.birthdate,
             name: user.name,
             surname: user.surname,
-            phonenumber: user.phonenumber
+            phonenumber: user.phonenumber,
+            roles: user.roles
     });
   }
 }

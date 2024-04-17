@@ -382,7 +382,7 @@ export default {
                         dataToEdit.user.roles = this.userRoles.map(role => role.id);
                         dataToEdit.user.accessToken = this.currentUser.accessToken;
                         console.log(this.currentUser);
-                        this.$store.dispatch('admin/editprofile', dataToEdit).then(
+                        this.$store.dispatch('admin/editprofile', dataToEdit.user).then(
                             data => {
                                 this.$toast.add({severity:'success', summary: 'Succès', detail: data.message, life: 3000});
                             },

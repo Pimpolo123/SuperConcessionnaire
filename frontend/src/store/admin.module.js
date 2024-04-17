@@ -18,6 +18,16 @@ export const admin = {
                     return Promise.reject(error);
                 }
             );
-        }
+        },
+        editprofile({ commit }, data) {
+			return AdminService.editProfile(data).then(
+				data=> {
+					return Promise.resolve(data);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
+		}
     }
 };

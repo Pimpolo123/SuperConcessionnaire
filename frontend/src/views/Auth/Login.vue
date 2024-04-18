@@ -49,7 +49,6 @@
         },
         methods: {
             onSubmit(values) {
-                console.log(values);
                 this.loading = true;
                 for (const v in values) {
                     if(!values[v]){

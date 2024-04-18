@@ -131,6 +131,7 @@
                   }
                 }
                 if(this.isValid){
+                    this.user.roles = [1];
                     this.$store.dispatch('auth/register', this.user).then(
                         data => {
                             this.message = data.message;

@@ -114,7 +114,6 @@
                   }
                 }
                 if(this.isValid){
-                    console.log('user editaddress vue',this.user);
                     this.$store.dispatch('user/editaddress', this.user).then(
                         data => {
                             this.message = data.message;

@@ -28,6 +28,16 @@ export const admin = {
 					return Promise.reject(error);
 				}
 			)
+		},
+        editaddress({ commit }, data) {
+			return AdminService.editAddress(data).then(
+				data=> {
+					return Promise.resolve(data);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
 		}
     }
 };

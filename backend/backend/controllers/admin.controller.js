@@ -1,6 +1,7 @@
 const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
+const Address = db.address;
 const fs = require('fs');
 
 const Op = db.Sequelize.Op;
@@ -42,6 +43,91 @@ exports.getAllUsers = (req, res) => {
 
 exports.adminBoard = (req, res) => {
 	res.status(200).send("Admin Content.");
+};
+
+exports.editAddress = (req, res) => {
+    let message = "";
+	User.findOrCreate({
+		where: {username: req.body.user.username},
+		defaults: {
+			username: req.body.user.username,
+			email: req.body.user.email,
+			password:  bcrypt.hashSync(req.body.user.password, 8),
+			name: req.body.user.name,
+			surname: req.body.user.surname,
+			birthdate: req.body.user.birthdate,
+			phonenumber: req.body.user.phonenumber,
+		}
+	}).then(user => {
+		//user : array avec [1] = created ou non
+		if (!user[1]) {
+			user[0].name = req.body.user.name;
+			user[0].surname = req.body.user.surname;
+			user[0].birthdate = req.body.user.birthdate;
+			user[0].phonenumber = req.body.user.phonenumber;
+            user[0].setRoles(req.body.user.roles);
+			user[0].save();
+            message = "Utilisateur modifié avec succès";
+		} else {
+            user[0].setRoles(req.body.user.roles);
+			user[0].save();
+            message = "Utilisateur créé avec succès";
+        }
+		Address.findOrCreate({
+			where: {userId: user[0].id},
+			defaults: {
+				country: req.body.address.country,
+				region: req.body.address.region,
+				city: req.body.address.city,
+				postcode: req.body.address.postcode,
+				street: req.body.address.street,
+				housenumber: req.body.address.housenumber,
+				boxnumber: req.body.address.boxnumber
+			}
+		}).then(address => {
+			//address : array avec [1] = created ou non
+			if(!address[1]){
+				address[0].country = req.body.address.country,
+				address[0].region = req.body.address.region,
+				address[0].city = req.body.address.city,
+				address[0].postcode = req.body.address.postcode,
+				address[0].street = req.body.address.street,
+				address[0].housenumber = req.body.address.housenumber,
+				address[0].boxnumber = req.body.address.boxnumber
+				address[0].save();
+			}
+			var authorities = [];
+			user[0].getRoles().then(roles => {
+				for (let i = 0; i < roles.length; i++) {
+					authorities.push("ROLE_" + roles[i].name.toUpperCase());
+				}
+				return res.status(200).send({
+					id: user[0].id,
+					username: user[0].username,
+					email: user[0].email,
+					birthdate: user[0].birthdate,
+					name: user[0].name,
+					surname: user[0].surname,
+					roles: authorities,
+					message: message,
+					accessToken: req.headers["x-access-token"],
+					address: {
+						id: address[0].id,
+						country: address[0].country,
+						region: address[0].region,
+						city: address[0].city,
+						postcode: address[0].postcode,
+						street: address[0].street,
+						housenumber: address[0].housenumber,
+						boxnumber: address[0].boxnumber,
+						userId: user.id
+					}
+				});
+			})
+		});
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
 };
 
 exports.editProfile = (req, res) => {

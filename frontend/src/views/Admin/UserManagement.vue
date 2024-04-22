@@ -353,9 +353,17 @@ export default {
                         dataToEdit.roles = this.userRoles;
                         dataToEdit.imgUrl = this.imgUrl;
                         dataToEdit.user = this.user;
-                        //juste pour le front
-                        //pour le back ce serait trop lourd avec bcp d'users
-                        //juste envoyer dataToEdit et faire le traitement dans le back
+                        dataToEdit.user.roles = this.userRoles.map(role => role.id);
+                        dataToEdit.accessToken = this.currentUser.accessToken;
+                        console.log("DATATOEDIT", dataToEdit);
+                        this.$store.dispatch('admin/editaddress', {user: dataToEdit.user, address: dataToEdit.address}).then(
+                            data => {
+                                this.$toast.add({severity:'success', summary: 'Succès', detail: data.message, life: 3000});
+                            },
+                            error => {
+                                this.$toast.add({severity:'error', summary: 'Erreur', detail: error.response.data.message, life: 3000});
+                            }
+                        );
                         this.data.splice(index, 1, dataToEdit);
                     }
                     if(!this.isExistingUser) {
@@ -363,8 +371,18 @@ export default {
                         newData.roles = this.userRoles;
                         newData.imgUrl = this.imgUrl;
                         newData.user = this.user;
-                        newData.user.roles = 
+                        newData.user.roles = this.userRoles.map(role => role.id);
+                        newData.accessToken = this.currentUser.accessToken;
+                        this.$store.dispatch('admin/editaddress', {user: newData.user, address: newData.address}).then(
+                            data => {
+                                this.$toast.add({severity:'success', summary: 'Succès', detail: data.message, life: 3000});
+                            },
+                            error => {
+                                this.$toast.add({severity:'error', summary: 'Erreur', detail: error.response.data.message, life: 3000});
+                            }
+                        );
                         this.data.push(newData);
+                        console.log("NEWDATA", newData.user);
                     }
                     this.isExistingUser = true;
                     this.userDialog = false;

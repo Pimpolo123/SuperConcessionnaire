@@ -27,4 +27,10 @@ module.exports = function(app) {
         [authJwt.verifyToken, authJwt.isAdmin],
         controller.editProfile
     );
+
+    app.post(
+        "/admin/editaddress",
+        [authJwt.verifyToken, authJwt.isAdmin],
+        controller.editAddress
+    );
 };

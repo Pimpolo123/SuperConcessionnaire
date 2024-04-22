@@ -45,6 +45,37 @@ exports.adminBoard = (req, res) => {
 	res.status(200).send("Admin Content.");
 };
 
+exports.banUser = (req, res) => {
+    let message = ""
+    if(req.body.banned){
+        message = "Utilisateur banni"
+    } else {
+        message = "Utilisateur débanni"
+    }
+	User.findOne({
+		where: {
+			id: req.body.id
+		}
+	}).then(user => {
+        if (!user) {
+			return res.status(404).send({message: "L'utilisateur n'existe pas"});
+		}
+        user.banned = req.body.banned;
+        user.save();
+        return res.status(200).send({message: message});
+    })
+};
+
+exports.deleteUser = (req, res) => {
+	User.destroy({
+		where: {
+			id: req.body.id
+		}
+	}).then(() => {
+		return res.status(200).send({message: "Utilisateur supprimé"});
+    })
+};
+
 exports.editAddress = (req, res) => {
     let message = "";
 	User.findOrCreate({

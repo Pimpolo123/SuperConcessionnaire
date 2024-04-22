@@ -474,15 +474,30 @@ export default {
             }
         },
         deleteUser() {
-            //faire la requète ici(delete userID)
+            this.user.accessToken = this.currentUser.accessToken;
+            this.$store.dispatch('admin/deleteuser', this.user).then(
+                data => {
+                    this.$toast.add({severity:'success', summary: 'Succès', detail: data.message, life: 3000});
+                },
+                error => {
+                    this.$toast.add({severity:'error', summary: 'Erreur', detail: error.response.data.message, life: 3000});
+                }
+            );
             this.data = this.data.filter(val => val.user.id !== this.user.id);
             this.deleteUserDialog = false;
             this.user = {};
-            this.$toast.add({severity:'success', summary: 'Succès', detail: 'Utilisateur supprimé', life: 3000});
         },
         banUser(){
-            //faire la requète ici(userId.banned = true)
             this.user.banned = true;
+            this.user.accessToken = this.currentUser.accessToken;
+            this.$store.dispatch('admin/banuser', this.user).then(
+                data => {
+                    this.$toast.add({severity:'success', summary: 'Succès', detail: data.message, life: 3000});
+                },
+                error => {
+                    this.$toast.add({severity:'error', summary: 'Erreur', detail: error.response.data.message, life: 3000});
+                }
+            );
             this.data.forEach(d => {
                 if(d.user.id == this.user.id){
                     d.user = this.user;
@@ -490,11 +505,19 @@ export default {
             });
             this.banUserDialog = false;
             this.user = {};
-            this.$toast.add({severity:'success', summary: 'Succès', detail: 'Utilisateur banni', life: 3000});
         },
         unbanUser(){
-            //faire la requète ici(userId.banned = true)
+            //faire la requète ici(userId.banned = false)
             this.user.banned = false;
+            this.user.accessToken = this.currentUser.accessToken;
+            this.$store.dispatch('admin/banuser', this.user).then(
+                data => {
+                    this.$toast.add({severity:'success', summary: 'Succès', detail: data.message, life: 3000});
+                },
+                error => {
+                    this.$toast.add({severity:'error', summary: 'Erreur', detail: error.response.data.message, life: 3000});
+                }
+            );
             this.data.forEach(d => {
                 if(d.user.id == this.user.id){
                     d.user = this.user;
@@ -502,7 +525,6 @@ export default {
             });
             this.unbanUserDialog = false;
             this.user = {};
-            this.$toast.add({severity:'success', summary: 'Succès', detail: 'Utilisateur débanni', life: 3000});
         },
         exportCSV() {
             this.$refs.dt.exportCSV();

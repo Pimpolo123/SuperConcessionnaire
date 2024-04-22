@@ -38,6 +38,26 @@ export const admin = {
 					return Promise.reject(error);
 				}
 			)
+		},
+        deleteuser({ commit }, user) {
+			return AdminService.deleteUser(user).then(
+				data=> {
+					return Promise.resolve(data);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
+		},
+        banuser({ commit }, user) {
+			return AdminService.banUser(user).then(
+				data=> {
+					return Promise.resolve(data);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
 		}
     }
 };

@@ -33,4 +33,16 @@ module.exports = function(app) {
         [authJwt.verifyToken, authJwt.isAdmin],
         controller.editAddress
     );
+
+    app.post(
+        "/admin/banuser",
+        [authJwt.verifyToken, authJwt.isAdmin],
+        controller.banUser
+    );
+
+    app.post(
+        "/admin/deleteuser",
+        [authJwt.verifyToken, authJwt.isAdmin],
+        controller.deleteUser
+    );
 };

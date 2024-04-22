@@ -36,6 +36,29 @@ class AdminService {
 			});
 	}
 
+    banUser(user) {
+		return axios
+			.post(API_URL + 'banuser', {
+				id: user.id,
+                banned: user.banned
+			},{
+				headers: authHeader(user.accessToken)
+			}).then(response => {
+				return response.data;
+			});
+	}
+
+    deleteUser(user) {
+		return axios
+			.post(API_URL + 'deleteuser', {
+				id: user.id,
+			},{
+				headers: authHeader(user.accessToken)
+			}).then(response => {
+				return response.data;
+			});
+	}
+
     editAddress(data) {
         console.log(data);
 		return axios

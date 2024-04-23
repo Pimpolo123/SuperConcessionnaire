@@ -43,6 +43,10 @@ exports.signin = (req, res) => {
 			return res.status(404).send({message: "L'utilisateur n'existe pas"});
 		}
 
+		if (user.banned) {
+			return res.status(403).send({message: "Vous êtes banni"});
+		}
+
 		var passwordIsValid = bcrypt.compareSync(
 			req.body.password,
 			user.password

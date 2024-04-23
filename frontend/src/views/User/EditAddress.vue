@@ -136,7 +136,7 @@
                 return true;
             },
             validateCity(value){
-                const regex = /^[a-zA-Z]+$/i;
+                const regex = /^[a-zA-Z ]+$/i;
                 if(!value){
                     return "Veuillez saisir une ville"
                 }

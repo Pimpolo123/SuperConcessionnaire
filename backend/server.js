@@ -41,11 +41,12 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
     res.json({ message: "Welcome" });
-  });
+});
 
 require('./backend/routes/auth.routes')(app);
 require('./backend/routes/users.routes')(app);
 require('./backend/routes/admin.routes')(app);
+require('./backend/routes/cars.routes')(app);
 
 app.listen(PORT_BACK, () => {
     console.log(`Serveur en ligne sur le port ${PORT_BACK}.`);
@@ -61,6 +62,7 @@ db.sequelize.sync({force: true}).then(() => {
 });
 
 function initial() {
+	let cars = require('./static/car_list_test.json');
 	let countries = require('country-region-data/data.json');
 	countries = countries.slice(0, 10); 
 

@@ -12,3 +12,5 @@
 /pictures/*
 /all-vehicles-model.json
 /carscript.py
+/backend/static/car_list_clean.json
+/backend/static/car_list_test.json

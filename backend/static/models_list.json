@@ -1,0 +1,5726 @@
+[
+  {
+    "model": "S10 Pickup",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Pickup",
+    "make": "GMC"
+  },
+  {
+    "model": "Scrambler Pickup",
+    "make": "Jeep"
+  },
+  {
+    "model": "D100/D150 Pickup",
+    "make": "Dodge"
+  },
+  {
+    "model": "F150",
+    "make": "Ford"
+  },
+  {
+    "model": "Truck/T100",
+    "make": "Toyota"
+  },
+  {
+    "model": "Suburban",
+    "make": "GMC"
+  },
+  {
+    "model": "Bronco II",
+    "make": "Ford"
+  },
+  {
+    "model": "TT Coupe",
+    "make": "Audi"
+  },
+  {
+    "model": "G5",
+    "make": "Pontiac"
+  },
+  {
+    "model": "A4",
+    "make": "Audi"
+  },
+  {
+    "model": "HS",
+    "make": "Lexus"
+  },
+  {
+    "model": "Lancer",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "SX4",
+    "make": "Suzuki"
+  },
+  {
+    "model": "Legacy/Outback",
+    "make": "Subaru"
+  },
+  {
+    "model": "S80",
+    "make": "Volvo"
+  },
+  {
+    "model": "Lucerne",
+    "make": "Buick"
+  },
+  {
+    "model": "Taurus",
+    "make": "Ford"
+  },
+  {
+    "model": "Genesis",
+    "make": "Hyundai"
+  },
+  {
+    "model": "Caliber",
+    "make": "Dodge"
+  },
+  {
+    "model": "4Runner",
+    "make": "Toyota"
+  },
+  {
+    "model": "Odyssey",
+    "make": "Honda"
+  },
+  {
+    "model": "HHR",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "S10 Cab Chassis",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Mountaineer",
+    "make": "Mercury"
+  },
+  {
+    "model": "Tiguan",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "Edge",
+    "make": "Ford"
+  },
+  {
+    "model": "Tribeca",
+    "make": "Subaru"
+  },
+  {
+    "model": "Ranger",
+    "make": "Ford"
+  },
+  {
+    "model": "Metro",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "S15 Cab Chassis",
+    "make": "GMC"
+  },
+  {
+    "model": "F250",
+    "make": "Ford"
+  },
+  {
+    "model": "Cab Chassis",
+    "make": "Toyota"
+  },
+  {
+    "model": "MB 300E",
+    "make": "Import Trade Services"
+  },
+  {
+    "model": "Wetl 190E",
+    "make": "Wallace Environmental"
+  },
+  {
+    "model": "5 Series",
+    "make": "BMW"
+  },
+  {
+    "model": "BMW635CSI",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "Mark VIII",
+    "make": "Lincoln"
+  },
+  {
+    "model": "Rodeo",
+    "make": "Isuzu"
+  },
+  {
+    "model": "900",
+    "make": "Saab"
+  },
+  {
+    "model": "Mustang",
+    "make": "Ford"
+  },
+  {
+    "model": "Esprit",
+    "make": "Lotus"
+  },
+  {
+    "model": "Tahoe",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "911",
+    "make": "Porsche"
+  },
+  {
+    "model": "300 SRT8",
+    "make": "Chrysler"
+  },
+  {
+    "model": "RDX",
+    "make": "Acura"
+  },
+  {
+    "model": "9-3",
+    "make": "Saab"
+  },
+  {
+    "model": "944",
+    "make": "Porsche"
+  },
+  {
+    "model": "Sebring",
+    "make": "Chrysler"
+  },
+  {
+    "model": "Equator",
+    "make": "Suzuki"
+  },
+  {
+    "model": "Liberty",
+    "make": "Jeep"
+  },
+  {
+    "model": "Montero Sport",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "Caravan/Grand Caravan",
+    "make": "Dodge"
+  },
+  {
+    "model": "Clubman",
+    "make": "MINI"
+  },
+  {
+    "model": "Titan",
+    "make": "Nissan"
+  },
+  {
+    "model": "Patriot",
+    "make": "Jeep"
+  },
+  {
+    "model": "Sierra",
+    "make": "GMC"
+  },
+  {
+    "model": "3 Series",
+    "make": "BMW"
+  },
+  {
+    "model": "XK",
+    "make": "Jaguar"
+  },
+  {
+    "model": "LeBaron",
+    "make": "Chrysler"
+  },
+  {
+    "model": "Sentra",
+    "make": "Nissan"
+  },
+  {
+    "model": "XF",
+    "make": "Jaguar"
+  },
+  {
+    "model": "Silverado",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Yukon",
+    "make": "GMC"
+  },
+  {
+    "model": "Sorento",
+    "make": "Kia"
+  },
+  {
+    "model": "X5",
+    "make": "BMW"
+  },
+  {
+    "model": "MX-5",
+    "make": "Mazda"
+  },
+  {
+    "model": "S5",
+    "make": "Audi"
+  },
+  {
+    "model": "CC",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "Jetta",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "Continental Flying Spur",
+    "make": "Bentley"
+  },
+  {
+    "model": "Prelude",
+    "make": "Honda"
+  },
+  {
+    "model": "Phantom",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "IS",
+    "make": "Lexus"
+  },
+  {
+    "model": "Countryman",
+    "make": "MINI"
+  },
+  {
+    "model": "Crown Victoria",
+    "make": "Ford"
+  },
+  {
+    "model": "Mirage",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "Equinox",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Sequoia",
+    "make": "Toyota"
+  },
+  {
+    "model": "Thunderbird",
+    "make": "Ford"
+  },
+  {
+    "model": "FJ Cruiser",
+    "make": "Toyota"
+  },
+  {
+    "model": "Cayenne",
+    "make": "Porsche"
+  },
+  {
+    "model": "MiniE",
+    "make": "MINI"
+  },
+  {
+    "model": "200",
+    "make": "Chrysler"
+  },
+  {
+    "model": "300",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "X3",
+    "make": "BMW"
+  },
+  {
+    "model": "1000",
+    "make": "Pontiac"
+  },
+  {
+    "model": "MV-1",
+    "make": "VPG"
+  },
+  {
+    "model": "Eclipse",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "Corniche/Continental",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "S4",
+    "make": "Audi"
+  },
+  {
+    "model": "Accent",
+    "make": "Hyundai"
+  },
+  {
+    "model": "7 Series",
+    "make": "BMW"
+  },
+  {
+    "model": "Savana Cargo",
+    "make": "GMC"
+  },
+  {
+    "model": "Tucson",
+    "make": "Hyundai"
+  },
+  {
+    "model": "Celica",
+    "make": "Toyota"
+  },
+  {
+    "model": "Fusion",
+    "make": "Ford"
+  },
+  {
+    "model": "9-5",
+    "make": "Saab"
+  },
+  {
+    "model": "CTS",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Ram 1500 Pickup",
+    "make": "Dodge"
+  },
+  {
+    "model": "Journey",
+    "make": "Dodge"
+  },
+  {
+    "model": "Terrain",
+    "make": "GMC"
+  },
+  {
+    "model": "Scirocco",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "Roadster",
+    "make": "MINI"
+  },
+  {
+    "model": "C-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Forte",
+    "make": "Kia"
+  },
+  {
+    "model": "Passat",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "Skyhawk",
+    "make": "Buick"
+  },
+  {
+    "model": "XJ",
+    "make": "Jaguar"
+  },
+  {
+    "model": "S-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Soul",
+    "make": "Kia"
+  },
+  {
+    "model": "Tacoma",
+    "make": "Toyota"
+  },
+  {
+    "model": "Express Passenger",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Transit Connect Electric Van/Wagon",
+    "make": "Azure Dynamics"
+  },
+  {
+    "model": "Sienna",
+    "make": "Toyota"
+  },
+  {
+    "model": "Compass",
+    "make": "Jeep"
+  },
+  {
+    "model": "LS",
+    "make": "Lexus"
+  },
+  {
+    "model": "Juke",
+    "make": "Nissan"
+  },
+  {
+    "model": "CR-V",
+    "make": "Honda"
+  },
+  {
+    "model": "Shadow",
+    "make": "Dodge"
+  },
+  {
+    "model": "Murano",
+    "make": "Nissan"
+  },
+  {
+    "model": "Quest",
+    "make": "Nissan"
+  },
+  {
+    "model": "Cube",
+    "make": "Nissan"
+  },
+  {
+    "model": "Venza",
+    "make": "Toyota"
+  },
+  {
+    "model": "Rio",
+    "make": "Kia"
+  },
+  {
+    "model": "Evora",
+    "make": "Lotus"
+  },
+  {
+    "model": "E-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "JX35",
+    "make": "Infiniti"
+  },
+  {
+    "model": "Sonata",
+    "make": "Hyundai"
+  },
+  {
+    "model": "Continental",
+    "make": "Bentley"
+  },
+  {
+    "model": "Forester",
+    "make": "Subaru"
+  },
+  {
+    "model": "G37",
+    "make": "Infiniti"
+  },
+  {
+    "model": "Verano",
+    "make": "Buick"
+  },
+  {
+    "model": "Camaro",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Impreza/Outback Sport",
+    "make": "Subaru"
+  },
+  {
+    "model": "Altima",
+    "make": "Nissan"
+  },
+  {
+    "model": "XC70",
+    "make": "Volvo"
+  },
+  {
+    "model": "Firenza",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Santa Fe",
+    "make": "Hyundai"
+  },
+  {
+    "model": "John Cooper Works",
+    "make": "MINI"
+  },
+  {
+    "model": "Corolla",
+    "make": "Toyota"
+  },
+  {
+    "model": "Insight",
+    "make": "Honda"
+  },
+  {
+    "model": "Sedan",
+    "make": "Subaru"
+  },
+  {
+    "model": "1500",
+    "make": "Ram"
+  },
+  {
+    "model": "E250 Van",
+    "make": "Ford"
+  },
+  {
+    "model": "E350 Wagon",
+    "make": "Ford"
+  },
+  {
+    "model": "MKZ",
+    "make": "Lincoln"
+  },
+  {
+    "model": "iQ",
+    "make": "Scion"
+  },
+  {
+    "model": "Pathfinder",
+    "make": "Nissan"
+  },
+  {
+    "model": "Focus",
+    "make": "Ford"
+  },
+  {
+    "model": "Avalon",
+    "make": "Toyota"
+  },
+  {
+    "model": "626",
+    "make": "Mazda"
+  },
+  {
+    "model": "Vanquish",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "Cooper",
+    "make": "MINI"
+  },
+  {
+    "model": "CR-Z",
+    "make": "Honda"
+  },
+  {
+    "model": "Crosstour",
+    "make": "Honda"
+  },
+  {
+    "model": "Century",
+    "make": "Buick"
+  },
+  {
+    "model": "ILX",
+    "make": "Acura"
+  },
+  {
+    "model": "XTS",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Express Cargo",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Savana Passenger",
+    "make": "GMC"
+  },
+  {
+    "model": "Escape",
+    "make": "Ford"
+  },
+  {
+    "model": "Beetle",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "Newport/Fifth Avenue",
+    "make": "Chrysler"
+  },
+  {
+    "model": "Aries",
+    "make": "Dodge"
+  },
+  {
+    "model": "Q50",
+    "make": "Infiniti"
+  },
+  {
+    "model": "500 L",
+    "make": "Fiat"
+  },
+  {
+    "model": "Impala",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Q60",
+    "make": "Infiniti"
+  },
+  {
+    "model": "Cutlass Ciera",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Avenger",
+    "make": "Dodge"
+  },
+  {
+    "model": "SQ5",
+    "make": "Audi"
+  },
+  {
+    "model": "GLK-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Camry",
+    "make": "Toyota"
+  },
+  {
+    "model": "Accord",
+    "make": "Honda"
+  },
+  {
+    "model": "TL",
+    "make": "Acura"
+  },
+  {
+    "model": "Maxima",
+    "make": "Nissan"
+  },
+  {
+    "model": "6000",
+    "make": "Pontiac"
+  },
+  {
+    "model": "E150 Wagon",
+    "make": "Ford"
+  },
+  {
+    "model": "Frontier",
+    "make": "Nissan"
+  },
+  {
+    "model": "Elantra",
+    "make": "Hyundai"
+  },
+  {
+    "model": "Duntov GT",
+    "make": "CCC Engineering"
+  },
+  {
+    "model": "Highlander",
+    "make": "Toyota"
+  },
+  {
+    "model": "TT Roadster",
+    "make": "Audi"
+  },
+  {
+    "model": "4 Series",
+    "make": "BMW"
+  },
+  {
+    "model": "TSX",
+    "make": "Acura"
+  },
+  {
+    "model": "Civic",
+    "make": "Honda"
+  },
+  {
+    "model": "RX",
+    "make": "Lexus"
+  },
+  {
+    "model": "Paceman",
+    "make": "MINI"
+  },
+  {
+    "model": "Cavalier",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "MKC",
+    "make": "Lincoln"
+  },
+  {
+    "model": "M",
+    "make": "BMW"
+  },
+  {
+    "model": "A6",
+    "make": "Audi"
+  },
+  {
+    "model": "Space Wagon",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "Allroad",
+    "make": "Audi"
+  },
+  {
+    "model": "Boxster",
+    "make": "Porsche"
+  },
+  {
+    "model": "ATS",
+    "make": "Cadillac"
+  },
+  {
+    "model": "B-Class Electric Drive",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "3",
+    "make": "Mazda"
+  },
+  {
+    "model": "2 Series",
+    "make": "BMW"
+  },
+  {
+    "model": "Wrangler",
+    "make": "Jeep"
+  },
+  {
+    "model": "ML-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Challenger",
+    "make": "Dodge"
+  },
+  {
+    "model": "Century Wagon",
+    "make": "Buick"
+  },
+  {
+    "model": "Dart",
+    "make": "Dodge"
+  },
+  {
+    "model": "Sedona",
+    "make": "Kia"
+  },
+  {
+    "model": "C-MAX",
+    "make": "Ford"
+  },
+  {
+    "model": "Armada",
+    "make": "Nissan"
+  },
+  {
+    "model": "GS",
+    "make": "Lexus"
+  },
+  {
+    "model": "Canyon",
+    "make": "GMC"
+  },
+  {
+    "model": "SS",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "V60",
+    "make": "Volvo"
+  },
+  {
+    "model": "F-Type",
+    "make": "Jaguar"
+  },
+  {
+    "model": "Z4",
+    "make": "BMW"
+  },
+  {
+    "model": "WRX",
+    "make": "Subaru"
+  },
+  {
+    "model": "AMG GT",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "FR-S",
+    "make": "Scion"
+  },
+  {
+    "model": "S15 Pickup",
+    "make": "GMC"
+  },
+  {
+    "model": "Ghibli",
+    "make": "Maserati"
+  },
+  {
+    "model": "MKX",
+    "make": "Lincoln"
+  },
+  {
+    "model": "A3",
+    "make": "Audi"
+  },
+  {
+    "model": "Corvette",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Regal",
+    "make": "Buick"
+  },
+  {
+    "model": "SL-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "GLE-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Grand Am",
+    "make": "Pontiac"
+  },
+  {
+    "model": "Cherokee",
+    "make": "Jeep"
+  },
+  {
+    "model": "Range Rover",
+    "make": "Land Rover"
+  },
+  {
+    "model": "Expedition",
+    "make": "Ford"
+  },
+  {
+    "model": "R10 Pickup",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "R20 (C20) Pickup",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Sunbird",
+    "make": "Pontiac"
+  },
+  {
+    "model": "FF",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Charger",
+    "make": "Dodge"
+  },
+  {
+    "model": "D250 Pickup",
+    "make": "Dodge"
+  },
+  {
+    "model": "CLA-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Durango",
+    "make": "Dodge"
+  },
+  {
+    "model": "City Express Cargo Van",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "G80",
+    "make": "Genesis"
+  },
+  {
+    "model": "XC90",
+    "make": "Volvo"
+  },
+  {
+    "model": "S60",
+    "make": "Volvo"
+  },
+  {
+    "model": "Explorer",
+    "make": "Ford"
+  },
+  {
+    "model": "V20 Pickup",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Cruze",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Model S",
+    "make": "Tesla"
+  },
+  {
+    "model": "Model X",
+    "make": "Tesla"
+  },
+  {
+    "model": "Optima",
+    "make": "Kia"
+  },
+  {
+    "model": "Aventador",
+    "make": "Lamborghini"
+  },
+  {
+    "model": "V90",
+    "make": "Volvo"
+  },
+  {
+    "model": "CX-9",
+    "make": "Mazda"
+  },
+  {
+    "model": "Astro Cargo",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "G30 Van",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "QX30",
+    "make": "Infiniti"
+  },
+  {
+    "model": "Sportage",
+    "make": "Kia"
+  },
+  {
+    "model": "370Z",
+    "make": "Nissan"
+  },
+  {
+    "model": "Yaris",
+    "make": "Toyota"
+  },
+  {
+    "model": "Impreza",
+    "make": "Subaru"
+  },
+  {
+    "model": "Vandura",
+    "make": "GMC"
+  },
+  {
+    "model": "Colorado",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Van",
+    "make": "Toyota"
+  },
+  {
+    "model": "Macan",
+    "make": "Porsche"
+  },
+  {
+    "model": "B150/B250 Wagon",
+    "make": "Dodge"
+  },
+  {
+    "model": "Sonic",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Vanagon",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "CT6",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Renegade",
+    "make": "Jeep"
+  },
+  {
+    "model": "Jimmy",
+    "make": "GMC"
+  },
+  {
+    "model": "Panamera",
+    "make": "Porsche"
+  },
+  {
+    "model": "Kicks",
+    "make": "Nissan"
+  },
+  {
+    "model": "Spark",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "XC40",
+    "make": "Volvo"
+  },
+  {
+    "model": "Bronco",
+    "make": "Ford"
+  },
+  {
+    "model": "Ioniq",
+    "make": "Hyundai"
+  },
+  {
+    "model": "Discovery",
+    "make": "Land Rover"
+  },
+  {
+    "model": "NSX",
+    "make": "Acura"
+  },
+  {
+    "model": "i3",
+    "make": "BMW"
+  },
+  {
+    "model": "X1",
+    "make": "BMW"
+  },
+  {
+    "model": "TT",
+    "make": "Audi"
+  },
+  {
+    "model": "Arteon",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "Transit Connect",
+    "make": "Ford"
+  },
+  {
+    "model": "XC60",
+    "make": "Volvo"
+  },
+  {
+    "model": "Traverse",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Outback",
+    "make": "Subaru"
+  },
+  {
+    "model": "R8",
+    "make": "Audi"
+  },
+  {
+    "model": "CLS-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Pilot",
+    "make": "Honda"
+  },
+  {
+    "model": "Metris Passenger",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Outlander",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "A8",
+    "make": "Audi"
+  },
+  {
+    "model": "A-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "S6",
+    "make": "Audi"
+  },
+  {
+    "model": "RC",
+    "make": "Lexus"
+  },
+  {
+    "model": "300ZX",
+    "make": "Nissan"
+  },
+  {
+    "model": "Bentayga",
+    "make": "Bentley"
+  },
+  {
+    "model": "CT4",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Atlas",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "Speedtail",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "570GT",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "8 Series",
+    "make": "BMW"
+  },
+  {
+    "model": "RAV4",
+    "make": "Toyota"
+  },
+  {
+    "model": "XT6",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Acadia",
+    "make": "GMC"
+  },
+  {
+    "model": "GLS-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Gladiator",
+    "make": "Jeep"
+  },
+  {
+    "model": "LX",
+    "make": "Lexus"
+  },
+  {
+    "model": "GV80",
+    "make": "Genesis"
+  },
+  {
+    "model": "Forsa",
+    "make": "Suzuki"
+  },
+  {
+    "model": "GLC-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Encore",
+    "make": "Buick"
+  },
+  {
+    "model": "NV200 Cargo Van",
+    "make": "Nissan"
+  },
+  {
+    "model": "GT",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "Grand Cherokee",
+    "make": "Jeep"
+  },
+  {
+    "model": "X2",
+    "make": "BMW"
+  },
+  {
+    "model": "GV70",
+    "make": "Genesis"
+  },
+  {
+    "model": "K5",
+    "make": "Kia"
+  },
+  {
+    "model": "Taycan",
+    "make": "Porsche"
+  },
+  {
+    "model": "Telluride",
+    "make": "Kia"
+  },
+  {
+    "model": "Escalade",
+    "make": "Cadillac"
+  },
+  {
+    "model": "CT5",
+    "make": "Cadillac"
+  },
+  {
+    "model": "RS",
+    "make": "Audi"
+  },
+  {
+    "model": "Laser",
+    "make": "Plymouth"
+  },
+  {
+    "model": "Levante",
+    "make": "Maserati"
+  },
+  {
+    "model": "Cougar",
+    "make": "Mercury"
+  },
+  {
+    "model": "Topaz",
+    "make": "Mercury"
+  },
+  {
+    "model": "323",
+    "make": "Mazda"
+  },
+  {
+    "model": "QX80",
+    "make": "Infiniti"
+  },
+  {
+    "model": "718",
+    "make": "Porsche"
+  },
+  {
+    "model": "260",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "QX60",
+    "make": "Infiniti"
+  },
+  {
+    "model": "560",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "TLX",
+    "make": "Acura"
+  },
+  {
+    "model": "F-Pace",
+    "make": "Jaguar"
+  },
+  {
+    "model": "Bronco Sport",
+    "make": "Ford"
+  },
+  {
+    "model": "Sundance",
+    "make": "Plymouth"
+  },
+  {
+    "model": "Versa",
+    "make": "Nissan"
+  },
+  {
+    "model": "Mustang Mach-E",
+    "make": "Ford"
+  },
+  {
+    "model": "Navigator",
+    "make": "Lincoln"
+  },
+  {
+    "model": "G90",
+    "make": "Genesis"
+  },
+  {
+    "model": "Golf/GTI",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "Stelvio",
+    "make": "Alfa Romeo"
+  },
+  {
+    "model": "X6",
+    "make": "BMW"
+  },
+  {
+    "model": "Grand Wagoneer",
+    "make": "Jeep"
+  },
+  {
+    "model": "420",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "EQS",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Cutlass Supreme",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "ID.4",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "Air",
+    "make": "Lucid"
+  },
+  {
+    "model": "Axiom",
+    "make": "Isuzu"
+  },
+  {
+    "model": "Hatchback",
+    "make": "Subaru"
+  },
+  {
+    "model": "Tracker",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Envoy",
+    "make": "GMC"
+  },
+  {
+    "model": "XT",
+    "make": "Subaru"
+  },
+  {
+    "model": "DB AR1",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "Turbo 4 911 Kit",
+    "make": "Porsche"
+  },
+  {
+    "model": "Omni",
+    "make": "Dodge"
+  },
+  {
+    "model": "Epica",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Sable",
+    "make": "Mercury"
+  },
+  {
+    "model": "6",
+    "make": "Mazda"
+  },
+  {
+    "model": "Vdp",
+    "make": "Jaguar"
+  },
+  {
+    "model": "Tempo",
+    "make": "Ford"
+  },
+  {
+    "model": "Bonneville",
+    "make": "Pontiac"
+  },
+  {
+    "model": "Vibe",
+    "make": "Pontiac"
+  },
+  {
+    "model": "V70",
+    "make": "Volvo"
+  },
+  {
+    "model": "SSR Pickup",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "E150 Club Wagon",
+    "make": "Ford"
+  },
+  {
+    "model": "505",
+    "make": "Peugeot"
+  },
+  {
+    "model": "Alliance/Encore",
+    "make": "Renault"
+  },
+  {
+    "model": "Turbo 4 911 Cab",
+    "make": "Porsche"
+  },
+  {
+    "model": "S40",
+    "make": "Volvo"
+  },
+  {
+    "model": "Funeral Coach/Hearse",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Amanti",
+    "make": "Kia"
+  },
+  {
+    "model": "Matrix",
+    "make": "Toyota"
+  },
+  {
+    "model": "Dakota Pickup",
+    "make": "Dodge"
+  },
+  {
+    "model": "Van 1500/2500",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Safari Passenger",
+    "make": "GMC"
+  },
+  {
+    "model": "PT Cruiser",
+    "make": "Chrysler"
+  },
+  {
+    "model": "Magnum",
+    "make": "Dodge"
+  },
+  {
+    "model": "Liberty/Cherokee",
+    "make": "Jeep"
+  },
+  {
+    "model": "Wrangler/TJ",
+    "make": "Jeep"
+  },
+  {
+    "model": "600",
+    "make": "Dodge"
+  },
+  {
+    "model": "Montero",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "GX",
+    "make": "Lexus"
+  },
+  {
+    "model": "C8",
+    "make": "Spyker"
+  },
+  {
+    "model": "Crossfire",
+    "make": "Chrysler"
+  },
+  {
+    "model": "SLK-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Carrera 4 S Coupe",
+    "make": "Porsche"
+  },
+  {
+    "model": "Lacrosse/Allure",
+    "make": "Buick"
+  },
+  {
+    "model": "612 Scaglietti",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Milan",
+    "make": "Mercury"
+  },
+  {
+    "model": "Delta 88 Royale",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Van 15/25 Conversion",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "E150 Econoline",
+    "make": "Ford"
+  },
+  {
+    "model": "Montana",
+    "make": "Pontiac"
+  },
+  {
+    "model": "Torrent",
+    "make": "Pontiac"
+  },
+  {
+    "model": "Element",
+    "make": "Honda"
+  },
+  {
+    "model": "TrailBlazer",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "57",
+    "make": "Maybach"
+  },
+  {
+    "model": "FX35",
+    "make": "Infiniti"
+  },
+  {
+    "model": "Ion",
+    "make": "Saturn"
+  },
+  {
+    "model": "Quantum",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "Avalanche",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Rainier",
+    "make": "Buick"
+  },
+  {
+    "model": "Freestyle",
+    "make": "Ford"
+  },
+  {
+    "model": "Cayman",
+    "make": "Porsche"
+  },
+  {
+    "model": "G6",
+    "make": "Pontiac"
+  },
+  {
+    "model": "Grand Prix",
+    "make": "Pontiac"
+  },
+  {
+    "model": "DTS",
+    "make": "Cadillac"
+  },
+  {
+    "model": "V50",
+    "make": "Volvo"
+  },
+  {
+    "model": "Aerio",
+    "make": "Suzuki"
+  },
+  {
+    "model": "Truck",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "Tiburon",
+    "make": "Hyundai"
+  },
+  {
+    "model": "XKR",
+    "make": "Jaguar"
+  },
+  {
+    "model": "Tribute",
+    "make": "Mazda"
+  },
+  {
+    "model": "Vue",
+    "make": "Saturn"
+  },
+  {
+    "model": "Touareg",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "Carrera 2 Cabriolet",
+    "make": "Porsche"
+  },
+  {
+    "model": "Carrera 2 S Coupe",
+    "make": "Porsche"
+  },
+  {
+    "model": "CL-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "C30",
+    "make": "Volvo"
+  },
+  {
+    "model": "Spectra",
+    "make": "Kia"
+  },
+  {
+    "model": "Aura",
+    "make": "Saturn"
+  },
+  {
+    "model": "El Camino Pickup",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "SRX",
+    "make": "Cadillac"
+  },
+  {
+    "model": "350z",
+    "make": "Nissan"
+  },
+  {
+    "model": "G35",
+    "make": "Infiniti"
+  },
+  {
+    "model": "Aspen",
+    "make": "Chrysler"
+  },
+  {
+    "model": "Cobalt",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Murcielago",
+    "make": "Lamborghini"
+  },
+  {
+    "model": "fortwo",
+    "make": "smart"
+  },
+  {
+    "model": "Foose F150",
+    "make": "Tecstar, LP"
+  },
+  {
+    "model": "Arnage",
+    "make": "Bentley"
+  },
+  {
+    "model": "Super V8",
+    "make": "Jaguar"
+  },
+  {
+    "model": "5",
+    "make": "Mazda"
+  },
+  {
+    "model": "Carrera 4 Coupe",
+    "make": "Porsche"
+  },
+  {
+    "model": "CLK-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Comanche",
+    "make": "Jeep"
+  },
+  {
+    "model": "Spider",
+    "make": "Alfa Romeo"
+  },
+  {
+    "model": "M35",
+    "make": "Infiniti"
+  },
+  {
+    "model": "Viper",
+    "make": "Dodge"
+  },
+  {
+    "model": "B350 Van",
+    "make": "Dodge"
+  },
+  {
+    "model": "RX-7",
+    "make": "Mazda"
+  },
+  {
+    "model": "Quattro",
+    "make": "Audi"
+  },
+  {
+    "model": "4000",
+    "make": "Audi"
+  },
+  {
+    "model": "200SX",
+    "make": "Nissan"
+  },
+  {
+    "model": "XJS",
+    "make": "Jaguar"
+  },
+  {
+    "model": "Cimarron",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Astro Passenger",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Skylark",
+    "make": "Buick"
+  },
+  {
+    "model": "Escort",
+    "make": "Ford"
+  },
+  {
+    "model": "Lynx",
+    "make": "Mercury"
+  },
+  {
+    "model": "G10/20 Van",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "240",
+    "make": "Volvo"
+  },
+  {
+    "model": "Monte Carlo",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Marquis",
+    "make": "Mercury"
+  },
+  {
+    "model": "Toronado",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "LeSabre",
+    "make": "Buick"
+  },
+  {
+    "model": "Parisienne",
+    "make": "Pontiac"
+  },
+  {
+    "model": "Aerostar Wagon",
+    "make": "Ford"
+  },
+  {
+    "model": "Rampage Pickup",
+    "make": "Dodge"
+  },
+  {
+    "model": "Ram 50 Pickup",
+    "make": "Dodge"
+  },
+  {
+    "model": "C10 Pickup",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "K10 Pickup",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "W100/W150 Pickup",
+    "make": "Dodge"
+  },
+  {
+    "model": "B350 Wagon",
+    "make": "Dodge"
+  },
+  {
+    "model": "Countach",
+    "make": "Lamborghini"
+  },
+  {
+    "model": "Daytona",
+    "make": "Dodge"
+  },
+  {
+    "model": "Turismo",
+    "make": "Plymouth"
+  },
+  {
+    "model": "Firebird/Trans Am/Formula",
+    "make": "Pontiac"
+  },
+  {
+    "model": "21 TD",
+    "make": "Vixen Motor Company"
+  },
+  {
+    "model": "Blazer",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Citation II",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Phoenix",
+    "make": "Pontiac"
+  },
+  {
+    "model": "740/760",
+    "make": "Volvo"
+  },
+  {
+    "model": "Delta 88",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Dynasty",
+    "make": "Dodge"
+  },
+  {
+    "model": "940",
+    "make": "Volvo"
+  },
+  {
+    "model": "Expo",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "B Pickup",
+    "make": "Mazda"
+  },
+  {
+    "model": "Post Office DJ8",
+    "make": "AM General"
+  },
+  {
+    "model": "Comanche Pickup",
+    "make": "Jeep"
+  },
+  {
+    "model": "Safari",
+    "make": "GMC"
+  },
+  {
+    "model": "Lumina/APV Minivan",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Sidekick",
+    "make": "Suzuki"
+  },
+  {
+    "model": "Cherokee/Wagoneer",
+    "make": "Jeep"
+  },
+  {
+    "model": "Ferrari Mondial T/Cabriolet",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Probe",
+    "make": "Ford"
+  },
+  {
+    "model": "Colt",
+    "make": "Plymouth"
+  },
+  {
+    "model": "80/90",
+    "make": "Audi"
+  },
+  {
+    "model": "SL",
+    "make": "Saturn"
+  },
+  {
+    "model": "850",
+    "make": "Volvo"
+  },
+  {
+    "model": "Impala/Caprice",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Trooper",
+    "make": "Isuzu"
+  },
+  {
+    "model": "Pickup 2500",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "B150/B250 Van",
+    "make": "Dodge"
+  },
+  {
+    "model": "Caravan C/V/Grand Caravan",
+    "make": "Dodge"
+  },
+  {
+    "model": "Passport",
+    "make": "Honda"
+  },
+  {
+    "model": "MPV",
+    "make": "Mazda"
+  },
+  {
+    "model": "Navajo",
+    "make": "Mazda"
+  },
+  {
+    "model": "Land Cruiser",
+    "make": "Toyota"
+  },
+  {
+    "model": "Integra",
+    "make": "Acura"
+  },
+  {
+    "model": "Tercel",
+    "make": "Toyota"
+  },
+  {
+    "model": "Contour",
+    "make": "Ford"
+  },
+  {
+    "model": "Prizm",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Tracer",
+    "make": "Mercury"
+  },
+  {
+    "model": "Protege",
+    "make": "Mazda"
+  },
+  {
+    "model": "Spirit",
+    "make": "Dodge"
+  },
+  {
+    "model": "Lincoln 100J",
+    "make": "Federal Coach"
+  },
+  {
+    "model": "Capri",
+    "make": "Mercury"
+  },
+  {
+    "model": "Defender",
+    "make": "Land Rover"
+  },
+  {
+    "model": "X-90",
+    "make": "Suzuki"
+  },
+  {
+    "model": "Sentra/200SX",
+    "make": "Nissan"
+  },
+  {
+    "model": "Aspire",
+    "make": "Ford"
+  },
+  {
+    "model": "Somerset Regal",
+    "make": "Buick"
+  },
+  {
+    "model": "Sunfire",
+    "make": "Pontiac"
+  },
+  {
+    "model": "Lumina/Monte Carlo",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Concorde",
+    "make": "Chrysler"
+  },
+  {
+    "model": "SW",
+    "make": "Saturn"
+  },
+  {
+    "model": "Hombre Pickup",
+    "make": "Isuzu"
+  },
+  {
+    "model": "DB7",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "Ferrari 456",
+    "make": "Ferrari"
+  },
+  {
+    "model": "SC",
+    "make": "Bitter Gmbh and Co. Kg"
+  },
+  {
+    "model": "Sephia",
+    "make": "Kia"
+  },
+  {
+    "model": "Galant",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "Malibu",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "9000",
+    "make": "Saab"
+  },
+  {
+    "model": "B1500/B2500 Wagon",
+    "make": "Dodge"
+  },
+  {
+    "model": "Electra/Park Avenue",
+    "make": "Buick"
+  },
+  {
+    "model": "C70",
+    "make": "Volvo"
+  },
+  {
+    "model": "Diamante",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "S70",
+    "make": "Volvo"
+  },
+  {
+    "model": "DeVille",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Limousine",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Nubira",
+    "make": "Daewoo"
+  },
+  {
+    "model": "Sonoma",
+    "make": "GMC"
+  },
+  {
+    "model": "C1500 Pickup",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Celebrity",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Voyager/Grand Voyager",
+    "make": "Plymouth"
+  },
+  {
+    "model": "Cabrio",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "Turbo RT",
+    "make": "Bentley"
+  },
+  {
+    "model": "Silver Spur",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "Silver Spur Park Ward",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "Town and Country",
+    "make": "Chrysler"
+  },
+  {
+    "model": "Nativa",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "456 MGT/MGA",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Millenia",
+    "make": "Mazda"
+  },
+  {
+    "model": "Echo",
+    "make": "Toyota"
+  },
+  {
+    "model": "Eldorado",
+    "make": "Cadillac"
+  },
+  {
+    "model": "I30",
+    "make": "Infiniti"
+  },
+  {
+    "model": "Q45",
+    "make": "Infiniti"
+  },
+  {
+    "model": "Park Avenue",
+    "make": "Buick"
+  },
+  {
+    "model": "Sport Van",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "LW",
+    "make": "Saturn"
+  },
+  {
+    "model": "Xterra",
+    "make": "Nissan"
+  },
+  {
+    "model": "Grand Vitara",
+    "make": "Suzuki"
+  },
+  {
+    "model": "Vitara",
+    "make": "Suzuki"
+  },
+  {
+    "model": "Town and Country/Voyager/Grand Voyager",
+    "make": "Chrysler"
+  },
+  {
+    "model": "MR2",
+    "make": "Toyota"
+  },
+  {
+    "model": "Stratus",
+    "make": "Dodge"
+  },
+  {
+    "model": "Intrepid",
+    "make": "Dodge"
+  },
+  {
+    "model": "Villager",
+    "make": "Mercury"
+  },
+  {
+    "model": "Fiero",
+    "make": "Pontiac"
+  },
+  {
+    "model": "Aurora",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Pulsar NX",
+    "make": "Nissan"
+  },
+  {
+    "model": "E250 Econoline",
+    "make": "Ford"
+  },
+  {
+    "model": "Windstar",
+    "make": "Ford"
+  },
+  {
+    "model": "Conquest",
+    "make": "Plymouth"
+  },
+  {
+    "model": "Freelander",
+    "make": "Land Rover"
+  },
+  {
+    "model": "575 M Maranello",
+    "make": "Ferrari"
+  },
+  {
+    "model": "S2000",
+    "make": "Honda"
+  },
+  {
+    "model": "X-Type",
+    "make": "Jaguar"
+  },
+  {
+    "model": "Ram Van 2500",
+    "make": "Dodge"
+  },
+  {
+    "model": "Firefly",
+    "make": "Pontiac"
+  },
+  {
+    "model": "Ninety-Eight/Touring",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Palisade",
+    "make": "Hyundai"
+  },
+  {
+    "model": "Grand Highlander",
+    "make": "Toyota"
+  },
+  {
+    "model": "X4",
+    "make": "BMW"
+  },
+  {
+    "model": "EV6",
+    "make": "Kia"
+  },
+  {
+    "model": "EQE",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Tundra",
+    "make": "Toyota"
+  },
+  {
+    "model": "Wagoneer",
+    "make": "Jeep"
+  },
+  {
+    "model": "C20 Pickup",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Aerostar Van",
+    "make": "Ford"
+  },
+  {
+    "model": "Dakota Cab Chassis",
+    "make": "Dodge"
+  },
+  {
+    "model": "TC",
+    "make": "Chrysler"
+  },
+  {
+    "model": "Ninety-Eight Regency",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Riviera",
+    "make": "Buick"
+  },
+  {
+    "model": "Eight/Mulsan/Mulsanne",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "Courier",
+    "make": "Ford"
+  },
+  {
+    "model": "K2500 Pickup",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "K2500 Sierra",
+    "make": "GMC"
+  },
+  {
+    "model": "Ramcharger",
+    "make": "Dodge"
+  },
+  {
+    "model": "Mondial T/Cabriolet",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Storm",
+    "make": "Geo"
+  },
+  {
+    "model": "Excel",
+    "make": "Hyundai"
+  },
+  {
+    "model": "430",
+    "make": "Maserati"
+  },
+  {
+    "model": "Swift",
+    "make": "Suzuki"
+  },
+  {
+    "model": "827",
+    "make": "Sterling"
+  },
+  {
+    "model": "Stanza",
+    "make": "Nissan"
+  },
+  {
+    "model": "Reliant",
+    "make": "Plymouth"
+  },
+  {
+    "model": "ES",
+    "make": "Lexus"
+  },
+  {
+    "model": "323 Protege",
+    "make": "Mazda"
+  },
+  {
+    "model": "Cressida",
+    "make": "Toyota"
+  },
+  {
+    "model": "100",
+    "make": "Audi"
+  },
+  {
+    "model": "Caprice",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "929",
+    "make": "Mazda"
+  },
+  {
+    "model": "Premier",
+    "make": "Eagle"
+  },
+  {
+    "model": "C2500 Pickup",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "C2500 Sierra",
+    "make": "GMC"
+  },
+  {
+    "model": "Caravan/Grand Caravan/Ram Van",
+    "make": "Dodge"
+  },
+  {
+    "model": "Chevette",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Virage",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "190",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Justy",
+    "make": "Subaru"
+  },
+  {
+    "model": "Beretta",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Cutlass Calais",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Lemans",
+    "make": "Pontiac"
+  },
+  {
+    "model": "350",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Rally",
+    "make": "GMC"
+  },
+  {
+    "model": "Rocky",
+    "make": "Daihatsu"
+  },
+  {
+    "model": "Bravada",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "K20 Pickup",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "NX",
+    "make": "Lexus"
+  },
+  {
+    "model": "Sprint",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "T10 (S10) Pickup",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Scoupe",
+    "make": "Hyundai"
+  },
+  {
+    "model": "Corrado",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "Stylus",
+    "make": "Isuzu"
+  },
+  {
+    "model": "Achieva",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Sundance/Duster",
+    "make": "Plymouth"
+  },
+  {
+    "model": "Loyale",
+    "make": "Subaru"
+  },
+  {
+    "model": "Summit",
+    "make": "Eagle"
+  },
+  {
+    "model": "J-20 Pickup",
+    "make": "Jeep"
+  },
+  {
+    "model": "K1500 Pickup",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Power Ram 50 Pickup",
+    "make": "Dodge"
+  },
+  {
+    "model": "Ferrari 348 TB/TS",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Talon",
+    "make": "Eagle"
+  },
+  {
+    "model": "Legend",
+    "make": "Acura"
+  },
+  {
+    "model": "F12 Berlinetta",
+    "make": "Ferrari"
+  },
+  {
+    "model": "RLX",
+    "make": "Acura"
+  },
+  {
+    "model": "LaCrosse",
+    "make": "Buick"
+  },
+  {
+    "model": "Prius",
+    "make": "Toyota"
+  },
+  {
+    "model": "Q70",
+    "make": "Infiniti"
+  },
+  {
+    "model": "MKT",
+    "make": "Lincoln"
+  },
+  {
+    "model": "GranTurismo",
+    "make": "Maserati"
+  },
+  {
+    "model": "Biturbo",
+    "make": "Maserati"
+  },
+  {
+    "model": "HR-V",
+    "make": "Honda"
+  },
+  {
+    "model": "Metris Cargo",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "MDX",
+    "make": "Acura"
+  },
+  {
+    "model": "500 X",
+    "make": "Fiat"
+  },
+  {
+    "model": "Rogue",
+    "make": "Nissan"
+  },
+  {
+    "model": "E-Pace",
+    "make": "Jaguar"
+  },
+  {
+    "model": "Veloster",
+    "make": "Hyundai"
+  },
+  {
+    "model": "GLA-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Model 3",
+    "make": "Tesla"
+  },
+  {
+    "model": "Testarossa",
+    "make": "Ferrari"
+  },
+  {
+    "model": "LC",
+    "make": "Lexus"
+  },
+  {
+    "model": "500",
+    "make": "Fiat"
+  },
+  {
+    "model": "Quattroporte",
+    "make": "Maserati"
+  },
+  {
+    "model": "Spectrum",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Niro",
+    "make": "Kia"
+  },
+  {
+    "model": "A5",
+    "make": "Audi"
+  },
+  {
+    "model": "Leaf",
+    "make": "Nissan"
+  },
+  {
+    "model": "Cordia",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "Legacy",
+    "make": "Subaru"
+  },
+  {
+    "model": "X7",
+    "make": "BMW"
+  },
+  {
+    "model": "XT5",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Vantage",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "GR Supra",
+    "make": "Toyota"
+  },
+  {
+    "model": "SQ8",
+    "make": "Audi"
+  },
+  {
+    "model": "Huayra",
+    "make": "Pagani"
+  },
+  {
+    "model": "Discovery Sport",
+    "make": "Land Rover"
+  },
+  {
+    "model": "Carnival",
+    "make": "Kia"
+  },
+  {
+    "model": "Ridgeline",
+    "make": "Honda"
+  },
+  {
+    "model": "Dawn",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "Santa Cruz",
+    "make": "Hyundai"
+  },
+  {
+    "model": "Crosstrek",
+    "make": "Subaru"
+  },
+  {
+    "model": "Horizon",
+    "make": "Plymouth"
+  },
+  {
+    "model": "Rogue Sport",
+    "make": "Nissan"
+  },
+  {
+    "model": "2",
+    "make": "Mazda"
+  },
+  {
+    "model": "S8",
+    "make": "Audi"
+  },
+  {
+    "model": "626/MX-6",
+    "make": "Mazda"
+  },
+  {
+    "model": "e-tron",
+    "make": "Audi"
+  },
+  {
+    "model": "Silver Spirit/Silver Spur",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "J-10 Pickup",
+    "make": "Jeep"
+  },
+  {
+    "model": "Eagle",
+    "make": "American Motors Corporation"
+  },
+  {
+    "model": "Wagon",
+    "make": "Subaru"
+  },
+  {
+    "model": "Nitro",
+    "make": "Dodge"
+  },
+  {
+    "model": "Supra",
+    "make": "Toyota"
+  },
+  {
+    "model": "BMW635L6",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "328 GTS/GTB",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Chevrolet Cavalier",
+    "make": "Quantum Technologies"
+  },
+  {
+    "model": "H3",
+    "make": "Hummer"
+  },
+  {
+    "model": "Commander",
+    "make": "Jeep"
+  },
+  {
+    "model": "Coupe GT",
+    "make": "Audi"
+  },
+  {
+    "model": "599 GTB Fiorano",
+    "make": "Ferrari"
+  },
+  {
+    "model": "M37",
+    "make": "Infiniti"
+  },
+  {
+    "model": "MKS",
+    "make": "Lincoln"
+  },
+  {
+    "model": "R8 Spyder",
+    "make": "Audi"
+  },
+  {
+    "model": "Eos",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "E150 Van",
+    "make": "Ford"
+  },
+  {
+    "model": "Tredia",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "DBS",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "Sunburst",
+    "make": "Pontiac"
+  },
+  {
+    "model": "DB9",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "1 Series",
+    "make": "BMW"
+  },
+  {
+    "model": "LR4",
+    "make": "Land Rover"
+  },
+  {
+    "model": "Somerset/Skylark",
+    "make": "Buick"
+  },
+  {
+    "model": "LR2",
+    "make": "Land Rover"
+  },
+  {
+    "model": "XR4Ti",
+    "make": "Merkur"
+  },
+  {
+    "model": "Calais",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "FX50",
+    "make": "Infiniti"
+  },
+  {
+    "model": "6 Series",
+    "make": "BMW"
+  },
+  {
+    "model": "458 Italia",
+    "make": "Ferrari"
+  },
+  {
+    "model": "QX56",
+    "make": "Infiniti"
+  },
+  {
+    "model": "RS 5",
+    "make": "Audi"
+  },
+  {
+    "model": "C/V",
+    "make": "Ram"
+  },
+  {
+    "model": "Prius c",
+    "make": "Toyota"
+  },
+  {
+    "model": "Flying Spur",
+    "make": "Bentley"
+  },
+  {
+    "model": "Q7",
+    "make": "Audi"
+  },
+  {
+    "model": "5000",
+    "make": "Audi"
+  },
+  {
+    "model": "458 Speciale",
+    "make": "Ferrari"
+  },
+  {
+    "model": "California T",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Trax",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "GL-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Equus",
+    "make": "Hyundai"
+  },
+  {
+    "model": "A7",
+    "make": "Audi"
+  },
+  {
+    "model": "Fiesta",
+    "make": "Ford"
+  },
+  {
+    "model": "F12",
+    "make": "Ferrari"
+  },
+  {
+    "model": "FX45",
+    "make": "Infiniti"
+  },
+  {
+    "model": "Targa",
+    "make": "Porsche"
+  },
+  {
+    "model": "RX-8",
+    "make": "Mazda"
+  },
+  {
+    "model": "Forenza",
+    "make": "Suzuki"
+  },
+  {
+    "model": "Seville",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Grand Marquis",
+    "make": "Mercury"
+  },
+  {
+    "model": "Monterey",
+    "make": "Pontiac"
+  },
+  {
+    "model": "Rendezvous",
+    "make": "Buick"
+  },
+  {
+    "model": "Ascender",
+    "make": "Isuzu"
+  },
+  {
+    "model": "Aviator",
+    "make": "Lincoln"
+  },
+  {
+    "model": "Turbo 4 911 Cab Kit",
+    "make": "Porsche"
+  },
+  {
+    "model": "Accent/Brio",
+    "make": "Hyundai"
+  },
+  {
+    "model": "Montego",
+    "make": "Mercury"
+  },
+  {
+    "model": "Uplander",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Aztek",
+    "make": "Pontiac"
+  },
+  {
+    "model": "XK8",
+    "make": "Jaguar"
+  },
+  {
+    "model": "Carrera 4 Cabriolet",
+    "make": "Porsche"
+  },
+  {
+    "model": "Silver Spirit/Spur/Mulsanne",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "S-type",
+    "make": "Jaguar"
+  },
+  {
+    "model": "Five Hundred",
+    "make": "Ford"
+  },
+  {
+    "model": "9-2",
+    "make": "Saab"
+  },
+  {
+    "model": "LTD Crown Victoria",
+    "make": "Ford"
+  },
+  {
+    "model": "Mariner",
+    "make": "Mercury"
+  },
+  {
+    "model": "CX-7",
+    "make": "Mazda"
+  },
+  {
+    "model": "STS-V",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Relay",
+    "make": "Saturn"
+  },
+  {
+    "model": "F430",
+    "make": "Ferrari"
+  },
+  {
+    "model": "XL7",
+    "make": "Suzuki"
+  },
+  {
+    "model": "XJR",
+    "make": "Jaguar"
+  },
+  {
+    "model": "XLR",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Aveo",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Azera",
+    "make": "Hyundai"
+  },
+  {
+    "model": "Flex",
+    "make": "Ford"
+  },
+  {
+    "model": "Gallardo",
+    "make": "Lamborghini"
+  },
+  {
+    "model": "Fit",
+    "make": "Honda"
+  },
+  {
+    "model": "Precis",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "Rabbit",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "Omega",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "CJ",
+    "make": "Jeep"
+  },
+  {
+    "model": "EXP",
+    "make": "Ford"
+  },
+  {
+    "model": "Voyager",
+    "make": "Chrysler"
+  },
+  {
+    "model": "Mark VII",
+    "make": "Lincoln"
+  },
+  {
+    "model": "Silver Spur Limousine",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "Coachbuilder Wagon",
+    "make": "Buick"
+  },
+  {
+    "model": "Convertible",
+    "make": "Saab"
+  },
+  {
+    "model": "960",
+    "make": "Volvo"
+  },
+  {
+    "model": "Roadmaster",
+    "make": "Buick"
+  },
+  {
+    "model": "Ram 2500 Pickup",
+    "make": "Dodge"
+  },
+  {
+    "model": "Del Sol",
+    "make": "Honda"
+  },
+  {
+    "model": "240SX",
+    "make": "Nissan"
+  },
+  {
+    "model": "WB",
+    "make": "Dabryan Coach Builders Inc"
+  },
+  {
+    "model": "Formal",
+    "make": "Federal Coach"
+  },
+  {
+    "model": "Ninety-Eight",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Stealth",
+    "make": "Dodge"
+  },
+  {
+    "model": "Vanden Plas",
+    "make": "Jaguar"
+  },
+  {
+    "model": "MX-6",
+    "make": "Mazda"
+  },
+  {
+    "model": "Neon",
+    "make": "Plymouth"
+  },
+  {
+    "model": "Previa",
+    "make": "Toyota"
+  },
+  {
+    "model": "Diablo",
+    "make": "Lamborghini"
+  },
+  {
+    "model": "Esteem",
+    "make": "Suzuki"
+  },
+  {
+    "model": "Impulse",
+    "make": "Isuzu"
+  },
+  {
+    "model": "Paseo",
+    "make": "Toyota"
+  },
+  {
+    "model": "CL",
+    "make": "Acura"
+  },
+  {
+    "model": "Mystique",
+    "make": "Mercury"
+  },
+  {
+    "model": "Cirrus",
+    "make": "Chrysler"
+  },
+  {
+    "model": "Breeze",
+    "make": "Plymouth"
+  },
+  {
+    "model": "LHS",
+    "make": "Chrysler"
+  },
+  {
+    "model": "B1500 Van",
+    "make": "Dodge"
+  },
+  {
+    "model": "B1500 Wagon",
+    "make": "Dodge"
+  },
+  {
+    "model": "Eurovan",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "QX4",
+    "make": "Infiniti"
+  },
+  {
+    "model": "360 Modena/Spider",
+    "make": "Ferrari"
+  },
+  {
+    "model": "DB-7 Vantage",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "GLC",
+    "make": "Mazda"
+  },
+  {
+    "model": "Town Car",
+    "make": "Lincoln"
+  },
+  {
+    "model": "X1/9",
+    "make": "Bertone"
+  },
+  {
+    "model": "Safari Cargo",
+    "make": "GMC"
+  },
+  {
+    "model": "Z3",
+    "make": "BMW"
+  },
+  {
+    "model": "Alero",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Laser/Daytona",
+    "make": "Chrysler"
+  },
+  {
+    "model": "Starion",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "I-Mark",
+    "make": "Isuzu"
+  },
+  {
+    "model": "Protege/Protege 5",
+    "make": "Mazda"
+  },
+  {
+    "model": "L100/200",
+    "make": "Saturn"
+  },
+  {
+    "model": "L300",
+    "make": "Saturn"
+  },
+  {
+    "model": "i4",
+    "make": "BMW"
+  },
+  {
+    "model": "C40",
+    "make": "Volvo"
+  },
+  {
+    "model": "RZ",
+    "make": "Lexus"
+  },
+  {
+    "model": "ARIYA",
+    "make": "Nissan"
+  },
+  {
+    "model": "Taos",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "SQ7",
+    "make": "Audi"
+  },
+  {
+    "model": "Caravelle",
+    "make": "Plymouth"
+  },
+  {
+    "model": "Milano",
+    "make": "Alfa Romeo"
+  },
+  {
+    "model": "Diplomat",
+    "make": "Dodge"
+  },
+  {
+    "model": "M30",
+    "make": "Infiniti"
+  },
+  {
+    "model": "Fox",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "Axxess",
+    "make": "Nissan"
+  },
+  {
+    "model": "Commercial Chassis",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Charade",
+    "make": "Daihatsu"
+  },
+  {
+    "model": "3000 GT",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "164",
+    "make": "Alfa Romeo"
+  },
+  {
+    "model": "V8",
+    "make": "Audi"
+  },
+  {
+    "model": "Lumina",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Brougham",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Samurai",
+    "make": "Suzuki"
+  },
+  {
+    "model": "968",
+    "make": "Porsche"
+  },
+  {
+    "model": "Pulsar/Pulsar-NX",
+    "make": "Nissan"
+  },
+  {
+    "model": "Vigor",
+    "make": "Acura"
+  },
+  {
+    "model": "Custom Cruiser",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Ferrari 512 TR",
+    "make": "Ferrari"
+  },
+  {
+    "model": "SVX",
+    "make": "Subaru"
+  },
+  {
+    "model": "Huracan",
+    "make": "Lamborghini"
+  },
+  {
+    "model": "V10 (K10) Pickup",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Q5",
+    "make": "Audi"
+  },
+  {
+    "model": "Cadenza",
+    "make": "Kia"
+  },
+  {
+    "model": "XE",
+    "make": "Jaguar"
+  },
+  {
+    "model": "G-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Volt",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Continental Supersports Convertible",
+    "make": "Bentley"
+  },
+  {
+    "model": "Stinger",
+    "make": "Kia"
+  },
+  {
+    "model": "Envision",
+    "make": "Buick"
+  },
+  {
+    "model": "Ascent",
+    "make": "Subaru"
+  },
+  {
+    "model": "124 Spider",
+    "make": "Fiat"
+  },
+  {
+    "model": "Eclipse Cross",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "XT4",
+    "make": "Cadillac"
+  },
+  {
+    "model": "924",
+    "make": "Porsche"
+  },
+  {
+    "model": "Cabriolet",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "86",
+    "make": "Toyota"
+  },
+  {
+    "model": "Q3",
+    "make": "Audi"
+  },
+  {
+    "model": "Giulia",
+    "make": "Alfa Romeo"
+  },
+  {
+    "model": "Corsair",
+    "make": "Lincoln"
+  },
+  {
+    "model": "Kona",
+    "make": "Hyundai"
+  },
+  {
+    "model": "S7",
+    "make": "Audi"
+  },
+  {
+    "model": "GLB-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Transit T150 Wagon",
+    "make": "Ford"
+  },
+  {
+    "model": "G70",
+    "make": "Genesis"
+  },
+  {
+    "model": "SA 310",
+    "make": "Suzuki"
+  },
+  {
+    "model": "BRZ",
+    "make": "Subaru"
+  },
+  {
+    "model": "Prius Prime",
+    "make": "Toyota"
+  },
+  {
+    "model": "Chiron",
+    "make": "Bugatti"
+  },
+  {
+    "model": "720S Spider",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "Ioniq 5",
+    "make": "Hyundai"
+  },
+  {
+    "model": "iX",
+    "make": "BMW"
+  },
+  {
+    "model": "765LT Spider",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "GV60",
+    "make": "Genesis"
+  },
+  {
+    "model": "Artura",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "I-Pace",
+    "make": "Jaguar"
+  },
+  {
+    "model": "EQB",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Cutlass Cruiser",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "MERC BENZ 300CE",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "M45",
+    "make": "Infiniti"
+  },
+  {
+    "model": "Brooklands",
+    "make": "Bentley"
+  },
+  {
+    "model": "GT-R",
+    "make": "Nissan"
+  },
+  {
+    "model": "G25",
+    "make": "Infiniti"
+  },
+  {
+    "model": "M56",
+    "make": "Infiniti"
+  },
+  {
+    "model": "CX-5",
+    "make": "Mazda"
+  },
+  {
+    "model": "Captiva",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Speed 3",
+    "make": "Mazda"
+  },
+  {
+    "model": "xD",
+    "make": "Scion"
+  },
+  {
+    "model": "CODA",
+    "make": "CODA Automotive"
+  },
+  {
+    "model": "Prius v",
+    "make": "Toyota"
+  },
+  {
+    "model": "458 Spider",
+    "make": "Ferrari"
+  },
+  {
+    "model": "XJL",
+    "make": "Jaguar"
+  },
+  {
+    "model": "iA",
+    "make": "Scion"
+  },
+  {
+    "model": "Wraith",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "Caballero Pickup",
+    "make": "GMC"
+  },
+  {
+    "model": "Carrera 2 Cabriolet Kit",
+    "make": "Porsche"
+  },
+  {
+    "model": "Kalos",
+    "make": "Daewoo"
+  },
+  {
+    "model": "Lacetti",
+    "make": "Daewoo"
+  },
+  {
+    "model": "Freestar",
+    "make": "Ford"
+  },
+  {
+    "model": "Venture",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "MX-5 Miata",
+    "make": "Mazda"
+  },
+  {
+    "model": "Carrera 4 Cabriolet Kit",
+    "make": "Porsche"
+  },
+  {
+    "model": "Baja",
+    "make": "Subaru"
+  },
+  {
+    "model": "Zephyr",
+    "make": "Lincoln"
+  },
+  {
+    "model": "Terraza",
+    "make": "Buick"
+  },
+  {
+    "model": "i-290 Extended Cab",
+    "make": "Isuzu"
+  },
+  {
+    "model": "i-370 Crew Cab",
+    "make": "Isuzu"
+  },
+  {
+    "model": "Solstice",
+    "make": "Pontiac"
+  },
+  {
+    "model": "Mark LT",
+    "make": "Lincoln"
+  },
+  {
+    "model": "Entourage",
+    "make": "Hyundai"
+  },
+  {
+    "model": "S281 Family",
+    "make": "Saleen Performance"
+  },
+  {
+    "model": "Borrego",
+    "make": "Kia"
+  },
+  {
+    "model": "G3",
+    "make": "Pontiac"
+  },
+  {
+    "model": "STS",
+    "make": "Cadillac"
+  },
+  {
+    "model": "EX35",
+    "make": "Infiniti"
+  },
+  {
+    "model": "Elise/Exige",
+    "make": "Lotus"
+  },
+  {
+    "model": "California",
+    "make": "Ferrari"
+  },
+  {
+    "model": "S15 Utility Body",
+    "make": "GMC"
+  },
+  {
+    "model": "928",
+    "make": "Porsche"
+  },
+  {
+    "model": "Silhouette",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Kubvan",
+    "make": "Grumman Olson"
+  },
+  {
+    "model": "Lincoln 24E",
+    "make": "Federal Coach"
+  },
+  {
+    "model": "MX-3",
+    "make": "Mazda"
+  },
+  {
+    "model": "Brooklands/Turbo R",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "Ferrari F355/355 F1",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Eighty-Eight/Regency/LSS",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Lanos",
+    "make": "Daewoo"
+  },
+  {
+    "model": "Scrambler",
+    "make": "Jeep"
+  },
+  {
+    "model": "Catera",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Eighty-Eight/Regency",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Prowler",
+    "make": "Plymouth"
+  },
+  {
+    "model": "Biturbo Spyder",
+    "make": "Maserati"
+  },
+  {
+    "model": "Ram Wagon 2500",
+    "make": "Dodge"
+  },
+  {
+    "model": "Leganza",
+    "make": "Daewoo"
+  },
+  {
+    "model": "S-Type",
+    "make": "Jaguar"
+  },
+  {
+    "model": "Ram Van 1500",
+    "make": "Dodge"
+  },
+  {
+    "model": "Carrera 2 Coupe",
+    "make": "Porsche"
+  },
+  {
+    "model": "CX-90",
+    "make": "Mazda"
+  },
+  {
+    "model": "Ioniq 6",
+    "make": "Hyundai"
+  },
+  {
+    "model": "Q8 e-tron",
+    "make": "Audi"
+  },
+  {
+    "model": "LTD",
+    "make": "Ford"
+  },
+  {
+    "model": "Corsica",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "LeSabre/Electra Wagon",
+    "make": "Buick"
+  },
+  {
+    "model": "Karif",
+    "make": "Maserati"
+  },
+  {
+    "model": "Silver Spirit II/Silver Spur",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "Spyder",
+    "make": "Maserati"
+  },
+  {
+    "model": "W250 Pickup",
+    "make": "Dodge"
+  },
+  {
+    "model": "F12 tdf",
+    "make": "Ferrari"
+  },
+  {
+    "model": "QX70",
+    "make": "Infiniti"
+  },
+  {
+    "model": "i8",
+    "make": "BMW"
+  },
+  {
+    "model": "488 Spider",
+    "make": "Ferrari"
+  },
+  {
+    "model": "ATS-V",
+    "make": "Cadillac"
+  },
+  {
+    "model": "RS 3",
+    "make": "Audi"
+  },
+  {
+    "model": "Raider",
+    "make": "Dodge"
+  },
+  {
+    "model": "Urus",
+    "make": "Lamborghini"
+  },
+  {
+    "model": "Nautilus",
+    "make": "Lincoln"
+  },
+  {
+    "model": "EcoSport",
+    "make": "Ford"
+  },
+  {
+    "model": "Mulsanne",
+    "make": "Bentley"
+  },
+  {
+    "model": "Continental GT Convertible",
+    "make": "Bentley"
+  },
+  {
+    "model": "Ghost",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "Seltos",
+    "make": "Kia"
+  },
+  {
+    "model": "675LT Spider",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "570S Spider",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "TTS",
+    "make": "Audi"
+  },
+  {
+    "model": "Trailblazer",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "TTS Coupe",
+    "make": "Audi"
+  },
+  {
+    "model": "812 Competizione",
+    "make": "Ferrari"
+  },
+  {
+    "model": "e-tron S",
+    "make": "Audi"
+  },
+  {
+    "model": "Pacifica",
+    "make": "Chrysler"
+  },
+  {
+    "model": "CX-30",
+    "make": "Mazda"
+  },
+  {
+    "model": "bZ4X",
+    "make": "Toyota"
+  },
+  {
+    "model": "R1T",
+    "make": "Rivian"
+  },
+  {
+    "model": "Grand Caravan",
+    "make": "Dodge"
+  },
+  {
+    "model": "QC Car",
+    "make": "Chrysler"
+  },
+  {
+    "model": "MERC BENZ 300TE",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "360 Modena/Modena F1",
+    "make": "Ferrari"
+  },
+  {
+    "model": "London Taxi",
+    "make": "London Coach Co Inc"
+  },
+  {
+    "model": "tC",
+    "make": "Scion"
+  },
+  {
+    "model": "E350 Van",
+    "make": "Ford"
+  },
+  {
+    "model": "Kizashi",
+    "make": "Suzuki"
+  },
+  {
+    "model": "New 911 Carrera",
+    "make": "Porsche"
+  },
+  {
+    "model": "Routan",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "ZDX",
+    "make": "Acura"
+  },
+  {
+    "model": "TVR 280i Coupe",
+    "make": "TVR Engineering Ltd"
+  },
+  {
+    "model": "QX50",
+    "make": "Infiniti"
+  },
+  {
+    "model": "xB",
+    "make": "Scion"
+  },
+  {
+    "model": "500e",
+    "make": "Fiat"
+  },
+  {
+    "model": "ELR",
+    "make": "Cadillac"
+  },
+  {
+    "model": "XM",
+    "make": "CX Automotive"
+  },
+  {
+    "model": "Vision",
+    "make": "Eagle"
+  },
+  {
+    "model": "400",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Trans Sport/Montana",
+    "make": "Pontiac"
+  },
+  {
+    "model": "Amigo",
+    "make": "Isuzu"
+  },
+  {
+    "model": "Acclaim",
+    "make": "Plymouth"
+  },
+  {
+    "model": "Panoz Roadster",
+    "make": "Panoz Auto-Development"
+  },
+  {
+    "model": "G20",
+    "make": "Infiniti"
+  },
+  {
+    "model": "B1500/B2500 Van",
+    "make": "Dodge"
+  },
+  {
+    "model": "B3500 Van",
+    "make": "Dodge"
+  },
+  {
+    "model": "Azure",
+    "make": "Bentley"
+  },
+  {
+    "model": "Caravan/Ram Van",
+    "make": "Dodge"
+  },
+  {
+    "model": "Brat",
+    "make": "Subaru"
+  },
+  {
+    "model": "XG",
+    "make": "Hyundai"
+  },
+  {
+    "model": "A.C.Mkiv",
+    "make": "Autokraft Limited"
+  },
+  {
+    "model": "Carrera 4 S",
+    "make": "Porsche"
+  },
+  {
+    "model": "Pony Excel",
+    "make": "Hyundai"
+  },
+  {
+    "model": "Concorde/LHS",
+    "make": "Chrysler"
+  },
+  {
+    "model": "Carrera 4 S Cabriolet",
+    "make": "Porsche"
+  },
+  {
+    "model": "GTO",
+    "make": "Pontiac"
+  },
+  {
+    "model": "Verona",
+    "make": "Suzuki"
+  },
+  {
+    "model": "SLR",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Optra",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Gran Fury",
+    "make": "Plymouth"
+  },
+  {
+    "model": "62",
+    "make": "Maybach"
+  },
+  {
+    "model": "LR3",
+    "make": "Land Rover"
+  },
+  {
+    "model": "XLR-V",
+    "make": "Cadillac"
+  },
+  {
+    "model": "RL",
+    "make": "Acura"
+  },
+  {
+    "model": "SKY",
+    "make": "Saturn"
+  },
+  {
+    "model": "Endeavor",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "S331 Family",
+    "make": "Saleen Performance"
+  },
+  {
+    "model": "Carrera 2 S Cabriolet",
+    "make": "Porsche"
+  },
+  {
+    "model": "370z",
+    "make": "Nissan"
+  },
+  {
+    "model": "Executive Sedan/Limousine",
+    "make": "Chrysler"
+  },
+  {
+    "model": "S10 Utility Body",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Brougham/DeVille",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Grecale",
+    "make": "Maserati"
+  },
+  {
+    "model": "228",
+    "make": "Maserati"
+  },
+  {
+    "model": "230",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Fleetwood/DeVille",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Post Office DJ5",
+    "make": "AM General"
+  },
+  {
+    "model": "SLX",
+    "make": "Acura"
+  },
+  {
+    "model": "Cutlass",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Ram Wagon 1500",
+    "make": "Dodge"
+  },
+  {
+    "model": "TVR 280i/350i Coupe",
+    "make": "TVR Engineering Ltd"
+  },
+  {
+    "model": "Carrera 4 S Kit",
+    "make": "Porsche"
+  },
+  {
+    "model": "V40",
+    "make": "Volvo"
+  },
+  {
+    "model": "Coupe and Gransport",
+    "make": "Maserati"
+  },
+  {
+    "model": "500SEL",
+    "make": "Texas Coach Company"
+  },
+  {
+    "model": "Fuego",
+    "make": "Renault"
+  },
+  {
+    "model": "Raider Pickup",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "Van 1500",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "R-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "Enclave",
+    "make": "Buick"
+  },
+  {
+    "model": "Carrera 4 Targa",
+    "make": "Porsche"
+  },
+  {
+    "model": "Nova",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "D250 Pickup Cab Chassis",
+    "make": "Dodge"
+  },
+  {
+    "model": "Saloon/Vantage/Volante",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "CX-50",
+    "make": "Mazda"
+  },
+  {
+    "model": "i5",
+    "make": "BMW"
+  },
+  {
+    "model": "Hummer EV",
+    "make": "GMC"
+  },
+  {
+    "model": "Series 1",
+    "make": "Evans Automobiles"
+  },
+  {
+    "model": "Fleetwood Brougham",
+    "make": "Cadillac"
+  },
+  {
+    "model": "405",
+    "make": "Peugeot"
+  },
+  {
+    "model": "LTD Crown Victoria/Country Squire Wagon",
+    "make": "Ford"
+  },
+  {
+    "model": "Consulier GTP",
+    "make": "Consulier Industries Inc"
+  },
+  {
+    "model": "Festiva",
+    "make": "Ford"
+  },
+  {
+    "model": "New Yorker Fifth Avenue/Imperial",
+    "make": "Chrysler"
+  },
+  {
+    "model": "Pas-Syclone",
+    "make": "PAS Inc - GMC"
+  },
+  {
+    "model": "Wetl 300",
+    "make": "Wallace Environmental"
+  },
+  {
+    "model": "XTS Limo",
+    "make": "Cadillac"
+  },
+  {
+    "model": "K900",
+    "make": "Kia"
+  },
+  {
+    "model": "XTS Hearse",
+    "make": "Cadillac"
+  },
+  {
+    "model": "S90",
+    "make": "Volvo"
+  },
+  {
+    "model": "GTC4Lusso",
+    "make": "Ferrari"
+  },
+  {
+    "model": "RUFTURBO12/CTR3/CTR2017",
+    "make": "RUF Automobile"
+  },
+  {
+    "model": "650S Can-Am",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "720S Coupe",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "GV/GVX",
+    "make": "Yugo"
+  },
+  {
+    "model": "S3",
+    "make": "Audi"
+  },
+  {
+    "model": "Cullinan",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "RS e-tron GT",
+    "make": "Audi"
+  },
+  {
+    "model": "765LT Coupe",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "RAV4 Prime",
+    "make": "Toyota"
+  },
+  {
+    "model": "UX",
+    "make": "Lexus"
+  },
+  {
+    "model": "LEAF",
+    "make": "Nissan"
+  },
+  {
+    "model": "Maverick",
+    "make": "Ford"
+  },
+  {
+    "model": "ITS 190E 2.3",
+    "make": "Import Trade Services"
+  },
+  {
+    "model": "MERC.BENZ 260E",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "Eighty-Eight",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "EV Plus",
+    "make": "Honda"
+  },
+  {
+    "model": "GTA",
+    "make": "Renault"
+  },
+  {
+    "model": "i-MiEV",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "780",
+    "make": "Volvo"
+  },
+  {
+    "model": "e6",
+    "make": "BYD"
+  },
+  {
+    "model": "Q40",
+    "make": "Infiniti"
+  },
+  {
+    "model": "C-HR",
+    "make": "Toyota"
+  },
+  {
+    "model": "488 Pista Spider",
+    "make": "Ferrari"
+  },
+  {
+    "model": "4C",
+    "make": "Alfa Romeo"
+  },
+  {
+    "model": "488 Pista",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Bolt EV",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "CX-3",
+    "make": "Mazda"
+  },
+  {
+    "model": "Divo",
+    "make": "Bugatti"
+  },
+  {
+    "model": "600LT Coupe",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "Model Y",
+    "make": "Tesla"
+  },
+  {
+    "model": "812 GTS",
+    "make": "Ferrari"
+  },
+  {
+    "model": "MX-30",
+    "make": "Mazda"
+  },
+  {
+    "model": "F8 Tributo",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Fleetwood",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Electra Estate Wagon",
+    "make": "Buick"
+  },
+  {
+    "model": "ITS 230CE",
+    "make": "Import Trade Services"
+  },
+  {
+    "model": "ITS 200TE",
+    "make": "Import Trade Services"
+  },
+  {
+    "model": "300SL MERC BENZ",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "BMW735I",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "Virage/Volante",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "H3T",
+    "make": "Hummer"
+  },
+  {
+    "model": "RX Turbo",
+    "make": "Subaru"
+  },
+  {
+    "model": "SLS AMG",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "9-4",
+    "make": "Saab"
+  },
+  {
+    "model": "Karma",
+    "make": "Fisker"
+  },
+  {
+    "model": "FX37",
+    "make": "Infiniti"
+  },
+  {
+    "model": "380",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "CT",
+    "make": "Lexus"
+  },
+  {
+    "model": "Coupe Cambiocorsa/Coupe GT",
+    "make": "Maserati"
+  },
+  {
+    "model": "Carrera 4 S Cabriolet Kit",
+    "make": "Porsche"
+  },
+  {
+    "model": "Voyager/Town and Country",
+    "make": "Chrysler"
+  },
+  {
+    "model": "18i/Wagon/Sportwagon",
+    "make": "Renault"
+  },
+  {
+    "model": "Reno",
+    "make": "Suzuki"
+  },
+  {
+    "model": "Rondo",
+    "make": "Kia"
+  },
+  {
+    "model": "F150 Supercharged",
+    "make": "Saleen Performance"
+  },
+  {
+    "model": "Altima / Stanza",
+    "make": "Nissan"
+  },
+  {
+    "model": "J30",
+    "make": "Infiniti"
+  },
+  {
+    "model": "Spirit III/Spur III/Dawn",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "New Yorker",
+    "make": "Chrysler"
+  },
+  {
+    "model": "Silver Dawn",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "3000 GT Spyder",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "B2500 Van",
+    "make": "Dodge"
+  },
+  {
+    "model": "550 Maranello",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Sephia/Spectra",
+    "make": "Kia"
+  },
+  {
+    "model": "Vehicross",
+    "make": "Isuzu"
+  },
+  {
+    "model": "Blackwood",
+    "make": "Lincoln"
+  },
+  {
+    "model": "Turbo Kit",
+    "make": "Porsche"
+  },
+  {
+    "model": "Medallion",
+    "make": "Eagle"
+  },
+  {
+    "model": "Hardbody",
+    "make": "Nissan"
+  },
+  {
+    "model": "BMW 325i",
+    "make": "Import Trade Services"
+  },
+  {
+    "model": "D250 Cab Chassis",
+    "make": "Dodge"
+  },
+  {
+    "model": "Clarity",
+    "make": "Honda"
+  },
+  {
+    "model": "DB11",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "GLI",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "R1S",
+    "make": "Rivian"
+  },
+  {
+    "model": "GR 86",
+    "make": "Toyota"
+  },
+  {
+    "model": "Scorpio",
+    "make": "Merkur"
+  },
+  {
+    "model": "Crown",
+    "make": "Toyota"
+  },
+  {
+    "model": "Veracruz",
+    "make": "Hyundai"
+  },
+  {
+    "model": "MERC BENZ 300SE",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "GTV",
+    "make": "Alfa Romeo"
+  },
+  {
+    "model": "IS F",
+    "make": "Lexus"
+  },
+  {
+    "model": "G8",
+    "make": "Pontiac"
+  },
+  {
+    "model": "NV200 NYC Taxi",
+    "make": "Nissan"
+  },
+  {
+    "model": "222E",
+    "make": "Maserati"
+  },
+  {
+    "model": "Lagonda",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "CSX",
+    "make": "Dodge"
+  },
+  {
+    "model": "Postal Cab Chassis",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Allante",
+    "make": "Cadillac"
+  },
+  {
+    "model": "xA",
+    "make": "Scion"
+  },
+  {
+    "model": "Turbo 4 911 Turbo Cab S",
+    "make": "Porsche"
+  },
+  {
+    "model": "GLH-S",
+    "make": "Dodge"
+  },
+  {
+    "model": "9-7",
+    "make": "Saab"
+  },
+  {
+    "model": "Funeral Coach",
+    "make": "S and S Coach Company  E.p. Dutton"
+  },
+  {
+    "model": "DeVille/Concourse",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Six Door",
+    "make": "Federal Coach"
+  },
+  {
+    "model": "Windsor",
+    "make": "Federal Coach"
+  },
+  {
+    "model": "Lumina Minivan",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "B2500 Wagon",
+    "make": "Dodge"
+  },
+  {
+    "model": "Detomaso Mangusta",
+    "make": "Qvale"
+  },
+  {
+    "model": "Enzo Ferrari",
+    "make": "Ferrari"
+  },
+  {
+    "model": "DB-7 GT",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "Turbo",
+    "make": "Porsche"
+  },
+  {
+    "model": "Neon/SRT-4/SX 2.0",
+    "make": "Dodge"
+  },
+  {
+    "model": "Rapide",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "SLC-Class",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "TT RS",
+    "make": "Audi"
+  },
+  {
+    "model": "600LT Spider",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "Q4 e-tron",
+    "make": "Audi"
+  },
+  {
+    "model": "MC20",
+    "make": "Maserati"
+  },
+  {
+    "model": "Century Estate Wagon",
+    "make": "Buick"
+  },
+  {
+    "model": "Niva",
+    "make": "Volga Associated Automobile"
+  },
+  {
+    "model": "Bitter SC",
+    "make": "Bitter Gmbh and Co. Kg"
+  },
+  {
+    "model": "599 GTO",
+    "make": "Ferrari"
+  },
+  {
+    "model": "TVR 280i Convertible",
+    "make": "TVR Engineering Ltd"
+  },
+  {
+    "model": "MP4-12C Spider",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "488 GTB",
+    "make": "Ferrari"
+  },
+  {
+    "model": "F60 America",
+    "make": "Ferrari"
+  },
+  {
+    "model": "750C/I-Mark",
+    "make": "Isuzu"
+  },
+  {
+    "model": "Altra EV",
+    "make": "Nissan"
+  },
+  {
+    "model": "Th!nk",
+    "make": "Ford"
+  },
+  {
+    "model": "RSX",
+    "make": "Acura"
+  },
+  {
+    "model": "DJ Po Vehicle",
+    "make": "AM General"
+  },
+  {
+    "model": "RS Q8",
+    "make": "Audi"
+  },
+  {
+    "model": "348 TB/TS",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Wetl 560",
+    "make": "Wallace Environmental"
+  },
+  {
+    "model": "PORSCHE 928 S4",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "Plus Eight",
+    "make": "Morgan"
+  },
+  {
+    "model": "Continental Supersports",
+    "make": "Bentley"
+  },
+  {
+    "model": "Promaster City",
+    "make": "Ram"
+  },
+  {
+    "model": "Cascada",
+    "make": "Buick"
+  },
+  {
+    "model": "R32",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "Armored Deville",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Carrera 2 Coupe Kit",
+    "make": "Porsche"
+  },
+  {
+    "model": "Astra",
+    "make": "Saturn"
+  },
+  {
+    "model": "SJ 410",
+    "make": "Suzuki"
+  },
+  {
+    "model": "JX/JXI/Limited Convertible",
+    "make": "Chrysler"
+  },
+  {
+    "model": "Protege/Protege MPS",
+    "make": "Mazda"
+  },
+  {
+    "model": "575",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Portofino",
+    "make": "Ferrari"
+  },
+  {
+    "model": "620R Coupe",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "Senna",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "SF90 Stradale Coupe",
+    "make": "Ferrari"
+  },
+  {
+    "model": "W-126/4 Series",
+    "make": "JBA Motorcars, Inc."
+  },
+  {
+    "model": "LYRIQ",
+    "make": "Cadillac"
+  },
+  {
+    "model": "225",
+    "make": "Maserati"
+  },
+  {
+    "model": "Sigma",
+    "make": "Mitsubishi"
+  },
+  {
+    "model": "Reatta",
+    "make": "Buick"
+  },
+  {
+    "model": "J-Car/Elantra",
+    "make": "Hyundai"
+  },
+  {
+    "model": "Monaco",
+    "make": "Dodge"
+  },
+  {
+    "model": "GV Plus/GV/Cabrio",
+    "make": "Yugo"
+  },
+  {
+    "model": "ITS 230TE",
+    "make": "Import Trade Services"
+  },
+  {
+    "model": "Wetl 600 SEL",
+    "make": "Wallace Environmental"
+  },
+  {
+    "model": "Veyron",
+    "make": "Bugatti"
+  },
+  {
+    "model": "Camargue",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "740 GLE Sedan",
+    "make": "Mcevoy Motors"
+  },
+  {
+    "model": "P1",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "650S Coupe",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "360 Modena/Spider/Challenge",
+    "make": "Ferrari"
+  },
+  {
+    "model": "500SEC",
+    "make": "Texas Coach Company"
+  },
+  {
+    "model": "Kenyon 5.0 Coupe",
+    "make": "Kenyon Corporation Of America"
+  },
+  {
+    "model": "Starlet",
+    "make": "Toyota"
+  },
+  {
+    "model": "i7",
+    "make": "BMW"
+  },
+  {
+    "model": "Roma",
+    "make": "Ferrari"
+  },
+  {
+    "model": "QX55",
+    "make": "Infiniti"
+  },
+  {
+    "model": "e-tron GT",
+    "make": "Audi"
+  },
+  {
+    "model": "F-150 Lightning",
+    "make": "Ford"
+  },
+  {
+    "model": "Solterra",
+    "make": "Subaru"
+  },
+  {
+    "model": "Renault Medallion",
+    "make": "Eagle"
+  },
+  {
+    "model": "RS 7",
+    "make": "Audi"
+  },
+  {
+    "model": "1",
+    "make": "Polestar"
+  },
+  {
+    "model": "825",
+    "make": "Sterling"
+  },
+  {
+    "model": "Corolla Cross",
+    "make": "Toyota"
+  },
+  {
+    "model": "190E 2.3 MERC BENZ",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "Delta 204T",
+    "make": "Red Shift Ltd."
+  },
+  {
+    "model": "EX37",
+    "make": "Infiniti"
+  },
+  {
+    "model": "I35",
+    "make": "Infiniti"
+  },
+  {
+    "model": "Coupe Cambiocorsa/GT/G-Sport",
+    "make": "Maserati"
+  },
+  {
+    "model": "500SE",
+    "make": "Texas Coach Company"
+  },
+  {
+    "model": "i-280 Extended Cab",
+    "make": "Isuzu"
+  },
+  {
+    "model": "Outlook",
+    "make": "Saturn"
+  },
+  {
+    "model": "Dovell 230E",
+    "make": "Bill Dovell Motor Car Company"
+  },
+  {
+    "model": "Ferrari F512M",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Lincoln Eaton",
+    "make": "Federal Coach"
+  },
+  {
+    "model": "960 Wagon/V90",
+    "make": "Volvo"
+  },
+  {
+    "model": "Intrigue",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Z8",
+    "make": "BMW"
+  },
+  {
+    "model": "Coupe Cambiocorsa/coupe GT",
+    "make": "Maserati"
+  },
+  {
+    "model": "Station Wagon",
+    "make": "Dacia"
+  },
+  {
+    "model": "Coupe quattro",
+    "make": "Audi"
+  },
+  {
+    "model": "Elan",
+    "make": "Lotus"
+  },
+  {
+    "model": "W8",
+    "make": "Vector"
+  },
+  {
+    "model": "RUF TURBO 12/CTR3",
+    "make": "RUF Automobile"
+  },
+  {
+    "model": "Evoque",
+    "make": "Land Rover"
+  },
+  {
+    "model": "Venue",
+    "make": "Hyundai"
+  },
+  {
+    "model": "Q8",
+    "make": "Audi"
+  },
+  {
+    "model": "Bolt EUV",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Elva",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "MERC BENZ 300SEL",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "ActiveHybrid X6",
+    "make": "BMW"
+  },
+  {
+    "model": "Turbo 2 911 Gt2",
+    "make": "Porsche"
+  },
+  {
+    "model": "Turbo 4 911 S",
+    "make": "Porsche"
+  },
+  {
+    "model": "i-370 Extended Cab",
+    "make": "Isuzu"
+  },
+  {
+    "model": "Dovell 230CE",
+    "make": "Bill Dovell Motor Car Company"
+  },
+  {
+    "model": "Kenyon 5.0 Sp Sedan",
+    "make": "Kenyon Corporation Of America"
+  },
+  {
+    "model": "Ferrari 348 TB/TS/Spider",
+    "make": "Ferrari"
+  },
+  {
+    "model": "New Yorker/LHS",
+    "make": "Chrysler"
+  },
+  {
+    "model": "Ferrari F50",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Lincoln Stratford",
+    "make": "Federal Coach"
+  },
+  {
+    "model": "Ferrari F355",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Turbo GT2",
+    "make": "Porsche"
+  },
+  {
+    "model": "Cxestate",
+    "make": "CX Automotive"
+  },
+  {
+    "model": "Pas-typhoon",
+    "make": "PAS Inc - GMC"
+  },
+  {
+    "model": "MERC BENZ 300E",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "3.2 Mondial/Cabriolet",
+    "make": "Ferrari"
+  },
+  {
+    "model": "599 SA Aperta",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Kallista",
+    "make": "Panther Car Company Limited"
+  },
+  {
+    "model": "Sabre",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "DBX V8",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "CX",
+    "make": "CX Automotive"
+  },
+  {
+    "model": "Renaissance",
+    "make": "Federal Coach"
+  },
+  {
+    "model": "B3500 Wagon",
+    "make": "Dodge"
+  },
+  {
+    "model": "Wave",
+    "make": "Pontiac"
+  },
+  {
+    "model": "Carrera 4 S Targa",
+    "make": "Porsche"
+  },
+  {
+    "model": "Saloon/vantage/volante",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "Z",
+    "make": "Nissan"
+  },
+  {
+    "model": "SSC",
+    "make": "Saleen"
+  },
+  {
+    "model": "Laforza",
+    "make": "Laforza Automobile Inc"
+  },
+  {
+    "model": "Ruf",
+    "make": "Ruf Automobile Gmbh"
+  },
+  {
+    "model": "Stage 3 Mustang",
+    "make": "Roush Performance"
+  },
+  {
+    "model": "812 Superfast",
+    "make": "Ferrari"
+  },
+  {
+    "model": "New Yorker/5th Avenue",
+    "make": "Chrysler"
+  },
+  {
+    "model": "Wetl 500",
+    "make": "Wallace Environmental"
+  },
+  {
+    "model": "300CE MERC BENZ",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "Huayra Coupe",
+    "make": "Pagani"
+  },
+  {
+    "model": "675LT Coupe",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "Turbo 4 911",
+    "make": "Porsche"
+  },
+  {
+    "model": "Turbo 4 911 Turbo",
+    "make": "Porsche"
+  },
+  {
+    "model": "Phaeton",
+    "make": "Volkswagen"
+  },
+  {
+    "model": "E Class/New Yorker",
+    "make": "Chrysler"
+  },
+  {
+    "model": "F355/355 F1",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Wetl Testarossa",
+    "make": "Wallace Environmental"
+  },
+  {
+    "model": "MERC.BENZ.300SE",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "TR40",
+    "make": "Mahindra"
+  },
+  {
+    "model": "240 DL/240 GL Sedan",
+    "make": "Mcevoy Motors"
+  },
+  {
+    "model": "RS 6",
+    "make": "Audi"
+  },
+  {
+    "model": "Classic",
+    "make": "Chevrolet"
+  },
+  {
+    "model": "Magnus",
+    "make": "Daewoo"
+  },
+  {
+    "model": "Turbo 2 911 GT2",
+    "make": "Porsche"
+  },
+  {
+    "model": "550 Maranello/Barchetta",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Park Ward",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "296 GTB",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Monza SP1",
+    "make": "Ferrari"
+  },
+  {
+    "model": "540C Coupe",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "K27",
+    "make": "Kandi"
+  },
+  {
+    "model": "FJ8c Post Office",
+    "make": "AM General"
+  },
+  {
+    "model": "ITS 520",
+    "make": "Import Trade Services"
+  },
+  {
+    "model": "Wetl 850I",
+    "make": "Wallace Environmental"
+  },
+  {
+    "model": "575 M Maranello and Superamerica",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Elise/exige",
+    "make": "Lotus"
+  },
+  {
+    "model": "F141",
+    "make": "Ferrari"
+  },
+  {
+    "model": "599 GTB",
+    "make": "Ferrari"
+  },
+  {
+    "model": "DeVille/60 Special",
+    "make": "Cadillac"
+  },
+  {
+    "model": "Silver Spirit III/Spur III",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "Lincoln 85J",
+    "make": "Federal Coach"
+  },
+  {
+    "model": "Endurance",
+    "make": "Lordstown"
+  },
+  {
+    "model": "Daytona SP3",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Agera RS",
+    "make": "Koenigsegg"
+  },
+  {
+    "model": "EV1",
+    "make": "GMC"
+  },
+  {
+    "model": "MP4-12C Coupe",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "RC F",
+    "make": "Lexus"
+  },
+  {
+    "model": "570S Coupe",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "Carrera 2 911 GT3",
+    "make": "Porsche"
+  },
+  {
+    "model": "Marauder",
+    "make": "Mercury"
+  },
+  {
+    "model": "Avanti II",
+    "make": "Avanti Motor Corporation"
+  },
+  {
+    "model": "Avtech SC / M12",
+    "make": "Vector"
+  },
+  {
+    "model": "Regal/Century",
+    "make": "Buick"
+  },
+  {
+    "model": "Silver Seraph",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "TVR 280i/350i Convertible",
+    "make": "TVR Engineering Ltd"
+  },
+  {
+    "model": "Hyper-Mini",
+    "make": "Nissan"
+  },
+  {
+    "model": "Maybach",
+    "make": "Mercedes-Benz"
+  },
+  {
+    "model": "GS-6",
+    "make": "Karma"
+  },
+  {
+    "model": "Regera",
+    "make": "Koenigsegg"
+  },
+  {
+    "model": "F8 Spider",
+    "make": "Ferrari"
+  },
+  {
+    "model": "A.C.MARK IV",
+    "make": "Autokraft Limited"
+  },
+  {
+    "model": "Ferrari F355 Berlinetta/GTS",
+    "make": "Ferrari"
+  },
+  {
+    "model": "960/S90",
+    "make": "Volvo"
+  },
+  {
+    "model": "V70 XC",
+    "make": "Volvo"
+  },
+  {
+    "model": "LLV",
+    "make": "Grumman Allied Industries"
+  },
+  {
+    "model": "F 40",
+    "make": "Ferrari"
+  },
+  {
+    "model": "i-350 Crew Cab",
+    "make": "Isuzu"
+  },
+  {
+    "model": "Mustang GT",
+    "make": "Shelby"
+  },
+  {
+    "model": "Silver Spur III Limousine",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "Oasis",
+    "make": "Isuzu"
+  },
+  {
+    "model": "CTS-V",
+    "make": "Cadillac"
+  },
+  {
+    "model": "300SL",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "BMW735IL",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "BMW535I",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "Active E",
+    "make": "BMW"
+  },
+  {
+    "model": "GNX",
+    "make": "ASC Incorporated"
+  },
+  {
+    "model": "Wetl 412",
+    "make": "Wallace Environmental"
+  },
+  {
+    "model": "Gy/yugo GVX",
+    "make": "Yugo"
+  },
+  {
+    "model": "XJRS",
+    "make": "Jaguar"
+  },
+  {
+    "model": "Coupe",
+    "make": "Volvo"
+  },
+  {
+    "model": "SF90 Stradale",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Monza SP2",
+    "make": "Ferrari"
+  },
+  {
+    "model": "MB 300SL",
+    "make": "Import Trade Services"
+  },
+  {
+    "model": "F40",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Morgan Plus 8",
+    "make": "Isis Imports Ltd"
+  },
+  {
+    "model": "Imperial/New Yorker Fifth Avenue",
+    "make": "Chrysler"
+  },
+  {
+    "model": "RS 4",
+    "make": "Audi"
+  },
+  {
+    "model": "Ferrari 550 Maranello",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Gladiator Pickup",
+    "make": "Jeep"
+  },
+  {
+    "model": "TURBO12/CTR3/CTR ANNIVERSARY",
+    "make": "RUF Automobile"
+  },
+  {
+    "model": "Hornet",
+    "make": "Dodge"
+  },
+  {
+    "model": "Ciera",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "VF 8",
+    "make": "Vinfast"
+  },
+  {
+    "model": "BMW 325I",
+    "make": "Import Trade Services"
+  },
+  {
+    "model": "230E MERC BENZ",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "LFA",
+    "make": "Lexus"
+  },
+  {
+    "model": "918 Spyder",
+    "make": "Porsche"
+  },
+  {
+    "model": "Veneno",
+    "make": "Lamborghini"
+  },
+  {
+    "model": "iM",
+    "make": "Scion"
+  },
+  {
+    "model": "Fifth Avenue/Imperial",
+    "make": "Chrysler"
+  },
+  {
+    "model": "300E",
+    "make": "Lambda Control Systems"
+  },
+  {
+    "model": "Armored DTS",
+    "make": "Cadillac"
+  },
+  {
+    "model": "604",
+    "make": "Peugeot"
+  },
+  {
+    "model": "Kenyon 5.0 Sedan",
+    "make": "Kenyon Corporation Of America"
+  },
+  {
+    "model": "Envista",
+    "make": "Buick"
+  },
+  {
+    "model": "240 DL/240 GL Wagon",
+    "make": "Mcevoy Motors"
+  },
+  {
+    "model": "ERD 1",
+    "make": "Environmental Rsch and Devp Corp"
+  },
+  {
+    "model": "Trofeo/Toronado",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Estate Wagon",
+    "make": "Buick"
+  },
+  {
+    "model": "ITS 320",
+    "make": "Import Trade Services"
+  },
+  {
+    "model": "Q",
+    "make": "Maserati"
+  },
+  {
+    "model": "SF90 Spider",
+    "make": "Ferrari"
+  },
+  {
+    "model": "ITS 190E 2.0",
+    "make": "Import Trade Services"
+  },
+  {
+    "model": "300TE MERC BENZ",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "Landaulet",
+    "make": "Maybach"
+  },
+  {
+    "model": "LaFerrari",
+    "make": "Ferrari"
+  },
+  {
+    "model": "308",
+    "make": "Ferrari"
+  },
+  {
+    "model": "85J",
+    "make": "Federal Coach"
+  },
+  {
+    "model": "Lincoln Eagle/Windsor",
+    "make": "Federal Coach"
+  },
+  {
+    "model": "Silver Spur/Silver Dawn",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "Revero",
+    "make": "Karma"
+  },
+  {
+    "model": "300E MERC BENZ",
+    "make": "J.K. Motors"
+  },
+  {
+    "model": "650S Spider",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "Silver Spur II Mpw Touring L",
+    "make": "Rolls-Royce"
+  },
+  {
+    "model": "24E",
+    "make": "Federal Coach"
+  },
+  {
+    "model": "500SL",
+    "make": "Texas Coach Company"
+  },
+  {
+    "model": "ITS 190E",
+    "make": "Import Trade Services"
+  },
+  {
+    "model": "Mondial/Cabriolet",
+    "make": "Ferrari"
+  },
+  {
+    "model": "Carrera GT",
+    "make": "Porsche"
+  },
+  {
+    "model": "Kenyon 5.0 Cabrio",
+    "make": "Kenyon Corporation Of America"
+  },
+  {
+    "model": "Vantage Manual",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "DBX 707",
+    "make": "Aston Martin"
+  },
+  {
+    "model": "Ocean",
+    "make": "Fisker"
+  },
+  {
+    "model": "Carrera 4",
+    "make": "Porsche"
+  },
+  {
+    "model": "Mondial",
+    "make": "Ferrari"
+  },
+  {
+    "model": "S209",
+    "make": "STI"
+  },
+  {
+    "model": "MSO HS",
+    "make": "McLaren Automotive"
+  },
+  {
+    "model": "1fas 410",
+    "make": "Import Foreign Auto Sales Inc"
+  },
+  {
+    "model": "Ninety-Eight II",
+    "make": "Oldsmobile"
+  },
+  {
+    "model": "Pas-Typhoon",
+    "make": "PAS, Inc"
+  },
+  {
+    "model": "Heritage",
+    "make": "Federal Coach"
+  },
+  {
+    "model": "Postal Vehicle",
+    "make": "Ford"
+  },
+  {
+    "model": "Goldacre Limited",
+    "make": "Goldacre"
+  },
+  {
+    "model": "Carrera",
+    "make": "Porsche"
+  },
+  {
+    "model": "740 GLE Wagon",
+    "make": "Mcevoy Motors"
+  }
+]

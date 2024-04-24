@@ -5,7 +5,7 @@ module.exports = (sequelize, Sequelize) => {
 			allowNull: false,
 		},
         displacement: {
-			type: Sequelize.INTEGER,
+			type: Sequelize.FLOAT,
 			allowNull: true,
 		},
         gears: {

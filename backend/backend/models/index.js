@@ -55,31 +55,32 @@ db.address.belongsTo(db.user);
 db.country.hasMany(db.region);
 db.region.belongsTo(db.country);
 
-db.car.hasOne(db.make);
-db.make.belongsTo(db.car);
+db.make.hasOne(db.model);
+db.model.belongsTo(db.make);
 
-db.car.hasOne(db.model);
-db.model.belongsTo(db.car);
+db.make.hasOne(db.car);
+db.car.belongsTo(db.make);
 
+db.model.hasOne(db.car);
+db.car.belongsTo(db.model);
 
-db.car.hasOne(db.admissiontype);
-db.admissiontype.belongsTo(db.car);
+db.admissiontype.hasOne(db.car);
+db.car.belongsTo(db.admissiontype);
 
-db.car.hasOne(db.category);
-db.category.belongsTo(db.car);
+db.category.hasOne(db.car);
+db.car.belongsTo(db.category);
 
+db.color.hasOne(db.car);
+db.car.belongsTo(db.color);
 
-db.car.hasOne(db.color);
-db.color.belongsTo(db.car);
+db.gearboxtype.hasOne(db.car);
+db.car.belongsTo(db.gearboxtype);
 
-db.car.hasOne(db.gearboxtype);
-db.gearboxtype.belongsTo(db.car);
+db.fueltype.hasOne(db.car);
+db.car.belongsTo(db.fueltype);
 
-db.car.hasOne(db.fueltype);
-db.fueltype.belongsTo(db.car);
-
-db.car.hasOne(db.drivetrain);
-db.drivetrain.belongsTo(db.car);
+db.drivetrain.hasOne(db.car);
+db.car.belongsTo(db.drivetrain);
 
 
 db.ROLES = [

@@ -15,6 +15,15 @@ const Country = db.country;
 const Region = db.region;
 const Address = db.address;
 const User = db.user;
+const Car = db.car;
+const AdmissionType = db.admissiontype;
+const Category = db.category;
+const Color = db.color;
+const Drivetrain = db.drivetrain;
+const FuelType = db.fueltype;
+const GearboxType = db.gearboxtype;
+const Make = db.make;
+const Model = db.model;
 const Op = db.Sequelize.Op;
 var bcrypt = require("bcryptjs");
 
@@ -63,6 +72,14 @@ db.sequelize.sync({force: true}).then(() => {
 
 function initial() {
 	let cars = require('./static/car_list_test.json');
+	let makes = require('./static/makes_list.json');
+	let models = require('./static/models_list.json');
+	let gearboxTypes = require('./static/gearboxtypes_list.json');
+	let fuelTypes = require('./static/fueltypes_list.json');
+	let categories = require('./static/categories_list.json');
+	let drivetrains = require('./static/drivetrains_list.json');
+	let colors = require('./static/colors_list.json');
+	let admissionTypes = require('./static/admissiontypes_list.json');
 	let countries = require('country-region-data/data.json');
 	countries = countries.slice(0, 10); 
 
@@ -138,4 +155,61 @@ function initial() {
 			});
 		};
 	};
-  }
+
+	makes.forEach(name => {
+		Make.findOrCreate({
+			where: { name: name }, 
+			defaults: { name: name } 
+		})
+	});
+	models.forEach(m => {
+		Model.findOrCreate({
+			where: { name: m.model },
+			defaults: { name: m.model }
+		}).then(model => {
+			Make.findOrCreate({
+				where: { name: m.make }, 
+				defaults: { name: m.make } 
+			}).then(make => {
+				model[0].setMake(make[0].id);
+				model[0].save();
+			})
+		});
+	});
+	gearboxTypes.forEach(name => {
+		GearboxType.findOrCreate({
+			where: { name: name },
+			defaults: { name: name }
+		});
+	});
+	fuelTypes.forEach(name => {
+		FuelType.findOrCreate({
+			where: { name: name },
+			defaults: { name: name }
+		});
+	});
+	categories.forEach(name => {
+		Category.findOrCreate({
+			where: { name: name },
+			defaults: { name: name }
+		});
+	});
+	drivetrains.forEach(name => {
+		Drivetrain.findOrCreate({
+			where: { name: name },
+			defaults: { name: name }
+		});
+	});
+	colors.forEach(name => {
+		Color.findOrCreate({
+			where: { name: name },
+			defaults: { name: name }
+		});
+	});
+	admissionTypes.forEach(name => {
+		AdmissionType.findOrCreate({
+			where: { name: name },
+			defaults: { name: name }
+		});
+	});
+}

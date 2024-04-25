@@ -99,10 +99,10 @@ exports.signin = (req, res) => {
 };
 
 function base64_encode(fileUsername) {
-	const files = fs.readdirSync('../pictures');
+	const files = fs.readdirSync('../pictures/user');
 	for (const file of files) {
         if (file.split('.')[0] == fileUsername) {
-            var bitmap = fs.readFileSync('../pictures/' + file);
+            var bitmap = fs.readFileSync('../pictures/user/' + file);
     		return Buffer.from(bitmap).toString('base64');
         }
     }

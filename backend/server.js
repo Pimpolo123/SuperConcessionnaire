@@ -7,7 +7,7 @@ const PORT_FRONT = process.env.PORT_FRONT;
 const HOST = process.env.SERVER_HOST;
 const fs = require('fs');
 const path = require('path');
-const pictureDir = '../pictures'
+const pictureDir = '../pictures/user'
 
 const db = require("./backend/models");
 const Role = db.role;
@@ -24,6 +24,8 @@ const FuelType = db.fueltype;
 const GearboxType = db.gearboxtype;
 const Make = db.make;
 const Model = db.model;
+const Euro = db.euro;
+const Option = db.option;
 const Op = db.Sequelize.Op;
 var bcrypt = require("bcryptjs");
 
@@ -71,7 +73,6 @@ db.sequelize.sync({force: true}).then(() => {
 });
 
 function initial() {
-	let cars = require('./static/car_list_test.json');
 	let makes = require('./static/makes_list.json');
 	let models = require('./static/models_list.json');
 	let gearboxTypes = require('./static/gearboxtypes_list.json');
@@ -80,8 +81,11 @@ function initial() {
 	let drivetrains = require('./static/drivetrains_list.json');
 	let colors = require('./static/colors_list.json');
 	let admissionTypes = require('./static/admissiontypes_list.json');
+	let euro = require('./static/euro_list.json');
+	let options = require('./static/options_list.json');
 	let countries = require('country-region-data/data.json');
 	countries = countries.slice(0, 10); 
+	models = models.slice(0, 20);
 
     Role.create({
 		id: 1,
@@ -212,4 +216,70 @@ function initial() {
 			defaults: { name: name }
 		});
 	});
+	euro.forEach(name => {
+		Euro.findOrCreate({
+			where: { name: name },
+			defaults: { name: name }
+		});
+	});
+	options.forEach(name => {
+		Option.findOrCreate({
+			where: { name: name },
+			defaults: { name: name }
+		});
+	});
+
+	Car.create({
+		power: 200,
+		year: 2018,
+		price: 20000,
+		description: "T'as vu l'auto mon copain ?",
+		firstReg: "2018-07-01",
+		displacement: 1.5,
+		gears: 6,
+		cylinders: 3,
+		doors: 3,
+		co2: 237,
+		urbanCons: 9.5,
+		mixCons: 7.2,
+		hwCons: 5
+	}).then(car => {
+		car.setMake(1);
+		car.setModel(1);
+		car.setCategory(1);
+		car.setAdmissiontype(1);
+		car.setColor(1);
+		car.setDrivetrain(1);
+		car.setGearboxtype(1);
+		car.setFueltype(1);
+		car.setEuro(1);
+		car.setOptions([1, 10, 20]);
+	})
+
+	Car.create({
+		power: 70,
+		year: 1998,
+		price: 15000,
+		description: "Jolie voiture mon copain",
+		firstReg: "1998-07-01",
+		displacement: 3,
+		gears: 4,
+		cylinders: 6,
+		doors: 5,
+		co2: 237,
+		urbanCons: 9.5,
+		mixCons: 7.2,
+		hwCons: 5
+	}).then(car => {
+		car.setMake(2);
+		car.setModel(2);
+		car.setCategory(2);
+		car.setAdmissiontype(2);
+		car.setColor(2);
+		car.setDrivetrain(2);
+		car.setGearboxtype(2);
+		car.setFueltype(2);
+		car.setEuro(2);
+		car.setOptions([2, 11, 21]);
+	})
 }

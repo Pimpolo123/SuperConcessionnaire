@@ -12,13 +12,17 @@ module.exports = function(app) {
 
     app.get(
         "/cars/getallcars",
-        [authJwt.verifyToken],
         controller.getAllCars
     );
 
     app.get(
-        "/cars/getcar/:id",
-        [authJwt.verifyToken],
+        "/cars/getcar",
         controller.getCar
+    );
+
+    app.post(
+        "/cars/addcar",
+        [authJwt.verifyToken, authJwt.isAdmin],
+        controller.addCar
     );
 };

@@ -13,7 +13,7 @@ exports.getAllUsers = (req, res) => {
     var userList = [];
 
     User.findAll({
-        where : { id: {[Op.ne]: req.body.userId}}
+        	where : { id: {[Op.ne]: req.body.userId}}
         }).then(users => {
         var promises = users.map(user => {
             var authorities = [];
@@ -194,10 +194,10 @@ exports.editProfile = (req, res) => {
 };
 
 function base64_encode(fileUsername) {
-	const files = fs.readdirSync('../pictures');
+	const files = fs.readdirSync('../pictures/user');
 	for (const file of files) {
         if (file.split('.')[0] == fileUsername) {
-            var bitmap = fs.readFileSync('../pictures/' + file);
+            var bitmap = fs.readFileSync('../pictures/user/' + file);
     		return Buffer.from(bitmap).toString('base64');
         }
     }

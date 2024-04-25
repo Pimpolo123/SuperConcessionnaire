@@ -1,5 +1,6 @@
 const { authJwt } = require("../middleware");
 const controller = require("../controllers/cars.controller");
+const upload = require('../middleware/verifyCarPics')
 
 module.exports = function(app) {
     app.use(function(req, res, next) {
@@ -20,9 +21,5 @@ module.exports = function(app) {
         controller.getCar
     );
 
-    app.post(
-        "/cars/addcar",
-        [authJwt.verifyToken, authJwt.isAdmin],
-        controller.addCar
-    );
+    app.post('/cars/addcar', [upload.array('files', 20), authJwt.verifyToken, authJwt.isModeratorOrAdmin], controller.addCar);
 };

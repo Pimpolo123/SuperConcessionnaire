@@ -42,6 +42,7 @@ db.fueltype = require("./cars/fueltype.model")(sequelize, Sequelize);
 db.gearboxtype = require("./cars/gearboxtype.model")(sequelize, Sequelize);
 db.option = require("./cars/option.model")(sequelize, Sequelize);
 db.euro = require("./cars/euro.model")(sequelize, Sequelize);
+db.carpicture = require("./cars/carpicture.model")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   	through: "user_roles"
@@ -93,6 +94,9 @@ db.option.belongsToMany(db.car, {
 db.car.belongsToMany(db.option, {
 	through: "car_options"
 });
+
+db.car.hasMany(db.carpicture);
+db.carpicture.belongsTo(db.car);
 
 
 db.ROLES = [

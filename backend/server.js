@@ -26,6 +26,7 @@ const Make = db.make;
 const Model = db.model;
 const Euro = db.euro;
 const Option = db.option;
+const CarPicture = db.carpicture;
 const Op = db.Sequelize.Op;
 var bcrypt = require("bcryptjs");
 
@@ -229,6 +230,12 @@ function initial() {
 		});
 	});
 
+	['photo1', 'photo2', 'photo3'].forEach(e => {
+		CarPicture.create({
+			base64url: e
+		})
+	})
+
 	Car.create({
 		power: 200,
 		year: 2018,
@@ -254,6 +261,7 @@ function initial() {
 		car.setFueltype(1);
 		car.setEuro(1);
 		car.setOptions([1, 10, 20]);
+		car.setCarpictures([1,2]);
 	})
 
 	Car.create({
@@ -281,5 +289,6 @@ function initial() {
 		car.setFueltype(2);
 		car.setEuro(2);
 		car.setOptions([2, 11, 21]);
+		car.setCarpictures([3]);
 	})
 }

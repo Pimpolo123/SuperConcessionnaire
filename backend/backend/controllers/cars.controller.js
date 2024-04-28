@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const db = require("../models");
 const Car = db.car;
 const AdmissionType = db.admissiontype;
@@ -16,7 +17,7 @@ const Op = db.Sequelize.Op;
 
 exports.getAllCars = (req, res) => {
     Car.findAll({
-        include : [Make, Model, AdmissionType, FuelType, GearboxType, Category, Color, Drivetrain, Euro, Option, CarPicture]
+        include : [Make, Model, AdmissionType, FuelType, GearboxType, Category, Color, Drivetrain, Euro, Option, {model: CarPicture, limit: 1}]
     }).then(cars => {
         res.status(200).send(cars);
 	}).catch(err => {
@@ -51,19 +52,7 @@ exports.getCar = (req, res) => {
 exports.addCar = (req, res) => {
     base64Ids = [];
     let filePromises = [];
-    if(!req.files) {
-        res.status(500).send({ message: "Erreur : Fichier manquant" });
-    }
     req.files.forEach(file => {
-        if(file.size > 5000000){
-            res.status(500).send({ message: "Erreur : Fichier trop gros" });
-        }
-        if(file.mimetype.split('/')[0] != 'image'){
-            res.status(500).send({ message: "Erreur : Type non autorisé" });
-        }
-        if(req.body.description.length() > 2000){
-            res.status(500).send({ message: "Erreur : Description trop longue" });
-        }
         const filePromise = CarPicture.create({
             base64url: file.buffer.toString('base64')
         }).then(pic => {
@@ -103,8 +92,78 @@ exports.addCar = (req, res) => {
             car.setCarpictures(base64Ids),
         ])
 	}).then(() => {
-        res.status(200).send({message: "Voiture créée"});
+        return res.status(200).send({message: "Voiture créée"});
+	}).catch(error => {
+        return res.status(500).send({ message: error.message});
+    });
+};
+
+exports.editCar = (req, res) => {
+    base64Ids = [];
+    let filePromises = [];
+    let oldPictures = [];
+    req.files.forEach(file => {
+        const filePromise = CarPicture.create({
+            base64url: file.buffer.toString('base64')
+        }).then(pic => {
+            base64Ids.push(pic.id)
+        })
+        filePromises.push(filePromise);
+    })
+    Promise.all(filePromises).then(() => {
+        return Car.findOne({
+            where: {
+                id: req.body.id
+            },
+            include: CarPicture
+        })
+	}).then(car => {
+        if(!car){
+            return res.status(500).send({ message: "Erreur : Voiture introuvable" });
+        }
+        oldPictures = car.carpictures;
+
+        car.power = req.body.power;
+        car.year = req.body.year;
+        car.price = req.body.price;
+        car.description = req.body.description;
+        car.firstReg = req.body.firstReg;
+        car.displacement = req.body.displacement;
+        car.gears = req.body.gears;
+        car.cylinders = req.body.cylinders;
+        car.doors = req.body.doors;
+        car.co2 = req.body.co2;
+        car.urbanCons = req.body.urbanCons;
+        car.mixCons = req.body.mixCons;
+        car.hwCons = req.body.hwCons;
+        return Promise.all([
+            car.setMake(req.body.makeId),
+            car.setModel(req.body.modelId),
+            car.setCategory(req.body.categoryId),
+            car.setAdmissiontype(req.body.admissiontypeId),
+            car.setColor(req.body.colorId),
+            car.setDrivetrain(req.body.drivetrainId),
+            car.setGearboxtype(req.body.gearboxtypeId),
+            car.setFueltype(req.body.fueltypeId),
+            car.setEuro(req.body.euroId),
+            car.setOptions(JSON.parse(req.body.options)),
+            car.setCarpictures(base64Ids),
+            car.save()
+        ])
+	}).then(() => {
+        return Promise.all(oldPictures.map(picture => picture.destroy()));
+	}).then(() => {
+        res.status(200).send({message: "Voiture modifiée"});
 	}).catch(error => {
         res.status(500).send({ message: error.message});
     });
+}
+
+exports.deleteCar = (req, res) => {
+	Car.destroy({
+		where: {
+			id: req.query.id
+		}
+	})
+	res.status(200).send({message: "Voiture supprimée"});
 };

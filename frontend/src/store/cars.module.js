@@ -38,6 +38,26 @@ export const cars = {
                     return Promise.reject(error);
                 }
             );
+        },
+        deletecar({ commit }, car) {
+            return CarsService.deleteCar(car.id).then(
+                car => {
+                    return Promise.resolve(car);
+                    },
+                error => {
+                    return Promise.reject(error);
+                }
+            );
+        },
+        deletecars({ commit }, cars) {
+            return CarsService.deleteCars(cars).then(
+                car => {
+                    return Promise.resolve(car);
+                    },
+                error => {
+                    return Promise.reject(error);
+                }
+            );
         }
     }
 };

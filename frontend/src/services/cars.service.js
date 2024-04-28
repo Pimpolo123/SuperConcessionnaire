@@ -23,6 +23,29 @@ class CarsService {
             });
     }
 
+    deleteCar(id) {
+        return axios
+            .get(API_URL + 'deletecar', { 
+                params: { id: id }, 
+                headers: authHeader() 
+            })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    deleteCars(carList) {
+        return axios
+            .post(API_URL + 'deletecars', {
+                cars: carList
+            },{
+                headers: authHeader()
+            })
+            .then(response => {
+                return response.data;
+            });
+    }
+
     addCar(car) {
         var formData = new FormData();
 		formData.append("files", car.files);

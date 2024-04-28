@@ -28,6 +28,12 @@ module.exports = function(app) {
     );
 
     app.post(
+        '/cars/deletecars', 
+        
+        controller.deleteCars
+    );
+
+    app.post(
         '/cars/addcar', 
         [verifyCarPics.memStorage.array('files', 20), verifyCarPics.validateFiles, authJwt.verifyToken, authJwt.isModeratorOrAdmin], 
         controller.addCar

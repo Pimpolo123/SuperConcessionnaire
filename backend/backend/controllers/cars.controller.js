@@ -169,3 +169,15 @@ exports.deleteCar = (req, res) => {
 	})
 	res.status(200).send({message: "Voiture supprimée"});
 };
+
+exports.deleteCars = (req, res) => {
+    const cars = req.body.cars;
+    cars.forEach(car => {
+        Car.destroy({
+            where: {
+                id: car.id
+            }
+        })
+    })
+	res.status(200).send({message: "Voiture supprimée"});
+};

@@ -10,7 +10,9 @@
                     <Button label="Export" icon="pi pi-upload" @click="exportCSV($event)" rounded />
                 </template>
             </Toolbar>
-            <DataTable ref="dt" :value="data" v-model:selection="selectedCars" dataKey="car.id" removableSort sortField="car.id" :sortOrder="1"
+            <Toast />
+            <ConfirmDialog></ConfirmDialog>
+            <DataTable ref="dt" :value="data" v-model:selection="selectedCars" dataKey="id" removableSort sortField="id" :sortOrder="1"
                 :paginator="true" :rows="10" :filters="filters" showGridlines
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[5,10,25]"
                 currentPageReportTemplate="Affichage de {first} à {last} de {totalRecords} voitures">
@@ -26,12 +28,7 @@
 					</div>
                 </template>
                 <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
-                <Column header="Image" style="max-width: 4rem;">
-                    <template #body="slotProps">
-                        <img :src="getImageSource(slotProps.data.carpictures[0].base64url)" alt="Photo de voiture" class="rounded-circle" style="width: 64px" />
-                    </template>
-                </Column>
-                <Column header="Marque/modèle" sortable style="max-width:5rem">
+                <Column field="make.name" header="Marque/modèle" sortable style="max-width:5rem">
                     <template #body="slotProps">
                         <div class="font-weight-bold">{{ slotProps.data.make.name }}</div>
                         <div class="font-weight-bold">{{ slotProps.data.model.name }}</div>
@@ -39,23 +36,33 @@
                         <div>{{ slotProps.data.year }}</div>
                     </template>
                 </Column>
-                <Column header="Informations" sortable style="max-width: 14rem;">
+                <Column header="Image" style="max-width: 4rem;">
+                    <template #body="slotProps">
+                        <img :src="getImageSource(slotProps.data.carpictures[0].base64url)" alt="Photo de voiture" class="rounded-square" style="width: 64px" />
+                    </template>
+                </Column>
+                <Column header="Informations" style="max-width: 14rem;">
                     <template #body="slotProps">
                         <div class="container">
-                            <div class="d-flex justify-content-around">
+                            <div class="d-flex justify-content-between">
                                 <span class="font-weight-bold">Catégorie : <span class="font-weight-normal">{{ slotProps.data.category.name }}</span></span>
                                 <span class="font-weight-bold">Puissance : <span class="font-weight-normal">{{ slotProps.data.power }} kW</span></span>
-                                
                             </div>
-                            <div class="d-flex justify-content-around">
+                            <div class="d-flex justify-content-between">
                                 <span class="font-weight-bold">Carburant : <span class="font-weight-normal">{{ slotProps.data.fueltype.name }}</span></span>
-                                <span class="font-weight-bold">Kilométrage : <span class="font-weight-normal">TKT km</span></span>
+                                <span class="font-weight-bold">Kilométrage : <span class="font-weight-normal">{{ slotProps.data.kilometers }} km</span></span>
                             </div>
-                            <div class="d-flex justify-content-around">
+                            <div class="d-flex justify-content-between">
                                 <span class="font-weight-bold">1ère immatriculation : <span class="font-weight-normal">{{ slotProps.data.firstReg }}</span></span>
-                                <span class="font-weight-bold">Boite de vitesse : <span class="font-weight-normal">{{ slotProps.data.gearboxtype.name }}</span></span>
+                                <span class="font-weight-bold">Boite de vitesse : <span class="font-weight-normal">{{ slotProps.data.gearboxtype.name }} {{ slotProps.data.gears }} vitesses</span></span>
                             </div>
                         </div>
+                    </template>
+                </Column>
+                <Column :exportable="false" style="width:8rem">
+                    <template #body="slotProps">
+                        <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editUser(slotProps.data)" v-tooltip.top="'Editer la voiture'"/>
+                        <Button icon="pi pi-trash" outlined rounded class="mr-2" severity="danger" @click="confirmDeleteUser(slotProps.data.user)" v-tooltip.top="'Supprimer la voiture'"/>
                     </template>
                 </Column>
             </DataTable>
@@ -72,6 +79,8 @@ import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import InputIcon from 'primevue/inputicon';
 import IconField from 'primevue/iconfield';
+import ConfirmDialog from 'primevue/confirmdialog';
+import Toast from 'primevue/toast';
 import 'primeicons/primeicons.css';
 
 export default {
@@ -82,6 +91,8 @@ export default {
             currentUser: JSON.parse(localStorage.getItem('user')),
             selectedCars: [],
             imgUrl: "",
+            filters: {},
+            deleteCarsDialog: false,
         }
     },
     created() {
@@ -108,7 +119,9 @@ export default {
         Button,
         InputText,
         InputIcon,
-        IconField
+        IconField,
+        ConfirmDialog,
+        Toast
     },
     methods: {
         openNew() {
@@ -124,7 +137,7 @@ export default {
         initFilters() {
             this.filters = {
                 global: {value: null, matchMode: FilterMatchMode.CONTAINS},
-                model: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+                name: {value: null, matchMode: FilterMatchMode.STARTS_WITH},
             }
         },
         exportCSV() {
@@ -142,6 +155,37 @@ export default {
             } else {
                 return 'data:image/png;base64,' + imgUrl;
             }
+        },
+        confirmDeleteSelected() {
+            this.$confirm.require({
+                message: 'Etes-vous sur de vouloir supprimer les voitures sélectionnées ?',
+                header: 'Confirmation',
+                icon: 'pi pi-exclamation-triangle',
+                rejectClass: 'p-button-secondary p-button-outlined',
+                rejectLabel: 'Annuler',
+                acceptLabel: 'Supprimer',
+                accept: () => {
+                    this.deleteSelectedCars();
+                    this.$toast.add({ severity: 'success', summary: 'Succès', detail: 'Voitures supprimées', life: 3000 });
+                },
+                reject: () => {
+                    this.$toast.add({ severity: 'info', summary: 'Annulé', detail: 'Action annulée', life: 1000 });
+                }
+            });
+        },
+        deleteSelectedCars() {
+            this.$store.dispatch('cars/deletecars', this.selectedCars).then(
+                res => {
+                    this.data = this.data.filter(val => !this.selectedCars.includes(val));
+                    this.selectedCars = [];
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+                }
+            );
         },
     }
 }

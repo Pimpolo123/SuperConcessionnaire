@@ -278,6 +278,7 @@ export default {
     mounted() {
         this.$store.dispatch('admin/getallusers').then(
             res => {
+                console.log(res);
                 this.data = res;
             },
             error => {

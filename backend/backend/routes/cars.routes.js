@@ -29,7 +29,7 @@ module.exports = function(app) {
 
     app.post(
         '/cars/deletecars', 
-        
+        [authJwt.verifyToken, authJwt.isModeratorOrAdmin], 
         controller.deleteCars
     );
 

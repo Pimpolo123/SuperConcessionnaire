@@ -36,7 +36,7 @@
                         <div>{{ slotProps.data.year }}</div>
                     </template>
                 </Column>
-                <Column header="Image" style="max-width: 4rem;">
+                <Column header="Image" style="max-width: 4rem;" :exportable="false">
                     <template #body="slotProps">
                         <img :src="getImageSource(slotProps.data.carpictures[0].base64url)" alt="Photo de voiture" class="rounded-square" style="width: 64px" />
                     </template>
@@ -61,8 +61,8 @@
                 </Column>
                 <Column :exportable="false" style="width:8rem">
                     <template #body="slotProps">
-                        <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editUser(slotProps.data)" v-tooltip.top="'Editer la voiture'"/>
-                        <Button icon="pi pi-trash" outlined rounded class="mr-2" severity="danger" @click="confirmDeleteUser(slotProps.data.user)" v-tooltip.top="'Supprimer la voiture'"/>
+                        <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editCar(slotProps.data)" v-tooltip.top="'Editer la voiture'"/>
+                        <Button icon="pi pi-trash" outlined rounded class="mr-2" severity="danger" @click="confirmDeleteCar(slotProps.data)" v-tooltip.top="'Supprimer la voiture'"/>
                     </template>
                 </Column>
             </DataTable>
@@ -88,11 +88,13 @@ export default {
     data() {
         return {
             data: [],
+            car: {},
             currentUser: JSON.parse(localStorage.getItem('user')),
             selectedCars: [],
             imgUrl: "",
             filters: {},
             deleteCarsDialog: false,
+            message: '',
         }
     },
     created() {
@@ -184,9 +186,45 @@ export default {
                                         error.message ||
                                         error.toString();
                                         this.successful = false;
+                    this.$toast.add({ severity: 'error', summary: 'Erreur', detail: this.message, life: 1000 });
                 }
             );
+            this.selectedCars = [];
         },
+        confirmDeleteCar(car) {
+            this.car = car;
+            this.$confirm.require({
+                message: 'Etes-vous sur de vouloir supprimer la voiture ?',
+                header: 'Confirmation',
+                icon: 'pi pi-exclamation-triangle',
+                rejectClass: 'p-button-secondary p-button-outlined',
+                rejectLabel: 'Annuler',
+                acceptLabel: 'Supprimer',
+                accept: () => {
+                    this.deleteCar();
+                    this.$toast.add({ severity: 'success', summary: 'Succès', detail: 'Voiture supprimée', life: 3000 });
+                },
+                reject: () => {
+                    this.$toast.add({ severity: 'info', summary: 'Annulé', detail: 'Action annulée', life: 1000 });
+                }
+            });
+        },
+        deleteCar(){
+            this.$store.dispatch('cars/deletecar', this.car.id).then(
+                res => {
+                    console.log(res);
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+                    this.$toast.add({ severity: 'error', summary: 'Erreur', detail: this.message, life: 1000 });
+                }
+            );
+            this.data = this.data.filter(val => val.id != this.car.id);
+            this.car = {};
+        }
     }
 }
 </script>

@@ -39,10 +39,10 @@ export const cars = {
                 }
             );
         },
-        deletecar({ commit }, car) {
-            return CarsService.deleteCar(car.id).then(
-                car => {
-                    return Promise.resolve(car);
+        deletecar({ commit }, id) {
+            return CarsService.deleteCar(id).then(
+                res => {
+                    return Promise.resolve(res);
                     },
                 error => {
                     return Promise.reject(error);

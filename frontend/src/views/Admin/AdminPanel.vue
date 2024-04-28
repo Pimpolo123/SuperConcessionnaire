@@ -5,13 +5,14 @@
     <div v-if="isAdmin()" class="container">
       <TabMenu :model="tabItems" />
       <UserManagement v-if="currentTab == 'userManagement'"></UserManagement>
-      <h1 v-if="currentTab == 'stockManagement'">stockstockstock</h1>
+      <CarManagement v-if="currentTab == 'stockManagement'"></CarManagement>
     </div>
 </template>
   
 <script>
     import UserService from '../../services/user.service';
     import UserManagement from './UserManagement.vue';
+    import CarManagement from './CarManagement.vue';
     import TabMenu from 'primevue/tabmenu';
     
     export default {
@@ -41,7 +42,8 @@
         },
         components: {
             UserManagement,
-            TabMenu
+            TabMenu,
+            CarManagement
         },
         mounted() {
         UserService.getAdminBoard().then(

@@ -66,6 +66,7 @@ exports.addCar = (req, res) => {
                 power: req.body.power,
                 year: req.body.year,
                 price: req.body.price,
+                kilometers: req.body.kilometers,
                 description: req.body.description,
                 firstReg: req.body.firstReg,
                 displacement: req.body.displacement,
@@ -126,6 +127,7 @@ exports.editCar = (req, res) => {
         car.power = req.body.power;
         car.year = req.body.year;
         car.price = req.body.price;
+        car.kilometers = req.body.kilometers;
         car.description = req.body.description;
         car.firstReg = req.body.firstReg;
         car.displacement = req.body.displacement;

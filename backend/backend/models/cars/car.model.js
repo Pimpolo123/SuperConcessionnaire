@@ -12,6 +12,10 @@ module.exports = (sequelize, Sequelize) => {
 			type: Sequelize.INTEGER,
 			allowNull: false,
 		},
+		kilometers: {
+			type: Sequelize.INTEGER,
+			allowNull: false,
+		},
 		description: {
 			type: Sequelize.TEXT,
 			allowNull: false,

@@ -179,5 +179,89 @@ exports.deleteCars = (req, res) => {
             }
         })
     })
-	res.status(200).send({message: "Voiture supprimée"});
+	res.status(200).send({message: "Voitures supprimées"});
 };
+
+exports.getAllMakes = (req, res) => {
+    Make.findAll().then(makes => {
+        res.status(200).send(makes);
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+}
+
+exports.getModels = (req, res) => {
+    Model.findAll({
+        where: {
+            makeId: req.query.makeId
+        }
+    }).then(models => {
+        res.status(200).send(models);
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+}
+
+exports.getAllCategories = (req, res) => {
+    Category.findAll().then(categories => {
+        res.status(200).send(categories);
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+}
+
+exports.getAllAdmissionTypes = (req, res) => {
+    AdmissionType.findAll().then(admissionTypes => {
+        res.status(200).send(admissionTypes);
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+}
+
+exports.getAllColors = (req, res) => {
+    Color.findAll().then(colors => {
+        res.status(200).send(colors);
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+}
+
+exports.getAllDrivetrains = (req, res) => {
+    Drivetrain.findAll().then(drivetrains => {
+        res.status(200).send(drivetrains);
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+}
+
+exports.getAllFuelTypes = (req, res) => {
+    FuelType.findAll().then(fuelTypes => {
+        res.status(200).send(fuelTypes);
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+}
+
+exports.getAllGearboxTypes = (req, res) => {
+    GearboxType.findAll().then(gearboxTypes => {
+        res.status(200).send(gearboxTypes);
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+}
+
+exports.getAllEuros = (req, res) => {   
+    Euro.findAll().then(euros => {
+        res.status(200).send(euros);
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+}
+
+exports.getAllOptions = (req, res) => {
+    Option.findAll().then(options => {
+        res.status(200).send(options);
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+}

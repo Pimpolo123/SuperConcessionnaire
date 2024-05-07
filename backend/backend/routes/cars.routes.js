@@ -44,4 +44,54 @@ module.exports = function(app) {
         [verifyCarPics.memStorage.array('files', 20), verifyCarPics.validateFiles, authJwt.verifyToken, authJwt.isModeratorOrAdmin], 
         controller.editCar
     );
+
+    app.get(
+        '/cars/getallmakes',
+        controller.getAllMakes
+    );
+
+    app.get(
+        '/cars/getmodels',
+        controller.getModels
+    );
+
+    app.get(
+        '/cars/getallcategories',
+        controller.getAllCategories
+    );
+
+    app.get(
+        '/cars/getalladmissiontypes',
+        controller.getAllAdmissionTypes
+    );
+
+    app.get(
+        '/cars/getallcolors',
+        controller.getAllColors
+    );
+
+    app.get(
+        '/cars/getallfueltypes',
+        controller.getAllFuelTypes
+    );
+
+    app.get(
+        '/cars/getalldrivetrains',
+        controller.getAllDrivetrains
+    );
+
+    app.get(
+        '/cars/getallgearboxtypes',
+        controller.getAllGearboxTypes
+    );
+
+    app.get(
+        '/cars/getalleuros',
+        controller.getAllEuros
+    );
+
+    app.get(
+        '/cars/getalloptions',
+        controller.getAllOptions
+    );
 };

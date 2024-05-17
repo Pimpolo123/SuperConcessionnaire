@@ -299,7 +299,7 @@
                         <div class="row border pb-2 mb-2 mt-0">
                             <ScrollPanel style="width: 100%; height: 19vh">
                                 <div v-for="option of options" :key="option.key" class="flex align-items-center">
-                                    <Checkbox v-model="selectedOptions" :inputId="option.key" name="option" :value="option.name" />
+                                    <Checkbox v-model="selectedOptions" :inputId="option.key" name="option" :value="option"/>
                                     <label :for="option.key" class="m-0 pl-2">{{ option.name }}</label>
                                 </div>
                             </ScrollPanel>
@@ -433,6 +433,12 @@ export default {
             this.isLoading = true;
             this.firstReg.year = parseInt(car.firstReg.split('-')[0]);
             this.firstReg.month =  parseInt(car.firstReg.split('-')[1]) - 1;
+            this.selectedOptions = car.options.map(option => {
+                return {
+                    id: option.id,
+                    name: option.name
+                };
+            });
             this.$store.dispatch('cars/getcar', car.id).then(
                 res => {
                     this.car = res;
@@ -779,7 +785,7 @@ export default {
         },
         updateCar(car){
             this.car = car;
-        }
+        },
     }
 }
 </script>

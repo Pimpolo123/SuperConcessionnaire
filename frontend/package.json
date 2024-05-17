@@ -19,6 +19,7 @@
     "@vuepic/vue-datepicker": "^8.3.1",
     "axios": "^1.6.8",
     "bootstrap": "^4.6.2",
+    "buffer": "^6.0.3",
     "fs": "^0.0.1-security",
     "jquery": "^3.7.1",
     "material-kit": "^2.0.4",
@@ -54,5 +55,8 @@
   "browser": {
     "path": false,
     "fs": false
+  },
+  "quokka": {
+    "babel": true
   }
 }

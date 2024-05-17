@@ -14,14 +14,19 @@ validateFiles = (req, res, next) => {
         if(file.mimetype.split('/')[0] != 'image'){
             return res.status(500).send({ message: "Erreur : Type non autorisé" });
         }
-        if(req.body.description.length > 2000){
+        if(JSON.parse(req.body.car).description.length > 2000){
             return res.status(500).send({ message: "Erreur : Description trop longue" });
         }
     })
     next();
 }
 
-memStorage = multer({ storage: storage })
+memStorage = multer({ 
+    storage: storage,
+    limits: {
+        fieldSize: 1024 * 1024 * 5
+      }
+})
 
 const verifyCarPics = {
     memStorage: memStorage,

@@ -31,5 +31,4 @@ app.use(ConfirmationService);
 app.use(store);
 app.directive('tooltip', Tooltip);
 app.use(materialKit);
-// app.use(VeeValidate);
 app.mount('#app');

@@ -48,32 +48,108 @@ class CarsService {
 
     addCar(car) {
         var formData = new FormData();
-		formData.append("files", car.files);
-        formData.append("car", car);
-		// formData.append("power", car.power);
-        // formData.append("year", car.year);
-        // formData.append("price", car.price);
-        // formData.append("description", car.description);
-        // formData.append("firstReg", car.firstReg);
-        // formData.append("displacement", car.displacement);
-        // formData.append("gears", car.gears);
-        // formData.append("cylinders", car.cylinders);
-        // formData.append("doors", car.doors);
-        // formData.append("co2", car.co2);
-        // formData.append("urbanCons", car.urbanCons);
-        // formData.append("mixCons", car.mixCons);
-        // formData.append("hwCons", car.hwCons);
-        // formData.append("makeId", car.makeId);
-        // formData.append("modelId", car.modelId);
-        // formData.append("admissiontypeId", car.admissiontypeId);
-        // formData.append("categoryId", car.categoryId);
-        // formData.append("colorId", car.colorId);
-        // formData.append("gearboxtypeId", car.gearboxtypeId);
-        // formData.append("fueltypeId", car.fueltypeId);
-        // formData.append("drivetrainId", car.drivetrainId);
-        // formData.append("euroId", car.euroId);
+        car.imageFiles.forEach(file => {
+            formData.append("files", file);
+        });
+        formData.append("car", JSON.stringify(car));
         return axios
             .post(API_URL + 'addcar', formData, { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    editCar(car) {
+        var formData = new FormData();
+        car.imageFiles.forEach(file => {
+            formData.append("files", file);
+        });
+        formData.append("car", JSON.stringify(car));
+        return axios
+            .post(API_URL + 'editcar', formData, { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    getAllMakes() {
+        return axios
+            .get(API_URL + 'getallmakes', { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    getModels(makeId) {
+        return axios
+            .get(API_URL + 'getmodels', { 
+                params: { makeId: makeId }, 
+                headers: authHeader() 
+            })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    getAllCategories() {
+        return axios
+            .get(API_URL + 'getallcategories', { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    getAllAdmissionTypes() {
+        return axios
+            .get(API_URL + 'getalladmissiontypes', { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    getAllColors() {
+        return axios
+            .get(API_URL + 'getallcolors', { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    getAllDrivetrains() {
+        return axios
+            .get(API_URL + 'getalldrivetrains', { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    getAllFuelTypes() {
+        return axios
+            .get(API_URL + 'getallfueltypes', { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    getAllGearboxTypes() {
+        return axios
+            .get(API_URL + 'getallgearboxtypes', { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    getAllEuros() {
+        return axios
+            .get(API_URL + 'getalleuros', { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    getAllOptions() {
+        return axios
+            .get(API_URL + 'getalloptions', { headers: authHeader() })
             .then(response => {
                 return response.data;
             });

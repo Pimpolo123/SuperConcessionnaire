@@ -508,7 +508,6 @@ export default {
             this.user = {};
         },
         unbanUser(){
-            //faire la requète ici(userId.banned = false)
             this.user.banned = false;
             this.user.accessToken = this.currentUser.accessToken;
             this.$store.dispatch('admin/banuser', this.user).then(

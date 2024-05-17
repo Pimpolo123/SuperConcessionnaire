@@ -28,7 +28,7 @@ exports.getAllCars = (req, res) => {
 exports.getCar = (req, res) => {
     const carId = req.query.id;
     if(!carId){
-        res.status(400).send({
+        return res.status(400).send({
             message: 'Aucune ID'
         })
     }
@@ -39,7 +39,7 @@ exports.getCar = (req, res) => {
         include : [Make, Model, AdmissionType, FuelType, GearboxType, Category, Color, Drivetrain, Euro, Option, CarPicture]
     }).then(car => {
         if(!car){
-            res.status(400).send({
+            return res.status(400).send({
                 message: 'Voiture introuvable'
             })
         }
@@ -50,6 +50,8 @@ exports.getCar = (req, res) => {
 };
 
 exports.addCar = (req, res) => {
+    newCar = JSON.parse(req.body.car);
+    console.log(newCar);
     base64Ids = [];
     let filePromises = [];
     req.files.forEach(file => {
@@ -63,101 +65,128 @@ exports.addCar = (req, res) => {
     Promise.all(filePromises)
         .then(() => {
             return Car.create({
-                power: req.body.power,
-                year: req.body.year,
-                price: req.body.price,
-                kilometers: req.body.kilometers,
-                description: req.body.description,
-                firstReg: req.body.firstReg,
-                displacement: req.body.displacement,
-                gears: req.body.gears,
-                cylinders: req.body.cylinders,
-                doors: req.body.doors,
-                co2: req.body.co2,
-                urbanCons: req.body.urbanCons,
-                mixCons: req.body.mixCons,
-                hwCons: req.body.hwCons
+                power: newCar.power,
+                year: newCar.year,
+                price: newCar.price,
+                kilometers: newCar.kilometers,
+                description: newCar.description,
+                firstReg: newCar.firstReg,
+                displacement: newCar.displacement,
+                gears: newCar.gears,
+                cylinders: newCar.cylinders,
+                doors: newCar.doors,
+                co2: newCar.co2,
+                urbanCons: newCar.urbanCons,
+                mixCons: newCar.mixCons,
+                hwCons: newCar.hwCons
         })
 	}).then(car => {
         return Promise.all([
-            car.setMake(req.body.makeId),
-            car.setModel(req.body.modelId),
-            car.setCategory(req.body.categoryId),
-            car.setAdmissiontype(req.body.admissiontypeId),
-            car.setColor(req.body.colorId),
-            car.setDrivetrain(req.body.drivetrainId),
-            car.setGearboxtype(req.body.gearboxtypeId),
-            car.setFueltype(req.body.fueltypeId),
-            car.setEuro(req.body.euroId),
-            car.setOptions(JSON.parse(req.body.options)),
+            car.setMake(newCar.make.id),
+            car.setModel(newCar.model.id),
+            car.setCategory(newCar.category?.id),
+            car.setAdmissiontype(newCar.admissiontype?.id),
+            car.setColor(newCar.color?.id),
+            car.setDrivetrain(newCar.drivetrain?.id),
+            car.setGearboxtype(newCar.gearboxtype?.id),
+            car.setFueltype(newCar.fueltype?.id),
+            car.setEuro(newCar.euro?.id),
+            // car.setOptions(req.body.options),
             car.setCarpictures(base64Ids),
         ])
-	}).then(() => {
-        return res.status(200).send({message: "Voiture créée"});
+	}).then(data => {
+        return res.status(200).send({message: "Voiture créée", id: data[0].dataValues.id});
 	}).catch(error => {
+        console.log(error);
         return res.status(500).send({ message: error.message});
     });
 };
 
 exports.editCar = (req, res) => {
-    base64Ids = [];
-    let filePromises = [];
+    let editedCar;
+    try {
+        editedCar = JSON.parse(req.body.car);
+    } catch (error) {
+        return res.status(400).send({ message: "Invalid JSON input" });
+    }
+    console.log("EDIT CAR", editedCar);
+    const base64Ids = [];
+    const filePromises = [];
     let oldPictures = [];
-    req.files.forEach(file => {
-        const filePromise = CarPicture.create({
-            base64url: file.buffer.toString('base64')
-        }).then(pic => {
-            base64Ids.push(pic.id)
-        })
-        filePromises.push(filePromise);
-    })
+
+    editedCar.carpictures.forEach(pic => {
+        base64Ids.push(pic.id);
+    });
+
+    if (Array.isArray(req.files) && req.files.length > 0) {
+        req.files.forEach(file => {
+            const filePromise = CarPicture.create({
+                base64url: file.buffer.toString('base64')
+            }).then(pic => {
+                base64Ids.push(pic.id);
+            }).catch(error => {
+                console.error("Error creating CarPicture:", error);
+                throw error;
+            });
+            filePromises.push(filePromise);
+        });
+    }
+
     Promise.all(filePromises).then(() => {
         return Car.findOne({
-            where: {
-                id: req.body.id
-            },
+            where: { id: editedCar.id },
             include: CarPicture
-        })
-	}).then(car => {
-        if(!car){
-            return res.status(500).send({ message: "Erreur : Voiture introuvable" });
+        });
+    }).then(car => {
+        if (!car) {
+            return res.status(404).send({ message: "Erreur : Voiture introuvable" });
         }
-        oldPictures = car.carpictures;
 
-        car.power = req.body.power;
-        car.year = req.body.year;
-        car.price = req.body.price;
-        car.kilometers = req.body.kilometers;
-        car.description = req.body.description;
-        car.firstReg = req.body.firstReg;
-        car.displacement = req.body.displacement;
-        car.gears = req.body.gears;
-        car.cylinders = req.body.cylinders;
-        car.doors = req.body.doors;
-        car.co2 = req.body.co2;
-        car.urbanCons = req.body.urbanCons;
-        car.mixCons = req.body.mixCons;
-        car.hwCons = req.body.hwCons;
+        car.carpictures.forEach(pic => {
+            if (!base64Ids.includes(pic.id)) {
+                oldPictures.push(pic);
+            }
+        });
+
+        car.id = editedCar.id;
+        car.power = editedCar.power;
+        car.year = editedCar.year;
+        car.price = editedCar.price;
+        car.kilometers = editedCar.kilometers;
+        car.description = editedCar.description;
+        car.firstReg = editedCar.firstReg;
+        car.displacement = editedCar.displacement;
+        car.gears = editedCar.gears;
+        car.cylinders = editedCar.cylinders;
+        car.doors = editedCar.doors;
+        car.co2 = editedCar.co2;
+        car.urbanCons = editedCar.urbanCons;
+        car.mixCons = editedCar.mixCons;
+        car.hwCons = editedCar.hwCons;
+
         return Promise.all([
-            car.setMake(req.body.makeId),
-            car.setModel(req.body.modelId),
-            car.setCategory(req.body.categoryId),
-            car.setAdmissiontype(req.body.admissiontypeId),
-            car.setColor(req.body.colorId),
-            car.setDrivetrain(req.body.drivetrainId),
-            car.setGearboxtype(req.body.gearboxtypeId),
-            car.setFueltype(req.body.fueltypeId),
-            car.setEuro(req.body.euroId),
-            car.setOptions(JSON.parse(req.body.options)),
+            car.setMake(editedCar.make.id),
+            car.setModel(editedCar.model.id),
+            car.setCategory(editedCar.category.id),
+            car.setAdmissiontype(editedCar.admissiontype.id),
+            car.setColor(editedCar.color.id),
+            car.setDrivetrain(editedCar.drivetrain.id),
+            car.setGearboxtype(editedCar.gearboxtype.id),
+            car.setFueltype(editedCar.fueltype.id),
+            car.setEuro(editedCar.euro.id),
+            car.setOptions(editedCar.options),
             car.setCarpictures(base64Ids),
             car.save()
-        ])
-	}).then(() => {
-        return Promise.all(oldPictures.map(picture => picture.destroy()));
-	}).then(() => {
-        res.status(200).send({message: "Voiture modifiée"});
-	}).catch(error => {
-        res.status(500).send({ message: error.message});
+        ]);
+    }).then(() => {
+        if (oldPictures.length > 0) {
+            return Promise.all(oldPictures.map(picture => picture.destroy()));
+        }
+    }).then(() => {
+        res.status(200).send({ message: "Voiture modifiée" });
+    }).catch(error => {
+        console.error("Error in editCar:", error);
+        res.status(500).send({ message: error.message });
     });
 }
 

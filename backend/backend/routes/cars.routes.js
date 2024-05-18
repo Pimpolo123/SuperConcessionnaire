@@ -35,13 +35,13 @@ module.exports = function(app) {
 
     app.post(
         '/cars/addcar', 
-        [verifyCarPics.memStorage.array('files', 20), verifyCarPics.validateFiles], 
+        [verifyCarPics.memStorage.array('files', 20), verifyCarPics.validateFiles, authJwt.verifyToken, authJwt.isModeratorOrAdmin], 
         controller.addCar
     );
 
     app.post(
         '/cars/editcar', 
-        [verifyCarPics.memStorage.array('files', 20), verifyCarPics.validateFiles], 
+        [verifyCarPics.memStorage.array('files', 20), verifyCarPics.validateFiles, authJwt.verifyToken, authJwt.isModeratorOrAdmin], 
         controller.editCar
     );
 

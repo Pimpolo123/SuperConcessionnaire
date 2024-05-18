@@ -53,6 +53,7 @@ exports.addCar = (req, res) => {
     newCar = JSON.parse(req.body.car);
     console.log(newCar);
     base64Ids = [];
+    optionIds = [];
     let filePromises = [];
     req.files.forEach(file => {
         const filePromise = CarPicture.create({
@@ -61,7 +62,10 @@ exports.addCar = (req, res) => {
             base64Ids.push(pic.id)
         })
         filePromises.push(filePromise);
-    })
+    });
+    newCar.options.forEach(option => {
+        optionIds.push(option.id);
+    });
     Promise.all(filePromises)
         .then(() => {
             return Car.create({
@@ -91,7 +95,7 @@ exports.addCar = (req, res) => {
             car.setGearboxtype(newCar.gearboxtype?.id),
             car.setFueltype(newCar.fueltype?.id),
             car.setEuro(newCar.euro?.id),
-            // car.setOptions(req.body.options),
+            car.setOptions(optionIds),
             car.setCarpictures(base64Ids),
         ])
 	}).then(data => {
@@ -112,10 +116,14 @@ exports.editCar = (req, res) => {
     console.log("EDIT CAR", editedCar);
     const base64Ids = [];
     const filePromises = [];
+    optionIds = [];
     let oldPictures = [];
 
     editedCar.carpictures.forEach(pic => {
         base64Ids.push(pic.id);
+    });
+    editedCar.options.forEach(option => {
+        optionIds.push(option.id);
     });
 
     if (Array.isArray(req.files) && req.files.length > 0) {
@@ -167,14 +175,14 @@ exports.editCar = (req, res) => {
         return Promise.all([
             car.setMake(editedCar.make.id),
             car.setModel(editedCar.model.id),
-            car.setCategory(editedCar.category.id),
-            car.setAdmissiontype(editedCar.admissiontype.id),
-            car.setColor(editedCar.color.id),
-            car.setDrivetrain(editedCar.drivetrain.id),
-            car.setGearboxtype(editedCar.gearboxtype.id),
-            car.setFueltype(editedCar.fueltype.id),
-            car.setEuro(editedCar.euro.id),
-            car.setOptions(editedCar.options),
+            car.setCategory(editedCar.category?.id),
+            car.setAdmissiontype(editedCar.admissiontype?.id),
+            car.setColor(editedCar.color?.id),
+            car.setDrivetrain(editedCar.drivetrain?.id),
+            car.setGearboxtype(editedCar.gearboxtype?.id),
+            car.setFueltype(editedCar.fueltype?.id),
+            car.setEuro(editedCar.euro?.id),
+            car.setOptions(optionIds),
             car.setCarpictures(base64Ids),
             car.save()
         ]);

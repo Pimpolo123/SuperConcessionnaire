@@ -70,7 +70,7 @@
                                     <span class="font-weight-normal" v-else>N/A</span>
                                 </span>
                                 <span class="font-weight-bold">Boite de vitesse : 
-                                    <span class="font-weight-normal" v-if="slotProps.data.gearboxtype">{{ slotProps.data.gearboxtype.name }} {{ slotProps.data.gears }} vitesses</span>
+                                    <span class="font-weight-normal" v-if="slotProps.data.gearboxtype">{{ slotProps.data.gearboxtype.name }} <span v-if="slotProps.data.gearboxtype.name != 'CVT'">{{ slotProps.data.gears }} vitesses</span></span>
                                     <span class="font-weight-normal" v-else>N/A</span>
                                 </span>
                             </div>
@@ -207,7 +207,7 @@
                     <div class="col-md-2">
                         <FloatLabel class="mt-4">
                             <label for="gears">Nombre de vitesses</label>
-                            <InputNumber id="gears" v-model.trim="car.gears"/>
+                            <InputNumber id="gears" v-model.trim="car.gears" :disabled="disableGears"/>
                         </FloatLabel>
                     </div>
                     <div class="col-md-2">
@@ -377,7 +377,8 @@ export default {
             options: [],
             categories: [],
             selectedOptions: [],
-            isLoading: false
+            isLoading: false,
+            disableGears: false,
         }
     },
     created() {
@@ -387,6 +388,12 @@ export default {
         this.$store.dispatch('cars/getallcars').then(
             res => {
                 this.data = res;
+                this.data.forEach(car => {
+                    if(car.gearboxtype.name == "CVT"){
+                        this.disableGears = true;
+                        car.gears = 1;
+                    }
+                });
                 console.log('DATA', this.data);
             },
             error => {
@@ -431,8 +438,10 @@ export default {
         editCar(car){
             this.isExistingCar = true;
             this.isLoading = true;
-            this.firstReg.year = parseInt(car.firstReg.split('-')[0]);
-            this.firstReg.month =  parseInt(car.firstReg.split('-')[1]) - 1;
+            if(car.firstReg){
+                this.firstReg.year = parseInt(car.firstReg.split('-')[0]);
+                this.firstReg.month =  parseInt(car.firstReg.split('-')[1]) - 1;
+            }
             this.selectedOptions = car.options.map(option => {
                 return {
                     id: option.id,
@@ -488,47 +497,52 @@ export default {
                 });
             })
             if(this.car?.make && this.car?.model && this.car?.year && this.car?.power && this.car?.price && this.car?.kilometers && this.car?.description?.trim()){
-                if(this.car?.firstReg.startsWith('undefined')){
-                    delete this.car.firstReg;
-                }
-                if(!this.isExistingCar){
-                    this.$store.dispatch('cars/addcar', this.car).then(
-                        res => {
-                            this.$toast.add({severity:'success', summary: 'Succès', detail: res.message, life: 3000});
-                            this.car.id = res.id;
-                            this.data.push(this.car);
-                            this.car = {};
-                            this.carDialog = false;
-                        },
-                        error => {
-                            this.message = (error.response && error.response.data.message) ||
-                                                error.message ||
-                                                error.toString();
-                                                this.successful = false;
-                            this.$toast.add({ severity: 'error', summary: 'Erreur', detail: this.message, life: 3000 });
-                        }
-                    );
-                    this.imgUrl = '';
-                    this.firstReg = {};
-                    this.imageFiles = [];
+                if(this.car.description.length <= 2000){
+                    if(this.car?.firstReg.startsWith('undefined')){
+                        delete this.car.firstReg;
+                    }
+                    if(!this.isExistingCar){
+                        this.$store.dispatch('cars/addcar', this.car).then(
+                            res => {
+                                this.$toast.add({severity:'success', summary: 'Succès', detail: res.message, life: 3000});
+                                this.car.id = res.id;
+                                this.data.push(this.car);
+                                this.car = {};
+                                this.carDialog = false;
+                            },
+                            error => {
+                                this.message = (error.response && error.response.data.message) ||
+                                                    error.message ||
+                                                    error.toString();
+                                                    this.successful = false;
+                                this.$toast.add({ severity: 'error', summary: 'Erreur', detail: this.message, life: 3000 });
+                            }
+                        );
+                        this.imgUrl = '';
+                        this.firstReg = {};
+                        this.imageFiles = [];
+                        this.selectedOptions = [];
+                    } else {
+                        this.$store.dispatch('cars/editcar', this.car).then(
+                            res => {
+                                this.$toast.add({severity:'success', summary: 'Succès', detail: res.message, life: 3000});
+                                this.data.splice(index, 1, this.car);
+                                this.car = {};
+                                this.carDialog = false;
+                            },
+                            error => {
+                                this.message = (error.response && error.response.data.message) ||
+                                                    error.message ||
+                                                    error.toString();
+                                                    this.successful = false;
+                                this.$toast.add({ severity: 'error', summary: 'Erreur', detail: this.message, life: 3000 });
+                            }
+                        );
+                        this.imgUrl = '';
+                        this.firstReg = {};
+                    }
                 } else {
-                    this.$store.dispatch('cars/editcar', this.car).then(
-                        res => {
-                            this.$toast.add({severity:'success', summary: 'Succès', detail: res.message, life: 3000});
-                            this.data.splice(index, 1, this.car);
-                            this.car = {};
-                            this.carDialog = false;
-                        },
-                        error => {
-                            this.message = (error.response && error.response.data.message) ||
-                                                error.message ||
-                                                error.toString();
-                                                this.successful = false;
-                            this.$toast.add({ severity: 'error', summary: 'Erreur', detail: this.message, life: 3000 });
-                        }
-                    );
-                    this.imgUrl = '';
-                    this.firstReg = '';
+                    this.$toast.add({severity:'error', summary: 'Erreur', detail: 'La description ne doit pas dépasser 2000 caractères', life: 3000});
                 }
             } else {
                 this.$toast.add({severity:'error', summary: 'Erreur', detail: 'Informations obligatoires manquantes', life: 3000});
@@ -785,6 +799,12 @@ export default {
         },
         updateCar(car){
             this.car = car;
+            if(this.car.gearboxtype.name == "CVT"){
+                this.car.gears = 1;
+                this.disableGears = true;
+            } else {
+                this.disableGears = false;
+            }
         },
     }
 }

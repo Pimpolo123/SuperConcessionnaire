@@ -227,7 +227,7 @@
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-7">
-                                <Datepicker name="firstReg" v-model="firstReg" menu-class-name="dp-custom-input" :teleport="true" 
+                                <Datepicker name="firstReg" v-model="firstReg" menu-class-name="dp-custom-input" :teleport="true" ref="firstReg" id="firstReg"
                                     :format="format" :enable-time-picker="false" month-picker placeholder="Première immatriculation" class="mt-4"/>
                             </div>
                             <div class="col-md-5">
@@ -348,7 +348,7 @@ export default {
         return {
             data: [],
             car: {},
-            firstReg: {},
+            firstReg: {year: null, month: null},
             currentUser: JSON.parse(localStorage.getItem('user')),
             selectedCars: [],
             imgUrl: "",
@@ -385,6 +385,14 @@ export default {
         this.initFilters();
     },
     mounted() {
+        this.$nextTick(() => {
+            console.log('Mounted - this.$refs:', this.$refs);
+            if (this.$refs.firstReg) {
+                console.log('FirstReg DatePicker:', this.$refs.firstReg);
+            } else {
+                console.warn('FirstReg DatePicker is not defined');
+            }
+        });
         this.$store.dispatch('cars/getallcars').then(
             res => {
                 this.data = res;
@@ -434,6 +442,11 @@ export default {
             this.isExistingCar = false;
             this.submitted = false;
             this.carDialog = true;
+            this.$nextTick(() => {
+                if (this.$refs.firstReg) {
+                    this.$refs.firstReg.clearValue();
+                }
+            });
         },
         editCar(car){
             this.isExistingCar = true;
@@ -639,6 +652,7 @@ export default {
         },
         hideDialog() {
             this.carDialog = false;
+            this.firstReg = {year: null, month: null};
             this.car = {};
             this.imgUrl = '';
             this.submitted = false;

@@ -1,10 +1,11 @@
-
 <template>
     <div class="card">
         <Toast />
         <DataView :value="data" :sortOrder="sortOrder" :sortField="sortField" paginator :rows="5">
             <template #header>
                 <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Trier" @change="onSortChange($event)" />
+                <Button icon="pi pi-filter" type="button" label="Filtrer" class="flex-auto md:flex-initial white-space-nowrap ml-3" @click="openFilters"></Button>
+                <Button icon="pi pi-filter-slash" type="button" label="Réinitialiser les filtres" class="flex-auto md:flex-initial white-space-nowrap ml-3" @click="resetFilters"></Button>
             </template>
             <template #list="slotProps">
                 <div class="container-fluid p-0 m-0">
@@ -154,6 +155,14 @@
                                     <span class="font-weight-bold" v-else></span>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="font-weight-bold">Options : 
+                                        <span class="font-weight-normal" v-if="car.options">{{ car.options.map(option => option.name).join(', ') }}</span>
+                                        <span class="font-weight-normal" v-else>N/A</span>
+                                    </div>
+                                </div>
+                            </div>
                         </template>
                     </Card>
                 </div>
@@ -227,6 +236,39 @@
                 <Button label="Fermer" icon="pi pi-times" text @click="hideDialog"/>
             </template>
         </Dialog>
+
+        <OverlayPanel ref="op">
+            <div class="flex flex-column gap-3 w-25rem">
+                <div class="row">
+                    <label for="makesDrop" class="mb-1">Marque</label>
+                    <Dropdown name="makesDrop" v-model="filteredMake" :options="makes" optionLabel="name" placeholder="Sélectionner une marque" class="w-full md:w-40rem mb-3" @change="filterByMake"/>
+                </div>
+                <div class="row">
+                    <label for="categoriesDrop" class="mb-1">Catégorie</label>
+                    <Dropdown name="categoriesDrop" v-model="filteredCategory" :options="categories" optionLabel="name" placeholder="Sélectionner une catégorie" class="w-full md:w-40rem mb-3" @change="filterByCategory(filteredCategory)"/>
+                </div>
+                <div class="row">
+                    <label for="colorDrop" class="mb-1">Couleur</label>
+                    <Dropdown name="colorDrop" v-model="filteredColor" :options="colors" optionLabel="name" placeholder="Sélectionner une couleur" class="w-full md:w-40rem mb-3" @change="filterByColor"/>
+                </div>
+                <div class="row">
+                    <label for="gearboxDrop" class="mb-1">Boîte de vitesses</label>
+                    <Dropdown name="gearboxDrop" v-model="filteredGearbox" :options="gearboxtypes" optionLabel="name" placeholder="Sélectionner un type de boîte" class="w-full md:w-40rem mb-3" @change="filterByGearboxtype"/>
+                </div>
+                <div class="row">
+                    <label for="drivetrainDrop" class="mb-1">Transmission</label>
+                    <Dropdown name="drivetrainDrop" v-model="filteredDrivetrain" :options="drivetrains" optionLabel="name" placeholder="Sélectionner une transmission" class="w-full md:w-40rem mb-3" @change="filterByDrivetrain"/>
+                </div>
+                <div class="row">
+                    <label for="euroDrop" class="mb-1">Catégorie EURO</label>
+                    <Dropdown name="euroDrop" v-model="filteredEuro" :options="euroclasses" optionLabel="name" placeholder="Sélectionner une catégorie EURO" class="w-full md:w-40rem mb-3" @change="filterByEuro"/>
+                </div>
+                <div class="row">
+                    <label for="fueltypeDrop" class="mb-1">Carburant</label>
+                    <Dropdown name="fueltypeDrop" v-model="filteredFueltype" :options="fueltypes" optionLabel="name" placeholder="Sélectionner un carburant" class="w-full md:w-40rem mb-3" @change="filterByFueltype"/>
+                </div>
+            </div>
+        </OverlayPanel>
     </div>
 </template>
 
@@ -238,12 +280,14 @@ import Toast from 'primevue/toast';
 import Dialog from 'primevue/dialog';
 import Galleria from 'primevue/galleria';
 import Card from 'primevue/card';
+import OverlayPanel from 'primevue/overlaypanel';
 import 'primeicons/primeicons.css';
 
 export default {
     data() {
         return {
             data: null,
+            staticData: null,
             sortKey: null,
             sortOrder: null,
             sortField: null,
@@ -269,20 +313,40 @@ export default {
                 { label: 'Kilométrage croissant', value: 'kilometers' },
                 { label: 'Année décroissante', value: '!year' },
                 { label: 'Année croissante', value: 'year' },
-            ]
+                { label: 'Puissance décroissante', value: '!power' },
+                { label: 'Puissance croissante', value: 'power' },
+            ],
+            makes: [],
+            colors: [],
+            gearboxtypes: [],
+            drivetrains: [],
+            euroclasses: [],
+            admissiontypes: [],
+            fueltypes: [],
+            options: [],
+            categories: [],
+            filteredMake: null,
+            filteredCategory: null,
+            filteredColor: null,
+            filteredGearbox: null,
+            filteredDrivetrain: null,
+            filteredEuro: null,
+            filteredFueltype: null,
         };
     },
     mounted() {
+        this.getAll();
         this.$store.dispatch('cars/getallcars').then(
             res => {
                 this.data = res;
+                console.log('DATA', this.data);
+                this.staticData = res;
                 // this.data.forEach(car => {
                 //     if(car.gearboxtype.name == "CVT"){
                 //         this.disableGears = true;
                 //         car.gears = 1;
                 //     }
                 // });
-                console.log('DATA', this.data);
             },
             error => {
                 this.message = (error.response && error.response.data.message) ||
@@ -299,7 +363,8 @@ export default {
         Toast,
         Dialog,
         Galleria,
-        Card
+        Card,
+        OverlayPanel
     },
     methods: {
         openDetails(car) {
@@ -346,6 +411,7 @@ export default {
         },
         hideDialog() {
             this.carDialog = false;
+            this.filterDialog = false;
             this.car = {};
             this.images = [];
         },
@@ -355,6 +421,163 @@ export default {
         prev() {
             this.activeIndex = this.activeIndex === 0 ? 0 : this.activeIndex - 1;
         },
+        openFilters() {
+            this.$refs.op.toggle(event);
+        },
+        resetFilters(filter = '') {
+            this.data = this.staticData;
+            if (filter !== 'make') {
+                this.filteredMake = null;
+            }
+            if (filter !== 'category') {
+                console.log('TEST');
+                this.filteredCategory = null;
+            }
+            if (filter !== 'color') {
+                this.filteredColor = null;
+            }
+            if (filter !== 'gearboxtype') {
+                this.filteredGearbox = null;
+            }
+            if (filter !== 'drivetrain') {
+                this.filteredDrivetrain = null;
+            }
+            if (filter !== 'euroclass') {
+                this.filteredEuro = null;
+            }
+            if (filter !== 'fueltype') {
+                this.filteredFueltype = null;
+            }
+        },
+        getAll(){
+            this.$store.dispatch('cars/getallmakes').then(
+                res => {
+                    this.makes = res;
+                    this.makes.sort((a, b) => a.name.localeCompare(b.name));
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+            });
+            this.$store.dispatch('cars/getallcategories').then(
+                res => {
+                    this.categories = res;
+                    this.categories.sort((a, b) => a.name.localeCompare(b.name));
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+            });
+            this.$store.dispatch('cars/getallcolors').then(
+                res => {
+                    this.colors = res;
+                    this.colors.sort((a, b) => a.name.localeCompare(b.name));
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+            });
+            this.$store.dispatch('cars/getallgearboxtypes').then(
+                res => {
+                    this.gearboxtypes = res;
+                    this.gearboxtypes.sort((a, b) => a.name.localeCompare(b.name));
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+            });
+            this.$store.dispatch('cars/getalldrivetrains').then(
+                res => {
+                    this.drivetrains = res;
+                    this.drivetrains.sort((a, b) => a.name.localeCompare(b.name));
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+            });
+            this.$store.dispatch('cars/getalleuros').then(
+                res => {
+                    this.euroclasses = res;
+                    this.euroclasses.sort((a, b) => a.name.localeCompare(b.name));
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+            });
+            this.$store.dispatch('cars/getalladmissiontypes').then(
+                res => {
+                    this.admissiontypes = res;
+                    this.admissiontypes.sort((a, b) => a.name.localeCompare(b.name));
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+            });
+            this.$store.dispatch('cars/getallfueltypes').then(
+                res => {
+                    this.fueltypes = res;
+                    this.fueltypes.sort((a, b) => a.name.localeCompare(b.name));
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+            });
+            this.$store.dispatch('cars/getalloptions').then(
+                res => {
+                    this.options = res;
+                    this.options.sort((a, b) => a.name.localeCompare(b.name));
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+            });
+        },
+        filterByMake(){
+            this.resetFilters('make');
+            this.data = this.staticData.filter(car => car.make.id == this.filteredMake.id);
+        },
+        filterByCategory(f){
+            this.resetFilters('category');
+            this.data = this.staticData.filter(car => car.categoryId == this.filteredCategory.id);
+        },
+        filterByColor(){
+            this.resetFilters('color');
+            this.data = this.staticData.filter(car => car.colorId == this.filteredColor.id);
+        },
+        filterByGearboxtype(){
+            this.resetFilters('gearboxtype');
+            this.data = this.staticData.filter(car => car.gearboxtypeId == this.filteredGearbox.id);
+        },
+        filterByDrivetrain(){
+            this.resetFilters('drivetrain');
+            this.data = this.staticData.filter(car => car.drivetrainId == this.filteredDrivetrain.id);
+        },
+        filterByEuro(){
+            this.resetFilters('euroclass');
+            this.data = this.staticData.filter(car => car.euroId == this.filteredEuro.id);
+        },
+        filterByFueltype(){
+            this.resetFilters('fueltype');
+            this.data = this.staticData.filter(car => car.fueltypeId == this.filteredFueltype.id);
+        }
     }
 };
 </script>

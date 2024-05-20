@@ -12,57 +12,75 @@ export const router = createRouter({
         {   
             path: '/',
             name: 'home',
-            component: Home
+            component: Home,
+            meta: { title: "Accueil" }
         },
         {
             path: '/home',
-            component: Home
+            component: Home,
+            meta: { title: "Accueil" } 
         },
         {
             path: '/login',
-            component: Login
+            component: Login,
+            meta: { title: "Connexion" } 
         },
         {
             path: '/register',
-            component: Register
+            component: Register,
+            meta: { title: "Inscription" } 
         },
         {
             path: '/profile',
             name: 'profile',
-            component: () => import('./views/User/Profile.vue')
+            component: () => import('./views/User/Profile.vue'),
+            meta: { title: "Profil" } 
         },
         {
             path: '/admin',
             name: 'admin',
-            component: () => import('./views/Admin/AdminPanel.vue')
+            component: () => import('./views/Admin/AdminPanel.vue'),
+            meta: { title: "Panel Admin" } 
         },
         {
             path: '/mod',
             name: 'moderator',
-            component: () => import('./views/BoardModerator.vue')
+            component: () => import('./views/BoardModerator.vue'),
+            meta: { title: "user" } 
         },
         {
             path: '/user',
             name: 'user',
-            component: () => import('./views/BoardUser.vue')
+            component: () => import('./views/BoardUser.vue'),
+            meta: { title: "Home Page" } 
         },
         {
             path: '/editprofile',
             name: 'editprofile',
-            component: () => import('./views/User/EditProfile.vue')
+            component: () => import('./views/User/EditProfile.vue'),
+            meta: { title: "Edition Profil" } 
         },
         {
             path: '/editaddress',
             name: 'editaddress',
-            component: () => import('./views/User/EditAddress.vue')
+            component: () => import('./views/User/EditAddress.vue'),
+            meta: { title: "Edition adresse" } 
+        },
+        {
+            path: '/carlist',
+            name: 'carlist',
+            component: () => import('./views/Cars/CarList.vue'),
+            meta: { title: "Liste des voitures" } 
         }
     ]
 });
 
 router.beforeEach((to, from, next) => {
-    const publicPages = ['/login', '/register', '/home'];
+    const publicPages = ['/login', '/register', '/home', '/carlist'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
+
+    document.title = to.meta.title || "SuperConcessionnaire";
 
     if (authRequired && !loggedIn) {
         next('/login');

@@ -389,7 +389,7 @@ export default {
             res => {
                 this.data = res;
                 this.data.forEach(car => {
-                    if(car.gearboxtype.name == "CVT"){
+                    if(car.gearboxtype?.name == "CVT"){
                         this.disableGears = true;
                         car.gears = 1;
                     }

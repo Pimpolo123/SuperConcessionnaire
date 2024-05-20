@@ -302,3 +302,14 @@ exports.getAllOptions = (req, res) => {
         res.status(500).send({ message: err.message });
     });
 }
+
+function base64ToFile(base64, filename) {
+    const byteString = atob(base64);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+        uint8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([arrayBuffer], { type: 'image/jpeg' });
+    return new File([blob], filename, { type: 'image/jpeg' });
+}

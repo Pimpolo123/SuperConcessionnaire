@@ -18,7 +18,7 @@ module.exports = function(app) {
 
     app.get(
         "/admin/board",
-        [authJwt.verifyToken, authJwt.isAdmin],
+        [authJwt.verifyToken, authJwt.isModeratorOrAdmin],
         controller.adminBoard
     );
 

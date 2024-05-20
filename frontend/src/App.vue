@@ -9,14 +9,14 @@
             <ul class="navbar-nav">
               <li class="nav-item">
                 <router-link to="/home" class="nav-link">
-                  <font-awesome-icon icon="home" class="pr-1"/>Home
+                  <font-awesome-icon icon="home" class="pr-1"/>Accueil
                 </router-link>
               </li>
               <li v-if="showAdminBoard" class="nav-item">
-                <router-link to="/admin" class="nav-link">Admin Board</router-link>
+                <router-link to="/admin" class="nav-link">Panel Admin</router-link>
               </li>
               <li v-if="showModeratorBoard" class="nav-item">
-                <router-link to="/mod" class="nav-link">Moderator Board</router-link>
+                <router-link to="/mod" class="nav-link">Panel Modérateur</router-link>
               </li>
               <li class="nav-item">
                 <router-link v-if="currentUser" to="/user" class="nav-link">User</router-link>
@@ -98,3 +98,18 @@
       	}
     };
 </script>
+
+<style scoped>
+    .navbar {
+        height: 80px; /* Adjust the height as needed */
+    }
+    .navbar-brand, .nav-link, .navbar-toggler {
+        font-size: 1.25rem; /* Adjust the font size as needed */
+    }
+    .navbar-toggler .pi {
+        font-size: 1.25rem; /* Adjust the icon size as needed */
+    }
+    .nav-link .fa, .nav-link .pi {
+        font-size: 1.25rem; /* Adjust the icon size as needed */
+    }
+</style>

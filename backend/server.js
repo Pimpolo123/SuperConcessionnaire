@@ -85,6 +85,7 @@ function initial() {
 	let euro = require('./static/euro_list.json');
 	let options = require('./static/options_list.json');
 	let countries = require('country-region-data/data.json');
+	let pictures = require('./static/pictures_list.json');
 	countries = countries.slice(0, 10); 
 	models = models.slice(0, 20);
 
@@ -230,7 +231,7 @@ function initial() {
 		});
 	});
 
-	['photo1', 'photo2', 'photo3'].forEach(e => {
+	[pictures[0], pictures[0], pictures[0]].forEach(e => {
 		CarPicture.create({
 			base64url: e
 		})
@@ -243,7 +244,7 @@ function initial() {
 		kilometers: 200000,
 		description: "T'as vu l'auto mon copain ?",
 		firstReg: "2018-07-01",
-		displacement: 1.5,
+		displacement: 1499,
 		gears: 6,
 		cylinders: 3,
 		doors: 3,
@@ -272,7 +273,7 @@ function initial() {
 		kilometers: 201000,
 		description: "Jolie voiture mon copain",
 		firstReg: "1998-07-01",
-		displacement: 3,
+		displacement: 3000,
 		gears: 4,
 		cylinders: 6,
 		doors: 5,

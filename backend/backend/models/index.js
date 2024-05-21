@@ -43,6 +43,7 @@ db.gearboxtype = require("./cars/gearboxtype.model")(sequelize, Sequelize);
 db.option = require("./cars/option.model")(sequelize, Sequelize);
 db.euro = require("./cars/euro.model")(sequelize, Sequelize);
 db.carpicture = require("./cars/carpicture.model")(sequelize, Sequelize);
+db.favorite = require("./favorite.model")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   	through: "user_roles"

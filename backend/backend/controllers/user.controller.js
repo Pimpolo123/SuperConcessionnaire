@@ -4,6 +4,7 @@ const User = db.user;
 const Role = db.role;
 const Address = db.address;
 const Country = db.country;
+const Favorite = db.favorite;
 const Region = db.region;
 const Op = db.Sequelize.Op;
 const fs = require('fs');
@@ -192,3 +193,46 @@ exports.editProfile = (req, res) => {
 		res.status(500).send({ message: err.message });
 	});
 };
+
+exports.addFavorite = (req, res) => {
+	Favorite.findOrCreate({
+		where: {
+			userId: req.body.userId,
+			carId: req.body.carId
+		},
+		defaults: {
+			userId: req.body.userId,
+			carId: req.body.carId
+		}
+	}).then(favorite => {
+		res.status(200).send({ message: "Voiture ajoutée aux favoris", newFavorite: favorite});
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+};
+
+exports.getFavorites = (req, res) => {
+	const userId = req.query.userId;
+	Favorite.findAll({
+		where: {
+			userId: userId
+		}
+	}).then(favorites => {
+		res.status(200).send(favorites);
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+}
+
+exports.removeFavorite = (req, res) => {
+	Favorite.destroy({
+		where: {
+			userId: req.body.userId,
+			carId: req.body.carId
+		}
+	}).then(() => {
+		res.status(200).send({ message: "Voiture retirée des favoris"});
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+}

@@ -72,6 +72,36 @@ export const user = {
 					return Promise.reject(error);
 				}
 			)
+		},
+		addfavorite({ commit }, data) {
+			return UserService.addFavorite(data).then(
+				res => {
+					return Promise.resolve(res);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
+		},
+		getfavorites({ commit }, userId) {
+			return UserService.getFavorites(userId).then(
+				res => {
+					return Promise.resolve(res);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
+		},
+		removefavorite({ commit }, data) {
+			return UserService.removeFavorite(data).then(
+				res => {
+					return Promise.resolve(res);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
 		}
 	},
 	mutations: {

@@ -49,12 +49,6 @@ export const router = createRouter({
             meta: { title: "user" } 
         },
         {
-            path: '/user',
-            name: 'user',
-            component: () => import('./views/BoardUser.vue'),
-            meta: { title: "Home Page" } 
-        },
-        {
             path: '/editprofile',
             name: 'editprofile',
             component: () => import('./views/User/EditProfile.vue'),
@@ -71,6 +65,12 @@ export const router = createRouter({
             name: 'carlist',
             component: () => import('./views/Cars/CarList.vue'),
             meta: { title: "Liste des voitures" } 
+        },
+        {
+            path: '/favorites',
+            name: 'favorites',
+            component: () => import('./views/User/Favorites.vue'),
+            meta: { title: "Mes favoris" } 
         }
     ]
 });

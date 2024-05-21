@@ -39,7 +39,7 @@
                             <div class="d-flex gap-5">
                                 <span class="text-xl font-semibold text-900 align-self-center">€{{ item.price }}</span>
                                 <div class="d-flex gap-2">
-                                    <Button icon="pi pi-heart" outlined></Button>
+                                    <Button :icon="getFavIcon(item)" outlined @click="fav(item)"></Button>
                                     <Button icon="pi pi-eye" label="Voir le véhicule" class="flex-auto md:flex-initial white-space-nowrap" @click="openDetails(item)"></Button>
                                 </div>
                             </div>
@@ -286,6 +286,8 @@ import 'primeicons/primeicons.css';
 export default {
     data() {
         return {
+            currentUser: this.$store.state.auth.user,
+            userFavorites: [],
             data: null,
             staticData: null,
             sortKey: null,
@@ -341,12 +343,17 @@ export default {
                 this.data = res;
                 console.log('DATA', this.data);
                 this.staticData = res;
-                // this.data.forEach(car => {
-                //     if(car.gearboxtype.name == "CVT"){
-                //         this.disableGears = true;
-                //         car.gears = 1;
-                //     }
-                // });
+            },
+            error => {
+                this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+            }
+        );
+        this.$store.dispatch('user/getfavorites', this.currentUser.id).then(
+            res => {
+                this.userFavorites = res;
             },
             error => {
                 this.message = (error.response && error.response.data.message) ||
@@ -577,6 +584,60 @@ export default {
         filterByFueltype(){
             this.resetFilters('fueltype');
             this.data = this.staticData.filter(car => car.fueltypeId == this.filteredFueltype.id);
+        },
+        fav(car){
+            this.$store.dispatch('user/getfavorites', this.currentUser.id).then(
+                res => {
+                    this.userFavorites = res;
+                    console.log('BEFORE',this.userFavorites);
+                    if(!this.userFavorites.some(favorite => favorite.carId === car.id && favorite.userId === this.currentUser.id)){
+                        this.addFavorite(car.id);
+                    } else {
+                        this.removeFavorite(car.id);
+                    }
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                            error.message ||
+                                            error.toString();
+                                            this.successful = false;
+                }
+            );
+        },
+        addFavorite(carId){
+            this.$store.dispatch('user/addfavorite', {carId: carId, userId: this.currentUser.id}).then(
+                res => {
+                    if(res.newFavorite[1]){
+                        this.userFavorites.push(res.newFavorite[0]);
+                        this.$toast.add({severity:'success', summary:'Succès', detail: res.message, life: 3000});
+                        console.log('ADDED',this.userFavorites);
+                    } else {
+                        this.$toast.add({severity:'error', summary:'Erreur', detail: 'Déja en favori', life: 3000});
+                    }
+                },
+                error => {
+                    this.$toast.add({severity:'error', summary:'Erreur', detail: error.message, life: 3000});
+                }
+            );
+        },
+        removeFavorite(carId){
+            this.$store.dispatch('user/removefavorite', {carId: carId, userId: this.currentUser.id}).then(
+                res => {
+                    this.userFavorites = this.userFavorites.filter(favorite => favorite.carId !== carId);
+                    this.$toast.add({severity:'success', summary:'Succès', detail: res.message, life: 3000});
+                    console.log('REMOVED',this.userFavorites);
+                },
+                error => {
+                    this.$toast.add({severity:'error', summary:'Erreur', detail: error.message, life: 3000});
+                }
+            );
+        },
+        getFavIcon(item){
+            if(this.userFavorites.some(favorite => favorite.carId === item.id && favorite.userId === this.currentUser.id)){
+                return 'pi pi-heart-fill';
+            } else {
+                return 'pi pi-heart';
+            }
         }
     }
 };

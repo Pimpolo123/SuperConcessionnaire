@@ -9,10 +9,6 @@ class UserService {
 		return axios.get(API_URL + 'test/all');
 	}
 
-	getUserBoard() {
-		return axios.get(API_URL + 'test/user', { headers: authHeader() });
-	}
-
 	getModeratorBoard() {
 		return axios.get(API_URL + 'test/mod', { headers: authHeader() });
 	}
@@ -108,6 +104,41 @@ class UserService {
 					localStorage.setItem('user', JSON.stringify(response.data));
 				}
 				return response.data;
+			});
+	}
+
+	addFavorite(data) {
+		return axios
+			.post(API_URL + 'addfavorite', {
+				userId: data.userId,
+				carId: data.carId
+			},{ 
+				headers: authHeader()
+			}).then(res => {
+				return res.data;
+			});
+	}
+
+	getFavorites(userId) {
+        return axios
+            .get(API_URL + 'getfavorites', { 
+                params: { userId: userId }, 
+                headers: authHeader() 
+            })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+	removeFavorite(data) {
+		return axios
+			.post(API_URL + 'removefavorite', {
+				userId: data.userId,
+				carId: data.carId
+			},{ 
+				headers: authHeader()
+			}).then(res => {
+				return res.data;
 			});
 	}
 }

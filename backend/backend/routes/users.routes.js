@@ -56,4 +56,22 @@ module.exports = function(app) {
     );
 
     app.post('/uploadpicture', upload.single('file'), controller.uploadProfilePicture);
+
+    app.post(
+        "/addfavorite", 
+        [authJwt.verifyToken], 
+        controller.addFavorite
+    );
+
+    app.post(
+        "/removefavorite", 
+        [authJwt.verifyToken], 
+        controller.removeFavorite
+    );
+
+    app.get(
+        "/getfavorites", 
+        [authJwt.verifyToken], 
+        controller.getFavorites
+    );
 };

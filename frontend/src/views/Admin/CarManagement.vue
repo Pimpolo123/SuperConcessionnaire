@@ -439,6 +439,10 @@ export default {
         openNew() {
             this.getAll();
             this.car = {};
+            this.imgUrl = '';
+            this.firstReg = {year: null, month: null};
+            this.imageFiles = [];
+            this.selectedOptions = [];
             this.isExistingCar = false;
             this.submitted = false;
             this.carDialog = true;
@@ -449,6 +453,10 @@ export default {
             });
         },
         editCar(car){
+            this.imgUrl = '';
+            this.firstReg = {year: null, month: null};
+            this.imageFiles = [];
+            this.selectedOptions = [];
             this.isExistingCar = true;
             this.isLoading = true;
             if(car.firstReg){
@@ -467,6 +475,11 @@ export default {
                     this.getAll();
                     this.getModelsFromId(car.make.id);
                     this.carDialog = true;
+                    this.$nextTick(() => {
+                        if (this.$refs.firstReg) {
+                            this.$refs.firstReg.clearValue();
+                        }
+                    });
                     this.submitted = false;
                     this.isLoading = false;
                 },
@@ -484,7 +497,7 @@ export default {
             }
             var index = this.data.findIndex(item => item.id === this.car.id);
             this.submitted = true;
-            this.car.firstReg = this.firstReg.year + '-' + (this.firstReg.month + 1) + '-01';
+            this.car.firstReg = this.firstReg?.year + '-' + (this.firstReg?.month + 1) + '-01';
             this.car.options = this.selectedOptions;
             this.car.imageFiles = this.imageFiles;
             Promise.all(this.imageFiles.map(file => {
@@ -553,6 +566,8 @@ export default {
                         );
                         this.imgUrl = '';
                         this.firstReg = {};
+                        this.imageFiles = [];
+                        this.selectedOptions = [];
                     }
                 } else {
                     this.$toast.add({severity:'error', summary: 'Erreur', detail: 'La description ne doit pas dépasser 2000 caractères', life: 3000});
@@ -656,6 +671,8 @@ export default {
             this.car = {};
             this.imgUrl = '';
             this.submitted = false;
+            this.imageFiles = [];
+            this.selectedOptions = [];
         },
         getModels(event){
             this.$store.dispatch('cars/getmodels', event.value.id).then(
@@ -813,7 +830,7 @@ export default {
         },
         updateCar(car){
             this.car = car;
-            if(this.car.gearboxtype.name == "CVT"){
+            if(this.car.gearboxtype?.name == "CVT"){
                 this.car.gears = 1;
                 this.disableGears = true;
             } else {

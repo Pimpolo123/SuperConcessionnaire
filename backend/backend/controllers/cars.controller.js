@@ -82,7 +82,8 @@ exports.addCar = (req, res) => {
                 co2: newCar.co2,
                 urbanCons: newCar.urbanCons,
                 mixCons: newCar.mixCons,
-                hwCons: newCar.hwCons
+                hwCons: newCar.hwCons,
+                isBid: newCar.isBid
         })
 	}).then(car => {
         return Promise.all([
@@ -171,6 +172,7 @@ exports.editCar = (req, res) => {
         car.urbanCons = editedCar.urbanCons;
         car.mixCons = editedCar.mixCons;
         car.hwCons = editedCar.hwCons;
+        car.isBid = editedCar.isBid;
 
         return Promise.all([
             car.setMake(editedCar.make.id),

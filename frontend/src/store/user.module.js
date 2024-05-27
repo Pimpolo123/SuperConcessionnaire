@@ -43,6 +43,16 @@ export const user = {
 				}
 			)
 		},
+		getuser({ commit }, id) {
+			return UserService.getUser(id).then(
+				user => {
+					return Promise.resolve(user);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
+		},
 		getregionlist({ commit }, data) {
 			return UserService.getRegionList(data).then(
 				regions => {

@@ -16,15 +16,16 @@ exports.allAccess = (req, res) => {
 	res.status(200).send("Public Content.");
 };
   
-exports.userBoard = (req, res) => {
+exports.getUser = (req, res) => {
 	User.findOne({
 		where: {
-			id: req.body.user.id
+			id: req.body.userId
 		}
 	}).then(user => {
-		console.log(user.getAddress())
-		res.status(200).send("ok");
-	})
+		res.status(200).send(user);
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
 };
   
 exports.moderatorBoard = (req, res) => {

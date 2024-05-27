@@ -32,6 +32,18 @@ class UserService {
 		return axios.get(API_URL + 'getcountrylist', { headers: authHeader() });
 	}
 
+	getUser(id) {
+        return axios
+            .post(API_URL + 'getuser', {
+                userId: id
+            },{
+                headers: authHeader()
+            })
+            .then(response => {
+                return response.data;
+            });
+    }
+
 	uploadPicture(pictureObject){
 		var formData = new FormData();
 		formData.append("file", pictureObject.file);

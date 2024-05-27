@@ -59,6 +59,7 @@ require('./backend/routes/auth.routes')(app);
 require('./backend/routes/users.routes')(app);
 require('./backend/routes/admin.routes')(app);
 require('./backend/routes/cars.routes')(app);
+require('./backend/routes/bid.routes')(app);
 
 app.listen(PORT_BACK, () => {
     console.log(`Serveur en ligne sur le port ${PORT_BACK}.`);
@@ -86,8 +87,8 @@ function initial() {
 	let options = require('./static/options_list.json');
 	let countries = require('country-region-data/data.json');
 	let pictures = require('./static/pictures_list.json');
-	// countries = countries.slice(0, 10); 
-	// models = models.slice(0, 20);
+	countries = countries.slice(0, 10); 
+	models = models.slice(0, 20);
 
     Role.create({
 		id: 1,

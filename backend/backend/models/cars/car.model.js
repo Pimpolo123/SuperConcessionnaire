@@ -55,7 +55,11 @@ module.exports = (sequelize, Sequelize) => {
 		hwCons: {
 			type: Sequelize.FLOAT,
 			allowNull: true,
-		}
+		},
+		isBid: {
+			type: Sequelize.BOOLEAN,
+			allowNull: true,
+		},
     });
 
     return Car;

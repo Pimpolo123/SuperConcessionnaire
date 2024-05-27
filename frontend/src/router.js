@@ -71,6 +71,12 @@ export const router = createRouter({
             name: 'favorites',
             component: () => import('./views/User/Favorites.vue'),
             meta: { title: "Mes favoris" } 
+        },
+        {
+            path: '/bidlist',
+            name: 'bidlist',
+            component: () => import('./views/Cars/BidList.vue'),
+            meta: { title: "Enchères en cours" } 
         }
     ]
 });

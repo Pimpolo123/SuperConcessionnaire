@@ -85,6 +85,27 @@
                 </Column>
             </DataTable>
             <Dialog v-model:visible="carDialog" :style="{width: '100%'}" header="Détails de la voiture" :modal="true" class="container p-fluid m-0 p-0" @after-hide="hideDialog">
+                <InputSwitch v-model="isBid" class="mt-4 d-flex" v-tooltip.top="'Vente aux enchères'" @change="setBid"/>
+                <div class="row mt-3" v-if="isBid">
+                    <div class="col-md-3">
+                        <FloatLabel class="mt-4">
+                            <label for="startingPrice">Prix de départ</label>
+                            <InputNumber id="startingPrice" v-model.trim="bid.startingPrice" :invalid="isBid && submitted && !bid.startingPrice" :disabled="bidDisabled"/>
+                            <small class="p-error" v-if="isBid && submitted && !bid.startingPrice">Prix de départ requis</small>
+                        </FloatLabel>
+                    </div>
+                    <div class="col-md-3">
+                        <FloatLabel class="mt-4">
+                            <label for="minimumBid">Enchère minimum</label>
+                            <InputNumber id="minimumBid" v-model.trim="bid.minimumBid" :invalid="isBid && submitted && !bid.minimumBid" :disabled="bidDisabled"/>
+                            <small class="p-error" v-if="isBid && submitted && !bid.minimumBid">Enchère minimum requise</small>
+                        </FloatLabel>
+                    </div>
+                    <div class="col-md-3">
+                        <Datepicker name="bidStartDate" v-model="bidDateRange" model-type="timestamp" menu-class-name="dp-custom-input" :teleport="true" ref="bidStartDate" id="bidStartDate"  :disabled="bidDisabled"
+                             :enable-time-picker="true" :time-picker-inline="true" range placeholder="Période des enchères" class="mt-4"/>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12 mt-3 mb-2">
                         <FileUpload name="carpictures[]" @select="onSelect" :multiple="true" accept="image/*" :maxFileSize="30000000" :fileLimit="20"
@@ -270,8 +291,8 @@
                             <div class="col-md-6">
                                 <FloatLabel class="mt-4">
                                     <label for="price">Prix</label>
-                                    <InputNumber id="price" v-model.trim="car.price" :invalid="submitted && !car.price"/>
-                                    <small class="p-error" v-if="submitted && !car.price">Prix requis</small>
+                                    <InputNumber id="price" v-model.trim="car.price" :invalid="!isBid && submitted && !car.price" :disabled="priceDisabled"/>
+                                    <small class="p-error" v-if="!isBid && submitted && !car.price">Prix requis</small>
                                 </FloatLabel>
                             </div>
                             <div class="col-md-6">
@@ -340,6 +361,8 @@ import FileUpload from 'primevue/fileupload';
 import Badge from 'primevue/badge';
 import ProgressBar from 'primevue/progressbar';
 import ProgressSpinner from 'primevue/progressspinner';
+import InputSwitch from 'primevue/inputswitch';
+
 
 
 export default {
@@ -365,6 +388,15 @@ export default {
 
                     return `${month}/${year}`;
             },
+            bidFormat: (date) => {
+                    const month = date.getMonth() + 1;
+                    const year = date.getFullYear();
+                    const day = date.getDate();
+                    const hour = date.getHours();
+                    const minute = date.getMinutes();
+
+                    return `${day}/${month}/${year} ${hour}:${minute}`;
+            },
             imageFiles: [],
             makes: [],
             models: [],
@@ -379,20 +411,17 @@ export default {
             selectedOptions: [],
             isLoading: false,
             disableGears: false,
+            isBid: false,
+            priceDisabled: false,
+            bidDisabled: false,
+            bid: {},
+            bidDateRange: []
         }
     },
     created() {
         this.initFilters();
     },
     mounted() {
-        this.$nextTick(() => {
-            console.log('Mounted - this.$refs:', this.$refs);
-            if (this.$refs.firstReg) {
-                console.log('FirstReg DatePicker:', this.$refs.firstReg);
-            } else {
-                console.warn('FirstReg DatePicker is not defined');
-            }
-        });
         this.$store.dispatch('cars/getallcars').then(
             res => {
                 this.data = res;
@@ -433,12 +462,14 @@ export default {
         FileUpload,
         Badge,
         ProgressBar,
-        ProgressSpinner
+        ProgressSpinner,
+        InputSwitch
     },
     methods: {
         openNew() {
             this.getAll();
             this.car = {};
+            this.bid = {};
             this.imgUrl = '';
             this.firstReg = {year: null, month: null};
             this.imageFiles = [];
@@ -472,6 +503,23 @@ export default {
             this.$store.dispatch('cars/getcar', car.id).then(
                 res => {
                     this.car = res;
+                    if(this.car.isBid){
+                        console.log(this.bidDateRange);
+                        this.isBid = true;
+                        this.bidDisabled = true;
+                        this.$store.dispatch('bid/getbid', this.car.id).then(
+                            res => {
+                                this.bidDateRange = [new Date(res.bidStartDate), new Date(res.bidEndDate)];
+                                this.bid = res;
+                            },
+                            error => {
+                                this.message = (error.response && error.response.data.message) ||
+                                                    error.message ||
+                                                    error.toString();
+                                                    this.successful = false;
+                            }
+                        );
+                    }
                     this.getAll();
                     this.getModelsFromId(car.make.id);
                     this.carDialog = true;
@@ -492,6 +540,9 @@ export default {
             );
         },
         saveCar(){
+            if(this.isBid){
+                this.car.isBid = true;
+            }
             if(!this.isExistingCar){
                 this.car.carpictures = [];
             }
@@ -522,7 +573,7 @@ export default {
                     }
                 });
             })
-            if(this.car?.make && this.car?.model && this.car?.year && this.car?.power && this.car?.price && this.car?.kilometers && this.car?.description?.trim()){
+            if(this.car?.make && this.car?.model && this.car?.year && this.car?.power && (this.car?.price || this.car?.price == 0) && this.car?.kilometers && this.car?.description?.trim()){
                 if(this.car.description.length <= 2000){
                     if(this.car?.firstReg.startsWith('undefined')){
                         delete this.car.firstReg;
@@ -530,10 +581,30 @@ export default {
                     if(!this.isExistingCar){
                         this.$store.dispatch('cars/addcar', this.car).then(
                             res => {
+                                if(this.isBid){
+                                    this.bid.carId = res.id;
+                                    this.bid.currentPrice = this.bid.startingPrice;
+                                    this.bid.bidStartDate = this.bidDateRange[0];
+                                    this.bid.bidEndDate = this.bidDateRange[1];
+                                    this.$store.dispatch('bid/addbid', this.bid).then(
+                                        res => {
+                                            console.log(res);
+                                        },
+                                        error => {
+                                            this.message = (error.response && error.response.data.message) ||
+                                                                error.message ||
+                                                                error.toString();
+                                                                this.successful = false;
+                                            this.$toast.add({ severity: 'error', summary: 'Erreur', detail: this.message, life: 3000 });
+                                        }
+                                    );
+                                }
                                 this.$toast.add({severity:'success', summary: 'Succès', detail: res.message, life: 3000});
                                 this.car.id = res.id;
                                 this.data.push(this.car);
                                 this.car = {};
+                                this.isBid = false;
+                                this.bid = {};
                                 this.carDialog = false;
                             },
                             error => {
@@ -551,6 +622,26 @@ export default {
                     } else {
                         this.$store.dispatch('cars/editcar', this.car).then(
                             res => {
+                                if(this.isBid){
+                                    this.bid.carId = this.car.id;
+                                    this.bid.currentPrice = this.bid.startingPrice;
+                                    this.bid.bidStartDate = this.bidDateRange[0];
+                                    this.bid.bidEndDate = this.bidDateRange[1];
+                                    this.$store.dispatch('bid/addbid', this.bid).then(
+                                        res => {
+                                            console.log(res);
+                                        },
+                                        error => {
+                                            this.message = (error.response && error.response.data.message) ||
+                                                                error.message ||
+                                                                error.toString();
+                                                                this.successful = false;
+                                            this.$toast.add({ severity: 'error', summary: 'Erreur', detail: this.message, life: 3000 });
+                                        }
+                                    );
+                                }
+                                this.isBid = false;
+                                this.bid = {};
                                 this.$toast.add({severity:'success', summary: 'Succès', detail: res.message, life: 3000});
                                 this.data.splice(index, 1, this.car);
                                 this.car = {};
@@ -568,6 +659,7 @@ export default {
                         this.firstReg = {};
                         this.imageFiles = [];
                         this.selectedOptions = [];
+                        this.bidDisabled = false;
                     }
                 } else {
                     this.$toast.add({severity:'error', summary: 'Erreur', detail: 'La description ne doit pas dépasser 2000 caractères', life: 3000});
@@ -669,6 +761,9 @@ export default {
             this.carDialog = false;
             this.firstReg = {year: null, month: null};
             this.car = {};
+            this.bid = {};
+            this.isBid = false;
+            this.bidDisabled = false;
             this.imgUrl = '';
             this.submitted = false;
             this.imageFiles = [];
@@ -837,6 +932,12 @@ export default {
                 this.disableGears = false;
             }
         },
+        setBid(){
+            if(this.isBid){
+                this.car.price = 0;
+                this.priceDisabled = true;
+            }
+        }
     }
 }
 </script>

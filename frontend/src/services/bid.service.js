@@ -30,6 +30,22 @@ class BidService {
                 return response.data;
             });
     }
+
+    updateBid(bid) {
+        return axios
+            .post(API_URL + 'updatebid', bid, { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    deleteBid(bid) {
+        return axios
+            .post(API_URL + 'deletebid', bid, { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
 }
 
 export default new BidService();

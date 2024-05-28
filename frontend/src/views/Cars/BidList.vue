@@ -1,5 +1,6 @@
 <template>
     <ConfirmDialog></ConfirmDialog>
+    <Toast/>
     <DataView :value="data" :sortOrder="sortOrder" :sortField="sortField" paginator :rows="5">
         <template #header>
             <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Trier" @change="onSortChange($event)" />
@@ -42,7 +43,10 @@
                             </div>
                         </div>
                         <div class="d-flex gap-5 col">
-                            <div class="font-weight-bold"> Enchère actuelle : 
+                            <div class="font-weight-bold" v-if="item.bid.currentPrice == item.bid.startingPrice"> Prix de départ
+                                <span class="text-xl font-semibold font-weight-normal text-900 align-self-center">{{ item.bid.currentPrice }}€</span>
+                            </div>
+                            <div class="font-weight-bold" v-else> Enchère actuelle : 
                                 <span class="text-xl font-semibold font-weight-normal text-900 align-self-center">{{ item.bid.currentPrice }}€</span>
                             </div>
                             <div class="col">
@@ -259,6 +263,7 @@ import Dialog from 'primevue/dialog';
 import Card from 'primevue/card';
 import Galleria from 'primevue/galleria';
 import ConfirmDialog from 'primevue/confirmdialog';
+import Toast from 'primevue/toast';
 
 export default {
     name: "CarManagement",
@@ -310,7 +315,7 @@ export default {
                         bid.bidStartDate = new Date(bid.bidStartDate);
                         bid.bidEndDate = new Date(bid.bidEndDate);
                         bid.bidError = false;
-                        bid.inputText = '(minimum ' + bid.minimumBid + '€ de plus)';
+                        bid.inputText = '(minimum ' + (bid.minimumBid + bid.currentPrice) + '€)';
                         if(bid.bidStartDate.getTime() > this.now.getTime()){
                             bid.isStarted = false;
                             bid.time = bid.bidStartDate.getTime() - this.now.getTime();
@@ -347,6 +352,7 @@ export default {
         Card,
         Galleria,
         ConfirmDialog,
+        Toast
     },
     methods: {
         isAdmin() {
@@ -409,31 +415,49 @@ export default {
             this.activeIndex = this.activeIndex === 0 ? 0 : this.activeIndex - 1;
         },
         confirmBid(car) {
-            car.bid.bidError = false;
-            if(car.bid.newBid < (car.bid.minimumBid + car.bid.currentPrice)){
-                car.bid.bidError = true;
-                return;
-            }
-            this.$confirm.require({
-                message: 'Etes-vous sur de vouloir enchérir ?',
-                header: 'Confirmation',
-                icon: 'pi pi-exclamation-triangle',
-                rejectClass: 'p-button-secondary p-button-outlined',
-                rejectLabel: 'Annuler',
-                acceptLabel: 'Enchèrir',
-                accept: () => {
-                    car.bid.currentPrice = car.bid.newBid;
-                    this.sendBid(car.bid);
-                    this.$toast.add({ severity: 'success', summary: 'Succès', detail: 'Enchère envoyée', life: 3000 });
-                },
-                reject: () => {
-                    this.$toast.add({ severity: 'info', summary: 'Annulé', detail: 'Action annulée', life: 1000 });
+            if(car.bid.isStarted){
+                car.bid.bidError = false;
+                if(car.bid.newBid < (car.bid.minimumBid + car.bid.currentPrice)){
+                    car.bid.bidError = true;
+                    return;
                 }
-            });
+                this.$confirm.require({
+                    message: 'Etes-vous sur de vouloir enchérir ?',
+                    header: 'Confirmation',
+                    icon: 'pi pi-exclamation-triangle',
+                    rejectClass: 'p-button-secondary p-button-outlined',
+                    rejectLabel: 'Annuler',
+                    acceptLabel: 'Enchèrir',
+                    accept: () => {
+                        car.bid.currentPrice = car.bid.newBid;
+                        car.bid.newBid = null;
+                        this.sendBid(car.bid);
+                    },
+                    reject: () => {
+                        this.$toast.add({ severity: 'info', summary: 'Annulé', detail: 'Action annulée', life: 1000 });
+                    }
+                });
+            } else {
+                this.$toast.add({ severity: 'error', summary: 'Erreur', detail: 'L\'enchère n\'as pas encore commencé', life: 1000 });
+            }
         },
         sendBid(bid) {
-            console.log(bid.id);
-            console.log(bid.currentPrice);
+            if(bid.isStarted){
+                bid.inputText = '(minimum ' + (bid.minimumBid + bid.currentPrice) + '€)';
+                this.$store.dispatch('bid/updatebid', {id: bid.id, currentPrice: bid.currentPrice}).then(
+                    res => {
+                        this.$toast.add({ severity: 'info', summary: 'Succès', detail: res.message, life: 1000 });
+                    },
+                    error => {
+                        this.message = (error.response && error.response.data.message) ||
+                                            error.message ||
+                                            error.toString();
+                                            this.successful = false;
+                    }
+                );
+            } else {
+                this.$toast.add({ severity: 'error', summary: 'Erreur', detail: 'L\'enchère n\'as pas encore commencé', life: 1000 });
+            }
         },
     }
 }

@@ -25,4 +25,16 @@ module.exports = function(app) {
         [authJwt.verifyToken, authJwt.isModeratorOrAdmin], 
         controller.addBid
     );
+    
+    app.post(
+        '/bid/updatebid', 
+        [authJwt.verifyToken], 
+        controller.updateBid
+    );
+
+    app.post(
+        '/bid/deletebid', 
+        [authJwt.verifyToken, authJwt.isModeratorOrAdmin], 
+        controller.deleteBid
+    );
 };

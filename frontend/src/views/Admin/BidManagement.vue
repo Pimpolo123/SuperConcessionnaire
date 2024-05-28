@@ -1,4 +1,6 @@
 <template>
+    <ConfirmDialog></ConfirmDialog>
+    <Toast/>
     <DataView :value="data" :sortOrder="sortOrder" :sortField="sortField" paginator :rows="5">
         <template #header>
             <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Trier" @change="onSortChange($event)" />
@@ -43,7 +45,7 @@
                         <div class="d-flex gap-5">
                             <span class="text-xl font-semibold text-900 align-self-center">€{{ item.bid.currentPrice }}</span>
                             <div class="d-flex gap-2">
-                                <Button icon="pi pi-trash" outlined rounded class="mr-2" severity="danger" @click="confirmDeleteCar(slotProps.data)" v-tooltip.top="'Supprimer l\'enchère'"/>
+                                <Button icon="pi pi-trash" outlined rounded class="mr-2" severity="danger" @click="confirmDeleteBid(item)" v-tooltip.top="'Supprimer l\'enchère'"/>
                             </div>
                         </div>
                     </div>
@@ -58,6 +60,8 @@ import DataView from 'primevue/dataview';
 import Button from 'primevue/button';
 import Dropdown from 'primevue/dropdown';
 import VueCountdown from '@chenfengyuan/vue-countdown';
+import ConfirmDialog from 'primevue/confirmdialog';
+import Toast from 'primevue/toast';
 
 export default {
     name: "CarManagement",
@@ -123,7 +127,9 @@ export default {
         DataView,
         Button,
         Dropdown,
-        VueCountdown
+        VueCountdown,
+        ConfirmDialog,
+        Toast
     },
     methods: {
         isAdmin() {
@@ -150,8 +156,38 @@ export default {
             this.submitted = false;
             this.imageFiles = [];
             this.selectedOptions = [];
-        }
-        
+        },
+        confirmDeleteBid(car) {
+            this.$confirm.require({
+                message: 'Etes-vous sur de vouloir enchérir ?',
+                header: 'Confirmation',
+                icon: 'pi pi-exclamation-triangle',
+                rejectClass: 'p-button-secondary p-button-outlined',
+                rejectLabel: 'Annuler',
+                acceptLabel: 'Enchèrir',
+                accept: () => {
+                    this.deleteBid(car.bid);
+                    this.$toast.add({ severity: 'success', summary: 'Succès', detail: 'Enchère envoyée', life: 3000 });
+                },
+                reject: () => {
+                    this.$toast.add({ severity: 'info', summary: 'Annulé', detail: 'Action annulée', life: 1000 });
+                }
+            });
+        },
+        deleteBid(bid) {
+            console.log(bid);
+            this.$store.dispatch('bid/deletebid', bid).then(
+                res => {
+                    this.data = this.data.filter(item => item.bid.id !== bid.id);
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+                }
+            );
+        },
     }
 }
 </script>

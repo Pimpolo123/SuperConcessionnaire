@@ -40,4 +40,33 @@ exports.addBid = (req, res) => {
     console.log(req.body);
 };
 
+exports.updateBid = (req, res) => {
+    Bid.findOne({
+        where: {
+            id: req.body.id
+        }
+    }).then(bid => {
+        if(!bid){
+            return res.status(404).send({message: "Enchère non trouvée"});
+        }
+        bid.currentPrice = req.body.currentPrice;
+        bid.save();
+        res.status(200).send({message: "Enchère modifiée"});
+    }).catch(err => {
+        res.status(500).send({message: err.message});
+    });
+}
+
+exports.deleteBid = (req, res) => {
+    Bid.destroy({
+        where: {
+            id: req.body.id
+        }
+    }).then(() => {
+        res.status(200).send({message: "Enchère supprimée"});
+    }).catch(err => {
+        res.status(500).send({message: err.message});
+    });
+}
+
 

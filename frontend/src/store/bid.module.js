@@ -39,5 +39,25 @@ export const bid = {
                 }
             );
         },
+        updatebid({ commit }, bid) {
+            return BidService.updateBid(bid).then(
+                bid => {
+                    return Promise.resolve(bid);
+                    },
+                error => {
+                    return Promise.reject(error);
+                }
+            );
+        },
+        deletebid({ commit }, bid) {
+            return BidService.deleteBid(bid).then(
+                bid => {
+                    return Promise.resolve(bid);
+                    },
+                error => {
+                    return Promise.reject(error);
+                }
+            );
+        }
     }
 };

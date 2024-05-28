@@ -60,6 +60,7 @@ require('./backend/routes/users.routes')(app);
 require('./backend/routes/admin.routes')(app);
 require('./backend/routes/cars.routes')(app);
 require('./backend/routes/bid.routes')(app);
+require('./backend/routes/pdf.routes')(app);
 
 app.listen(PORT_BACK, () => {
     console.log(`Serveur en ligne sur le port ${PORT_BACK}.`);

@@ -415,6 +415,7 @@ export default {
             this.activeIndex = this.activeIndex === 0 ? 0 : this.activeIndex - 1;
         },
         confirmBid(car) {
+            console.log(car);
             if(car.bid.isStarted){
                 car.bid.bidError = false;
                 if(car.bid.newBid < (car.bid.minimumBid + car.bid.currentPrice)){
@@ -429,6 +430,7 @@ export default {
                     rejectLabel: 'Annuler',
                     acceptLabel: 'Enchèrir',
                     accept: () => {
+                        car.biggestBidder = this.currentUser;
                         car.bid.currentPrice = car.bid.newBid;
                         car.bid.newBid = null;
                         this.sendBid(car.bid);
@@ -442,9 +444,10 @@ export default {
             }
         },
         sendBid(bid) {
+            console.log(bid);
             if(bid.isStarted){
                 bid.inputText = '(minimum ' + (bid.minimumBid + bid.currentPrice) + '€)';
-                this.$store.dispatch('bid/updatebid', {id: bid.id, currentPrice: bid.currentPrice}).then(
+                this.$store.dispatch('bid/updatebid', {id: bid.id, currentPrice: bid.currentPrice, userId: this.currentUser.id}).then(
                     res => {
                         this.$toast.add({ severity: 'info', summary: 'Succès', detail: res.message, life: 1000 });
                     },

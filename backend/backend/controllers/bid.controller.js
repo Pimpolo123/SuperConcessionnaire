@@ -50,6 +50,7 @@ exports.updateBid = (req, res) => {
             return res.status(404).send({message: "Enchère non trouvée"});
         }
         bid.currentPrice = req.body.currentPrice;
+        bid.userId = req.body.userId;
         bid.save();
         res.status(200).send({message: "Enchère modifiée"});
     }).catch(err => {

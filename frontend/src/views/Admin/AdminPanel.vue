@@ -1,7 +1,4 @@
 <template>
-    <header v-if="!isAdmin()" class="jumbotron">
-        <h3>{{content}}</h3>
-    </header>
     <div v-if="isAdmin()" class="container-fluid w-90 p-2">
       <TabMenu :model="tabItems" />
       <UserManagement v-if="currentTab == 'userManagement'"></UserManagement>

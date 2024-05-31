@@ -18,10 +18,13 @@ import {
   faUserPlus,
   faSignInAlt,
   faSignOutAlt,
-  faEye
+  faEye,
+  faUserTie,
+  faHeart,
+  faEnvelope
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faEye);
+library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faEye, faUserTie, faHeart, faEnvelope);
 
 const app = createApp(App);
 app.use(router);

@@ -27,6 +27,7 @@ const Model = db.model;
 const Euro = db.euro;
 const Option = db.option;
 const CarPicture = db.carpicture;
+const Message = db.message;
 const Op = db.Sequelize.Op;
 var bcrypt = require("bcryptjs");
 
@@ -296,4 +297,31 @@ function initial() {
 		car.setOptions([2, 11, 21]);
 		car.setCarpictures([3]);
 	})
+
+	// Message.create({
+	// 	content: "Hello",
+	// 	toRoleId: 3,
+	// 	type: "question"
+	// }).then(message => {
+	// 	message.setUser(3);
+	// 	message.setCar(1);
+	// })
+
+	// Message.create({
+	// 	content: "Hello2",
+	// 	toUserId: 3,
+	// 	read: true,
+	// 	responseTo: 1,
+	// 	type: "demand"
+	// }).then(message => {
+	// 	message.setUser(2);
+	// })
+
+	// Message.create({
+	// 	content: "Hello3",
+	// 	toUserId: 2,
+	// 	read: true,
+	// 	responseTo: 1,
+	// 	type: "demand"
+	// })
 }

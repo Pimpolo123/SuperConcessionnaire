@@ -77,7 +77,14 @@ export const router = createRouter({
             name: 'bidlist',
             component: () => import('./views/Cars/BidList.vue'),
             meta: { title: "Enchères en cours" } 
-        }
+        },
+        {
+            path: '/messages',
+            name: 'messages',
+            component: () => import('./views/User/MessagesPanel.vue'),
+            meta: { title: "Boîte de réception" } 
+        },
+
     ]
 });
 

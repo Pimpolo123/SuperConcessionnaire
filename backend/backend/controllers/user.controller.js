@@ -6,6 +6,8 @@ const Address = db.address;
 const Country = db.country;
 const Favorite = db.favorite;
 const Region = db.region;
+const Message = db.message;
+const Car = db.car;
 const Op = db.Sequelize.Op;
 const fs = require('fs');
 const path = require('path');
@@ -233,6 +235,81 @@ exports.removeFavorite = (req, res) => {
 		}
 	}).then(() => {
 		res.status(200).send({ message: "Voiture retirée des favoris"});
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+}
+
+exports.getMessagesFromUser = (req, res) => {
+	const userId = req.query.userId;
+	Message.findAll({
+		where: {
+			userId: userId
+		},
+		include: [User, Car]
+	}).then(message => {
+		res.status(200).send(message);
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+}
+
+exports.getMessagesToUser = (req, res) => {
+	const toUserId = req.query.toUserId;
+	Message.findAll({
+		where: {
+			toUserId: toUserId
+		},
+		include: [User, Car]
+	}).then(message => {
+		res.status(200).send(message);
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+}
+
+exports.getMessagesToRole = (req, res) => {
+	const toRoleId = req.query.toRoleId;
+	Message.findAll({
+		where: {
+			toRoleId: toRoleId
+		},
+		include: [User, Car]
+	}).then(message => {
+		res.status(200).send(message);
+	}
+	).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+}
+
+exports.addMessage = (req, res) => {
+	Message.create({
+		toRoleId: req.body.toRoleId,
+		toUserId: req.body.toUserId,
+		content: req.body.content,
+		responseTo: req.body.responseTo,
+		read: false,
+		type: req.body.type,
+		isOk: req.body.isOk
+	}).then(message => {
+		message.setUser(req.body.userId);
+		message.setCar(req.body.carId);
+		res.status(200).send({messageObject: message, message: "Message envoyé"});
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+}
+
+exports.markAsRead = (req, res) => {
+	Message.findOne({
+		where: {
+			id: req.body.id
+		}
+	}).then(message => {
+		message.read = true;
+		message.save();
+		res.status(200).send({message: "Message marqué comme lu"});
 	}).catch(err => {
 		res.status(500).send({ message: err.message });
 	});

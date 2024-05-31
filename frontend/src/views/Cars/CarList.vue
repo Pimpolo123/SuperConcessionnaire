@@ -1,7 +1,11 @@
 <template>
     <div class="card">
-        <Toast />
+        <ConfirmDialog></ConfirmDialog>
+        <Toast/>
         <DataView :value="data" :sortOrder="sortOrder" :sortField="sortField" paginator :rows="5">
+            <template #empty>
+                <div class="p-text-center p-text-secondary p-text-bold p-text-uppercase p-text-italic">Aucune voiture</div>
+            </template>
             <template #header>
                 <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Trier" @change="onSortChange($event)" />
                 <Button icon="pi pi-filter" type="button" label="Filtrer" class="flex-auto md:flex-initial white-space-nowrap ml-3" @click="openFilters"></Button>
@@ -40,6 +44,7 @@
                                 <span class="text-xl font-semibold text-900 align-self-center">€{{ item.price }}</span>
                                 <div class="d-flex gap-2">
                                     <Button :icon="getFavIcon(item)" outlined @click="fav(item)"></Button>
+                                    <Button icon="pi pi-envelope" label="Faire une demande" class="flex-auto md:flex-initial white-space-nowrap" @click="openAskDialog(item)"></Button>
                                     <Button icon="pi pi-eye" label="Voir le véhicule" class="flex-auto md:flex-initial white-space-nowrap" @click="openDetails(item)"></Button>
                                 </div>
                             </div>
@@ -236,6 +241,33 @@
                 <Button label="Fermer" icon="pi pi-times" text @click="hideDialog"/>
             </template>
         </Dialog>
+        <Dialog v-model:visible="askDialog" :style="{width: '100%'}" header="Faire une demande" :modal="true" class="container p-fluid m-0 p-0" @after-hide="hideDialog">
+            <div class="container-fluid">
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <div class="row mt-4">
+                            <div class="col-md-4">
+                                <div class="font-weight-bold">Destinataire : 
+                                    <span class="font-weight-normal">Administrateur</span>
+                                </div>
+                                <div class="font-weight-bold">Véhicule : 
+                                    <span class="font-weight-normal">{{ this.car.make.name }} {{ this.car.model.name }} {{ this.car.year }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="font-weight-bold">Votre message : 
+                                    <Textarea v-model="messageContent" rows="5" cols="100" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <template #footer>
+                <Button icon="pi pi-envelope" type="button" label="Envoyer" class="flex-auto md:flex-initial white-space-nowrap ml-3" @click="confirmSendAsk(this.car)"></Button>
+                <Button label="Fermer" icon="pi pi-times" text @click="hideDialog"/>
+            </template>
+        </Dialog>
 
         <OverlayPanel ref="op">
             <div class="flex flex-column gap-3 w-25rem">
@@ -281,6 +313,8 @@ import Dialog from 'primevue/dialog';
 import Galleria from 'primevue/galleria';
 import Card from 'primevue/card';
 import OverlayPanel from 'primevue/overlaypanel';
+import Textarea from 'primevue/textarea';
+import ConfirmDialog from 'primevue/confirmdialog';
 import 'primeicons/primeicons.css';
 
 export default {
@@ -334,6 +368,8 @@ export default {
             filteredDrivetrain: null,
             filteredEuro: null,
             filteredFueltype: null,
+            askDialog: false,
+            messageContent: '',
         };
     },
     mounted() {
@@ -362,6 +398,7 @@ export default {
                                         this.successful = false;
             }
         );
+        this.messageContent = 'Bonjour, \nJe suis intéressé par ce véhicule. Est-il toujours disponible ? \nCordialement, ' + this.currentUser.surname + ' ' + this.currentUser.name;
     },
     components: {
         DataView,
@@ -371,7 +408,9 @@ export default {
         Dialog,
         Galleria,
         Card,
-        OverlayPanel
+        OverlayPanel,
+        Textarea,
+        ConfirmDialog
     },
     methods: {
         openDetails(car) {
@@ -419,6 +458,7 @@ export default {
         hideDialog() {
             this.carDialog = false;
             this.filterDialog = false;
+            this.askDialog = false;
             this.car = {};
             this.images = [];
         },
@@ -638,6 +678,62 @@ export default {
             } else {
                 return 'pi pi-heart';
             }
+        },
+        openAskDialog(car){
+            this.$store.dispatch('cars/getcar', car.id).then(
+                res => {
+                    this.car = res;
+                    this.$nextTick(() => {
+                        this.askDialog = true;
+                    });
+                    res.carpictures.forEach(pic => {
+                        this.images.push({
+                            itemImageSrc: 'data:image/png;base64,' + pic.base64url,
+                            thumbnailImageSrc: 'data:image/png;base64,' + pic.base64url,
+                            alt: "Photo " + pic.id
+                        });
+                    });
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+                }
+            );
+        },
+        confirmSendAsk(car) {
+            this.$confirm.require({
+                message: 'Etes-vous sur de vouloir envoyer le message ?',
+                header: 'Confirmation',
+                icon: 'pi pi-exclamation-triangle',
+                rejectClass: 'p-button-secondary p-button-outlined',
+                rejectLabel: 'Annuler',
+                acceptLabel: 'Envoyer',
+                accept: () => {
+                    this.sendAsk(car);
+                },
+                reject: () => {
+                    this.$toast.add({ severity: 'info', summary: 'Annulé', detail: 'Action annulée', life: 1000 });
+                }
+            });
+        },
+        sendAsk(car){
+            this.$store.dispatch('user/addmessage', {
+                content: this.messageContent,
+                toRoleId: 3,
+                type: 'demand',
+                userId: this.currentUser.id,
+                carId: car.id
+            }).then(
+                res => {
+                    this.$toast.add({severity:'success', summary:'Succès', detail: res.message, life: 3000});
+                    this.askDialog = false;
+                },
+                error => {
+                    this.$toast.add({severity:'error', summary:'Erreur', detail: error.message, life: 3000});
+                }
+            );
         }
     }
 };

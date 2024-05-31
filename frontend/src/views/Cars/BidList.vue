@@ -2,6 +2,9 @@
     <ConfirmDialog></ConfirmDialog>
     <Toast/>
     <DataView :value="data" :sortOrder="sortOrder" :sortField="sortField" paginator :rows="5">
+        <template #empty>
+            <div class="p-text-center p-text-secondary p-text-bold p-text-uppercase p-text-italic">Aucune enchère</div>
+        </template>
         <template #header>
             <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Trier" @change="onSortChange($event)" />
         </template>

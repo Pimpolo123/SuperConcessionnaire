@@ -9,17 +9,28 @@
             <ul class="navbar-nav">
               <li class="nav-item">
                 <router-link to="/home" class="nav-link">
-                  <font-awesome-icon icon="home" class="pr-1"/>Accueil
+                  <font-awesome-icon icon="home" class="pr-1"/> Accueil
                 </router-link>
               </li>
               <li v-if="showAdminBoard" class="nav-item">
-                <router-link to="/admin" class="nav-link">Panel Admin</router-link>
+                <router-link to="/admin" class="nav-link">
+                  <font-awesome-icon icon="user-tie" /> Panel Admin
+                </router-link>
               </li>
               <li v-if="showModeratorBoard" class="nav-item">
-                <router-link to="/mod" class="nav-link">Panel Modérateur</router-link>
+                <router-link to="/mod" class="nav-link">
+                   Panel Modérateur
+                </router-link>
               </li>
               <li class="nav-item">
-                <router-link v-if="currentUser" to="/favorites" class="nav-link">Voir les favoris</router-link>
+                <router-link v-if="currentUser" to="/favorites" class="nav-link">
+                  <font-awesome-icon icon="heart" /> Voir les favoris
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link v-if="currentUser" to="/messages" class="nav-link">
+                  <font-awesome-icon icon="envelope" /> Boîte de réception
+                </router-link>
               </li>
             </ul>
           </div>

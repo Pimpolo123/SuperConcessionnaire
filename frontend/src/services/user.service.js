@@ -153,6 +153,69 @@ class UserService {
 				return res.data;
 			});
 	}
+
+	getMessagesFromUser(user) {
+        return axios
+            .get(API_URL + 'getmessagesfromuser', { 
+                params: { userId: user.id }, 
+                headers: authHeader() 
+            })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+	getMessagesToUser(user) {
+        return axios
+            .get(API_URL + 'getmessagestouser', { 
+                params: { toUserId: user.id }, 
+                headers: authHeader() 
+            })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+	getMessagesToRole(roleId) {
+		return axios
+			.get(API_URL + 'getmessagestorole', { 
+				params: { toRoleId: roleId }, 
+				headers: authHeader() 
+			})
+			.then(response => {
+				return response.data;
+			});
+	}
+
+	addMessage(data) {
+		return axios
+			.post(API_URL + 'addmessage', {
+				toRoleId: data.toRoleId,
+				toUserId: data.toUserId,
+				content: data.content,
+				responseTo: data.responseTo,
+				read: false,
+				type: data.type,
+				isOk: data.isOk,
+				userId: data.userId,
+				carId: data.carId
+			},{ 
+				headers: authHeader()
+			}).then(res => {
+				return res.data;
+			});
+	}
+
+	markAsRead(messageId) {
+		return axios
+			.post(API_URL + 'markasread', {
+				id: messageId
+			},{ 
+				headers: authHeader()
+			}).then(res => {
+				return res.data;
+			});
+	}
 }
 
 export default new UserService();

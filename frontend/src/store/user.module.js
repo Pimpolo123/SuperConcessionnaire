@@ -112,6 +112,56 @@ export const user = {
 					return Promise.reject(error);
 				}
 			)
+		},
+		getmessagestouser({ commit }, user) {
+			return UserService.getMessagesToUser(user).then(
+				res => {
+					return Promise.resolve(res);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
+		},
+		getmessagesfromuser({ commit }, user) {
+			return UserService.getMessagesFromUser(user).then(
+				res => {
+					return Promise.resolve(res);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
+		},
+		getmessagestorole({ commit }, roleId) {
+			return UserService.getMessagesToRole(roleId).then(
+				res => {
+					return Promise.resolve(res);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
+		},
+		addmessage({ commit }, data) {
+			return UserService.addMessage(data).then(
+				res => {
+					return Promise.resolve(res);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
+		},
+		markasread({ commit }, data) {
+			return UserService.markAsRead(data).then(
+				res => {
+					return Promise.resolve(res);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
 		}
 	},
 	mutations: {

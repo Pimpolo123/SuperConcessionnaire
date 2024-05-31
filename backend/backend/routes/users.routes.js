@@ -74,4 +74,34 @@ module.exports = function(app) {
         [authJwt.verifyToken], 
         controller.getFavorites
     );
+
+    app.get(
+        "/getmessagestouser", 
+        [authJwt.verifyToken], 
+        controller.getMessagesToUser
+    );
+
+    app.get(
+        "/getmessagesfromuser", 
+        [authJwt.verifyToken], 
+        controller.getMessagesFromUser
+    );
+
+    app.get(
+        "/getmessagestorole", 
+        [authJwt.verifyToken], 
+        controller.getMessagesToRole
+    );
+
+    app.post(
+        "/addmessage", 
+        [authJwt.verifyToken], 
+        controller.addMessage
+    );
+
+    app.post(
+        "/markasread",
+        [authJwt.verifyToken],
+        controller.markAsRead
+    )
 };

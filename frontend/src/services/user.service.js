@@ -216,6 +216,17 @@ class UserService {
 				return res.data;
 			});
 	}
+
+	deleteMessage(messageId) {
+		return axios
+			.post(API_URL + 'deletemessage', {
+				id: messageId
+			},{ 
+				headers: authHeader()
+			}).then(res => {
+				return res.data;
+			});
+	}
 }
 
 export default new UserService();

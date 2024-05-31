@@ -89,7 +89,7 @@ module.exports = function(app) {
 
     app.get(
         "/getmessagestorole", 
-        [authJwt.verifyToken], 
+        [authJwt.verifyToken, authJwt.isModeratorOrAdmin], 
         controller.getMessagesToRole
     );
 
@@ -103,5 +103,11 @@ module.exports = function(app) {
         "/markasread",
         [authJwt.verifyToken],
         controller.markAsRead
+    )
+
+    app.post(
+        "/deletemessage",
+        [authJwt.verifyToken],
+        controller.deleteMessage
     )
 };

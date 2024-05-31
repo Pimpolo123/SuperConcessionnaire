@@ -29,7 +29,7 @@
               </li>
               <li class="nav-item">
                 <router-link v-if="currentUser" to="/messages" class="nav-link">
-                  <font-awesome-icon icon="envelope" /> Boîte de réception
+                  <font-awesome-icon icon="envelope" /> Messages
                 </router-link>
               </li>
             </ul>

@@ -314,3 +314,15 @@ exports.markAsRead = (req, res) => {
 		res.status(500).send({ message: err.message });
 	});
 }
+
+exports.deleteMessage = (req, res) => {
+	Message.destroy({
+		where: {
+			id: req.body.id
+		}
+	}).then(() => {
+		res.status(200).send({message: "Message supprimé"});
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+}

@@ -31,6 +31,7 @@
                         <div class="d-flex gap-2 col">
                             <Button icon="pi pi-envelope" label="Marquer comme lu" class="flex-auto md:flex-initial white-space-nowrap" @click="markAsRead(item)"></Button>
                             <Button icon="pi pi-envelope" label="Répondre" class="flex-auto md:flex-initial white-space-nowrap" @click="openResponseDialog(item)"></Button>
+                            <Button icon="pi pi-trash"  class="flex-auto md:flex-initial white-space-nowrap w-20" @click="confirmDeleteMessage(item)" v-tooltip.top="'Supprimer le message'"></Button>
                         </div>
                     </div>
                 </div>
@@ -66,6 +67,7 @@
                         </div>
                         <div class="d-flex gap-2 col">
                             <Button icon="pi pi-envelope" label="Marquer comme lu" class="flex-auto md:flex-initial white-space-nowrap" @click="markAsRead(item)"></Button>
+                            <Button icon="pi pi-trash"  class="flex-auto md:flex-initial white-space-nowrap w-20" @click="confirmDeleteMessage(item)" v-tooltip.top="'Supprimer le message'"></Button>
                         </div>
                     </div>
                 </div>
@@ -291,6 +293,33 @@ export default {
                 }
             );
             //pas oublier de mettre à jour la base de données POUR READ
+        },
+        confirmDeleteMessage(item) {
+            this.$confirm.require({
+                message: 'Supprimer le message ?',
+                header: 'Confirmation',
+                icon: 'pi pi-exclamation-triangle',
+                accept: () => {
+                    this.deleteMessage(item);
+                },
+                reject: () => {
+                    this.$toast.add({ severity: 'info', summary: 'Annulation', detail: 'Action annulée', life: 3000 });
+                }
+            });
+        },
+        deleteMessage(item) {
+            this.$store.dispatch('user/deletemessage', item.id).then(
+                res => {
+                    if(this.isAdmin())
+                        this.messagesToAdmin = this.messagesToAdmin.filter(m => m.id !== item.id);
+                    else
+                        this.messages = this.messages.filter(m => m.id !== item.id);
+                    this.$toast.add({severity:'success', summary:'Succès', detail: res.message, life: 3000});
+                },
+                error => {
+                    this.$toast.add({severity:'error', summary:'Erreur', detail: error.message, life: 3000});
+                }
+            );
         },
         hideDialog() {
             this.responseDialog = false;

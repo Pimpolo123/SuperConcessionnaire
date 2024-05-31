@@ -14,7 +14,7 @@
                     <div :class="['p-4', 'gap-3', 'align-items-center', 'd-flex', 'column']">
                         <div class="col">
                             <div class="font-weight-bold">Destinataire :
-                                <span class="font-weight-normal"> {{ item.toRoleId }}</span>
+                                <span class="font-weight-normal"> {{ item.user.surname }} {{ item.user.name }}</span>
                             </div>
                             <div class="font-weight-bold">Date d'envoi :
                                 <span class="font-weight-normal"> {{ item.createdAt }}</span>
@@ -26,7 +26,7 @@
                             </div>
                         </div>
                         <div class="d-flex gap-2 col">
-                            <Button icon="pi pi-envelope" label="Marquer comme lu" class="flex-auto md:flex-initial white-space-nowrap" @click="markAsRead(item)"></Button>
+                            <Button icon="pi pi-trash"  class="flex-auto md:flex-initial white-space-nowrap w-20" @click="confirmDeleteMessage(item)"  v-tooltip.top="'Supprimer le message'"></Button>
                         </div>
                     </div>
                 </div>
@@ -97,6 +97,17 @@ export default {
                 this.messages = res;
                 this.messages.forEach(message => {
                     message.createdAt = new Date(message.createdAt).toLocaleString();
+                    this.$store.dispatch('user/getuser', message.toUserId).then(
+                        user => {
+                            message.user = user
+                        },
+                        error => {
+                            this.message = (error.response && error.response.data.message) ||
+                                                    error.message ||
+                                                    error.toString();
+                                                    this.successful = false;
+                        }
+                    );
                 });
                 console.log(this.messages);
             },
@@ -116,30 +127,29 @@ export default {
         Toast
     },
     methods: {
-        confirmDeleteMessage(message) {
-            console.log(message);
+        confirmDeleteMessage(item) {
             this.$confirm.require({
-                message: 'Voulez-vous vraiment supprimer ce message ?',
+                message: 'Supprimer le message ?',
                 header: 'Confirmation',
                 icon: 'pi pi-exclamation-triangle',
                 accept: () => {
-                    this.deleteMessage(message);
+                    this.deleteMessage(item);
                 },
                 reject: () => {
-                    this.$toast.add({ severity: 'info', summary: 'Annulation', detail: 'Suppression annulée', life: 3000 });
+                    this.$toast.add({ severity: 'info', summary: 'Annulation', detail: 'Action annulée', life: 3000 });
                 }
             });
         },
-        deleteMessage(message) {
-            // this.$store.dispatch('user/deletemessage', message).then(
-            //     res => {
-            //         this.$toast.add({ severity: 'success', summary: 'Succès', detail: 'Message supprimé', life: 3000 });
-            //         this.messages = this.messages.filter(m => m.id !== message.id);
-            //     },
-            //     error => {
-            //         this.$toast.add({ severity: 'error', summary: 'Erreur', detail: 'Erreur lors de la suppression du message', life: 3000 });
-            //     }
-            // );
+        deleteMessage(item) {
+            this.$store.dispatch('user/deletemessage', item.id).then(
+                res => {
+                    this.messages = this.messages.filter(m => m.id !== item.id);
+                    this.$toast.add({severity:'success', summary:'Succès', detail: res.message, life: 3000});
+                },
+                error => {
+                    this.$toast.add({severity:'error', summary:'Erreur', detail: error.message, life: 3000});
+                }
+            );
         },
         isAdmin() {
             if (this.currentUser && this.currentUser.roles) {

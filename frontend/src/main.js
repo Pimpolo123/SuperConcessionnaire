@@ -26,12 +26,12 @@ import {
 
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faEye, faUserTie, faHeart, faEnvelope);
 
-const app = createApp(App);
-app.use(router);
-app.use(PrimeVue);
-app.use(ToastService);
-app.use(ConfirmationService);
-app.use(store);
-app.directive('tooltip', Tooltip);
-app.use(materialKit);
-app.mount('#app');
+document.app = createApp(App);
+document.app.use(router);
+document.app.use(PrimeVue);
+document.app.use(ToastService);
+document.app.use(ConfirmationService);
+document.app.use(store);
+document.app.directive('tooltip', Tooltip);
+document.app.use(materialKit);
+document.app.mount('#app');

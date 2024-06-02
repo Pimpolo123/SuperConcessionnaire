@@ -228,6 +228,7 @@ export default {
                     this.$store.dispatch('cars/setbid', {carId: bid.carId, isBid: false}).then(
                         res => {
                             console.log('Voiture mise à jour : ', res)
+                            this.$toast.add({ severity: 'info', summary: 'Annulé', detail: 'Enchère annulée, n\'oubliez pas de remettre un prix a la voiture', life: 5000 });
                         },
                         error => {
                             this.message = (error.response && error.response.data.message) ||

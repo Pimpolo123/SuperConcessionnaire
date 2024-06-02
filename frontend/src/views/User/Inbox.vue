@@ -338,7 +338,7 @@ export default {
                     }).then(
                         res => {
                             this.responseDialog = false;
-                            this.$toast.add({severity:'success', summary:'Succès', detail: res.message, life: 3000});
+                            this.$toast.add({severity:'error', summary:'Erreur', detail: error.message, life: 3000});
                             console.log(res);
                         },
                         error => {

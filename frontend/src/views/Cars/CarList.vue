@@ -322,8 +322,8 @@ export default {
         return {
             currentUser: this.$store.state.auth.user,
             userFavorites: [],
-            data: null,
-            staticData: null,
+            data: [],
+            staticData: [],
             sortKey: null,
             sortOrder: null,
             sortField: null,
@@ -376,9 +376,13 @@ export default {
         this.getAll();
         this.$store.dispatch('cars/getallcars').then(
             res => {
-                this.data = res;
+                res.forEach(car => {
+                    if (!car.isBid) {
+                        this.data.push(car);
+                        this.staticData.push(car);
+                    }
+                });
                 console.log('DATA', this.data);
-                this.staticData = res;
             },
             error => {
                 this.message = (error.response && error.response.data.message) ||
@@ -738,4 +742,9 @@ export default {
     }
 };
 </script>
+<style>
+.p-galleria-thumbnail-container button{
+    display: none;
+}
+</style>
 

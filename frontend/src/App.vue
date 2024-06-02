@@ -78,36 +78,50 @@
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import 'primeicons/primeicons.css';
     import Button from 'primevue/button';
+	import Badge from 'primevue/badge';
 
     export default {
-        computed: {
-        currentUser() {
-            return this.$store.state.auth.user;
-        },
-        showAdminBoard() {
-            if (this.currentUser && this.currentUser.roles) {
-                return this.currentUser.roles.includes('ROLE_ADMIN');
-            }
-            return false;
-        },
-        showModeratorBoard() {
-            if (this.currentUser && this.currentUser.roles) {
-                return this.currentUser.roles.includes('ROLE_MODERATOR');
-            }
-            return false;
-        }
-        },
+		data() {
+			return {
+				unreadMessages: 0,
+			};
+		},
+		mounted() {
+		},
+		computed: {
+			currentUser() {
+				return this.$store.state.auth.user;
+			},
+			showAdminBoard() {
+				if (this.currentUser && this.currentUser.roles) {
+					return this.currentUser.roles.includes('ROLE_ADMIN');
+				}
+				return false;
+			},
+			showModeratorBoard() {
+				if (this.currentUser && this.currentUser.roles) {
+					return this.currentUser.roles.includes('ROLE_MODERATOR');
+				}
+				return false;
+			}
+		},
 		components: {
-            FontAwesomeIcon,
-            Button
-        },
-        methods: {
-            logOut() {
-              this.$store.dispatch('auth/logout');
-              this.$router.push('/login');
-        	}
-      	}
-    };
+			FontAwesomeIcon,
+			Button
+		},
+		methods: {
+			logOut() {
+				this.$store.dispatch('auth/logout');
+				this.$router.push('/login');
+			},
+			isAdmin() {
+				if (this.currentUser && this.currentUser.roles) {
+					return this.currentUser.roles.includes('ROLE_ADMIN');
+				}
+				return false;
+			},
+		}
+	};
 </script>
 
 <style scoped>

@@ -114,7 +114,7 @@
                             invalidFileTypeMessage="{0} : Type de fichier invalide, le fichier doit être une image"
                             invalidFileLimitMessage="{0} : Maximum 20 fichiers">
                             <template #content="{ files, removeFileCallback }">
-                                <ProgressBar :value="files.length*5" class="m-2" :showValue="true" style="height: 20px; width: 98%;"> {{ files.length }}/20 </ProgressBar>
+                                <ProgressBar :value="(files.length*5) + (uploadedPicsLength*5)" class="m-2" :showValue="true" style="height: 20px; width: 98%;" ref="progressBar"> {{ files.length + uploadedPicsLength }}/20 </ProgressBar>
                                 <div v-if="files.length > 0">
                                     <h5>En attente</h5>
                                     <div class="d-flex flex-wrap p-0 sm:p-5 gap-5">
@@ -415,7 +415,8 @@ export default {
             priceDisabled: false,
             bidDisabled: false,
             bid: {},
-            bidDateRange: []
+            bidDateRange: [],
+            uploadedPicsLength: 0
         }
     },
     created() {
@@ -502,6 +503,7 @@ export default {
             });
             this.$store.dispatch('cars/getcar', car.id).then(
                 res => {
+                    this.uploadedPicsLength = res.carpictures.length;
                     this.car = res;
                     if(this.car.isBid){
                         console.log(this.bidDateRange);

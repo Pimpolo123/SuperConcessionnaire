@@ -28,6 +28,8 @@ const Euro = db.euro;
 const Option = db.option;
 const CarPicture = db.carpicture;
 const Message = db.message;
+const PDFinfos = db.pdfinfos;
+const DealerInformations = db.dealerinformations;
 const Op = db.Sequelize.Op;
 var bcrypt = require("bcryptjs");
 
@@ -108,11 +110,11 @@ function initial() {
     });
 
 	User.create({
-		username:"jf",
-		email: "jf@jf.com",
+		username:"admin",
+		email: "admin@admin.com",
 		password: bcrypt.hashSync("toto", 8),
-		name: "toto",
-		surname: "toto",
+		name: "JF",
+		surname: "Mathonet",
 		birthdate: "2000-12-31",
 		phonenumber: "0476091162"
 	}).then(user => {
@@ -120,11 +122,11 @@ function initial() {
     });
 
 	User.create({
-		username:"jf2",
-		email: "jf2@jf.com",
+		username:"toto",
+		email: "pdupont@gmail.com",
 		password: bcrypt.hashSync("toto", 8),
-		name: "tata",
-		surname: "tata",
+		name: "Dupont",
+		surname: "Pierre",
 		birthdate: "2000-12-31",
 		phonenumber: "0476091162"
 	}).then(user => {
@@ -132,11 +134,11 @@ function initial() {
     });
 
 	User.create({
-		username:"jf3",
-		email: "jf3@jf.com",
+		username:"tata",
+		email: "johnnyc@caramail.com",
 		password: bcrypt.hashSync("toto", 8),
-		name: "titi",
-		surname: "titi",
+		name: "Cadillac",
+		surname: "Johnny",
 	}).then(user => {
         user.setRoles([1])
     });
@@ -297,31 +299,28 @@ function initial() {
 		car.setOptions([2, 11, 21]);
 		car.setCarpictures([3]);
 	})
+	PDFinfos.create({
+		fileName: "test.pdf",
+		dealershipName: "SuperConcessionnaire2000",
+		promiseDate: "1998-07-01",
+		promiseLocation: "Mons",
+		deposit: 500,
+		bankAccount: "BE81 0000 0000 0000"
+	}).then(pdfinfos => {
+		pdfinfos.setUser(1);
+		pdfinfos.setCar(1);
+		pdfinfos.save();
+	});
+	DealerInformations.create({
+		dealershipName: "SuperConcessionnaire2000",
+		bankAccount: "BE00000000000000",
+		country: "Belgique",
+		region: "Wallonie",
+		city: "Mons",
+		postcode: "7000",
+		street: "Rue de la gare",
+		number: "12",
+		phoneNumber: "0476091162"
+	});
 
-	// Message.create({
-	// 	content: "Hello",
-	// 	toRoleId: 3,
-	// 	type: "question"
-	// }).then(message => {
-	// 	message.setUser(3);
-	// 	message.setCar(1);
-	// })
-
-	// Message.create({
-	// 	content: "Hello2",
-	// 	toUserId: 3,
-	// 	read: true,
-	// 	responseTo: 1,
-	// 	type: "demand"
-	// }).then(message => {
-	// 	message.setUser(2);
-	// })
-
-	// Message.create({
-	// 	content: "Hello3",
-	// 	toUserId: 2,
-	// 	read: true,
-	// 	responseTo: 1,
-	// 	type: "demand"
-	// })
 }

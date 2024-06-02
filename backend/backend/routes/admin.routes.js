@@ -45,4 +45,16 @@ module.exports = function(app) {
         [authJwt.verifyToken, authJwt.isAdmin],
         controller.deleteUser
     );
+
+    app.post(
+        "/admin/updatedealerinformations",
+        [authJwt.verifyToken, authJwt.isAdmin],
+        controller.updateDealerInformations
+    );
+    
+    app.get(
+        "/admin/getdealerinformations",
+        [authJwt.verifyToken, authJwt.isAdmin],
+        controller.getDealerInformations
+    );
 };

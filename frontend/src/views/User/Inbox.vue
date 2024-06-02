@@ -22,7 +22,7 @@
                         </div>
                         <div class="col">
                             <div class="font-weight-bold" v-if="!item.showFullMessage">Aperçu du message :
-                                <span class="font-weight-normal"> {{ item.content.substring(0, 100) + '...' }}<span class="font-weight-normal" @click="showFullMessage(item)">afficher la totalité du message</span></span>
+                                <span class="font-weight-normal"> {{ item.content.substring(0, 100) + '...' }}<span class="font-weight-normal" @click="showFullMessage(item)">plus</span></span>
                             </div>
                             <div class="font-weight-bold" v-else>Aperçu du message :
                                 <span class="font-weight-normal"> {{ item.content }}</span>
@@ -59,13 +59,14 @@
                         </div>
                         <div class="col">
                             <div class="font-weight-bold" v-if="!item.showFullMessage">Aperçu du message :
-                                <span class="font-weight-normal"> {{ item.content.substring(0, 100) + '...' }} <span class="font-weight-normal" @click="showFullMessage(item)">afficher la totalité du message</span></span>
+                                <span class="font-weight-normal"> {{ item.content.substring(0, 100) + '...' }} <span class="font-weight-normal" @click="showFullMessage(item)">plus</span></span>
                             </div>
                             <div class="font-weight-bold" v-else>Aperçu du message :
                                 <span class="font-weight-normal"> {{ item.content }}</span>
                             </div>
                         </div>
                         <div class="d-flex gap-2 col">
+                            <Button icon="pi pi-download" class="flex-auto md:flex-initial white-space-nowrap" @click="downloadPromise(item)" v-tooltip.top="'Télécharger'" v-if="item.type == 'pdf'"></Button>
                             <Button icon="pi pi-envelope" label="Marquer comme lu" class="flex-auto md:flex-initial white-space-nowrap" @click="markAsRead(item)"></Button>
                             <Button icon="pi pi-trash"  class="flex-auto md:flex-initial white-space-nowrap w-20" @click="confirmDeleteMessage(item)" v-tooltip.top="'Supprimer le message'"></Button>
                         </div>
@@ -76,8 +77,24 @@
     </DataView>
     <Dialog v-model:visible="responseDialog" :style="{width: '100%'}" header="Envoyer une réponse" :modal="true" class="container p-fluid m-0 p-0" @after-hide="hideDialog" v-if="isAdmin()">
         <div class="d-flex gap-2 m-4 justify-content-center">
-            <Button icon="pi pi-envelope" label="Envoyer la promesse de vente" class="w-30 h-10" @click="confirmSendPromise"></Button>
+            <Button icon="pi pi-envelope" label="Envoyer la promesse de vente" class="w-30 h-10" @click="promise"></Button>
             <Button icon="pi pi-envelope" label="Répondre par un message" class="w-30 h-10" @click="respond"></Button>
+        </div>
+        <div class="container-fluid" v-if="isPromiseResponse">
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    <div class="font-weight-bold">Destinataire : 
+                        <span class="font-weight-normal">{{ this.selectedMessage?.user.surname }} {{ this.selectedMessage?.user.name }}</span>
+                    </div>
+                    <div class="font-weight-bold">Véhicule : 
+                        <span class="font-weight-normal">{{ this.selectedMessage?.car.make.name }} {{ this.selectedMessage?.car.model.name }} {{ this.selectedMessage?.car.year }}</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <InputNumber class="w-100 m-3" placeholder="Montant de l'accompte demandé" v-model="deposit" id="deposit" :invalid="submitted && !deposit"/>
+                    <small class="p-error" v-if="submitted && !deposit">Montant de l'accompte requis</small>
+                </div>
+            </div>
         </div>
         <div class="container-fluid" v-if="isMessageReponse">
             <div class="row mt-3">
@@ -116,7 +133,8 @@
             </div>
         </div>
         <template #footer>
-            <Button icon="pi pi-envelope" type="button" label="Envoyer" class="flex-auto md:flex-initial white-space-nowrap ml-3" @click="sendResponse(this.selectedMessage)"></Button>
+            <Button icon="pi pi-envelope" type="button" label="Envoyer" class="flex-auto md:flex-initial white-space-nowrap ml-3" @click="sendResponse(this.selectedMessage)" v-if="isMessageReponse"></Button>
+            <Button icon="pi pi-envelope" type="button" label="Envoyer" class="flex-auto md:flex-initial white-space-nowrap ml-3" @click="confirmSendPromise(this.selectedMessage)" v-if="isPromiseResponse"></Button>
             <Button label="Fermer" icon="pi pi-times" text @click="hideDialog"/>
         </template>
     </Dialog>
@@ -131,6 +149,7 @@ import Toast from 'primevue/toast';
 import Dialog from 'primevue/dialog';
 import Textarea from 'primevue/textarea';
 import RadioButton from 'primevue/radiobutton';
+import InputNumber from 'primevue/inputnumber';
 
 export default {
     data() {
@@ -148,8 +167,12 @@ export default {
             responseDialog: false,
             selectedMessage: {},
             isMessageReponse: false,
+            isPromiseResponse: false,
             messageContent: 'Le véhicule n\'est plus disponible',
-            isAvailable: false
+            isAvailable: false,
+            dealerInformations: {},
+            deposit: null,
+            submitted: false
         };
     },
     created() {
@@ -174,6 +197,16 @@ export default {
                                             error.message ||
                                             error.toString();
                                             this.successful = false;
+                }
+            );
+            this.$store.dispatch('admin/getdealerinformations').then(
+                res => {
+                    if(res){
+                        this.dealerInformations = res;
+                    }
+                },
+                error => {
+                    console.log(error);
                 }
             );
         } else {
@@ -208,7 +241,8 @@ export default {
         Toast,
         Dialog,
         Textarea,
-        RadioButton
+        RadioButton,
+        InputNumber
     },
     methods: {
         markAsRead(item) {
@@ -245,35 +279,80 @@ export default {
         },
         respond() {
             this.isMessageReponse = true;
+            this.isPromiseResponse = false;
+        },
+        promise() {
+            this.isPromiseResponse = true;
+            this.isMessageReponse = false;
         },
         confirmSendPromise() {
-            this.$confirm.require({
-                message: 'Voulez-vous vraiment envoyer le PDF de promesse de vente ?',
-                header: 'Confirmation',
-                icon: 'pi pi-exclamation-triangle',
-                accept: () => {
-                    this.sendPromise(this.selectedMessage);
-                },
-                reject: () => {
-                    this.$toast.add({ severity: 'info', summary: 'Annulation', detail: 'Envoi annulé', life: 3000 });
-                }
-            });
+            this.submitted = true;
+            if(this.deposit) {
+                this.$store.dispatch('admin/getdealerinformations').then(
+                    res => {
+                        this.$confirm.require({
+                            message: 'Voulez-vous vraiment envoyer le PDF de promesse de vente ?',
+                            header: 'Confirmation',
+                            icon: 'pi pi-exclamation-triangle',
+                            accept: () => {
+                                this.sendPromise(this.selectedMessage);
+                            },
+                            reject: () => {
+                                this.$toast.add({ severity: 'info', summary: 'Annulation', detail: 'Envoi annulé', life: 3000 });
+                            }
+                        });
+                    },
+                    error => {
+                        if(error.response.status == 404){
+                            this.$toast.add({severity:'error', summary:'Erreur', detail: 'Vous devez d\'abord remplir les informations du concessionnaire depuis le panel admin', life: 6000});
+                        }
+                        console.log(error.response.status);
+                    }
+                );
+            } else {
+                this.$toast.add({severity:'error', summary:'Erreur', detail: 'Montant de l\'accompte requis', life: 3000});
+            }
         },
         sendPromise(item) {
-            //générer le PDF
-            console.log(item);
+            this.$store.dispatch('admin/addpdfinfos', {
+                fileName: 'promesse_de_vente_' + item.user.username + '.pdf',
+                dealershipName: this.dealerInformations.dealershipName,
+                promiseDate: new Date(),
+                promiseLocation: this.dealerInformations.city,
+                deposit: this.deposit,
+                bankAccount: this.dealerInformations.bankAccount,
+                userId: item.userId,
+                carId: item.carId,
+            }).then(
+                res => {
+                    console.log(res);
+                    this.$store.dispatch('user/addmessage', {
+                        content: 'Vous pouvez télécharger la promesse de vente',
+                        isOk: true,
+                        responseTo: item.id,
+                        toUserId: item.userId,
+                        type: 'pdf',
+                        pdfId: res.infos.id,
+                        userId: this.currentUser.id,
+                        carId: item.carId
+                    }).then(
+                        res => {
+                            this.responseDialog = false;
+                            this.$toast.add({severity:'success', summary:'Succès', detail: res.message, life: 3000});
+                            console.log(res);
+                        },
+                        error => {
+                            this.$toast.add({severity:'error', summary:'Erreur', detail: error.message, life: 3000});
+                        }
+                    );
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+            this.markAsRead(item);
         },
         sendResponse(messageToRespond) {
-            console.log(messageToRespond);
-            console.log({
-                content: this.messageContent,
-                isOk: this.isAvailable,
-                responseTo: messageToRespond.id,
-                toUserId: messageToRespond.userId,
-                type: 'response',
-                userId: this.currentUser.id,
-                carId: messageToRespond.carId
-            });
             messageToRespond.read = true;
             this.$store.dispatch('user/addmessage', {
                 content: this.messageContent,
@@ -292,7 +371,7 @@ export default {
                     this.$toast.add({severity:'error', summary:'Erreur', detail: error.message, life: 3000});
                 }
             );
-            //pas oublier de mettre à jour la base de données POUR READ
+            this.markAsRead(messageToRespond);
         },
         confirmDeleteMessage(item) {
             this.$confirm.require({
@@ -325,13 +404,39 @@ export default {
             this.responseDialog = false;
             this.selectedMessage = {};
             this.isMessageReponse = false;
+            this.isPromiseResponse = false;
+            this.deposit = null;
+            this.submitted = false;
         },
         changeDefaultText(){
-            this.messageContent = this.isAvailable ? 'Le véhicule est toujours disponible' : 'Le véhicule n\'est plus disponible';
+            if(this.dealerInformations.phoneNumber){
+                this.messageContent = this.isAvailable ? `Le véhicule est toujours disponible, contactez-moi au ${this.dealerInformations.phoneNumber} pour recevoir une promesse de vente.` : 'Le véhicule n\'est plus disponible.';
+            } else {
+                this.messageContent = this.isAvailable ? 'Le véhicule est toujours disponible, contactez-moi pour recevoir une promesse de vente.' : 'Le véhicule n\'est plus disponible.';
+            }
         },
         showFullMessage(item){
             item.showFullMessage = true;
         },
+        downloadPromise(item){
+            console.log(item);
+            this.$store.dispatch('admin/generatepdf', item.pdfId).then(
+                res => {
+                    const blob = new Blob([res.data], { type: 'application/pdf' })
+                    const url = window.URL.createObjectURL(blob)
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'document.pdf');
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);
+                },
+                error => {
+                    console.log(error.response.status);
+                }
+            );
+        }
     }
 };
 </script>

@@ -2,6 +2,7 @@ const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
 const Address = db.address;
+const DealerInformations = db.dealerinformations;
 const fs = require('fs');
 
 const Op = db.Sequelize.Op;
@@ -192,6 +193,67 @@ exports.editProfile = (req, res) => {
 		res.status(500).send({ message: err.message });
 	});
 };
+
+exports.updateDealerInformations = (req, res) => {
+	DealerInformations.findOrCreate({
+		where: {id: 1},
+		defaults: {
+			dealershipName: req.body.dealershipName,
+			bankAccount: req.body.bankAccount,
+			country: req.body.country,
+			region: req.body.region,
+			postcode: req.body.postcode,
+			city: req.body.city,
+			street: req.body.street,
+			number: req.body.number,
+			phoneNumber: req.body.phoneNumber
+		}
+	}).then(dealer => {
+		//dealer : array avec [1] = created ou non
+		if(!dealer[1]){
+			dealer[0].dealershipName = req.body.dealershipName;
+			dealer[0].bankAccount = req.body.bankAccount;
+			dealer[0].country = req.body.country;
+			dealer[0].region = req.body.region;
+			dealer[0].postcode = req.body.postcode;
+			dealer[0].city = req.body.city;
+			dealer[0].street = req.body.street;
+			dealer[0].number = req.body.number;
+			dealer[0].phoneNumber = req.body.phoneNumber;
+			dealer[0].save();
+		}
+		return res.status(200).send({
+			id: dealer[0].id,
+			dealershipName: dealer[0].dealershipName,
+			bankAccount: dealer[0].bankAccount,
+			country: dealer[0].country,
+			region: dealer[0].region,
+			postcode: dealer[0].postcode,
+			city: dealer[0].city,
+			street: dealer[0].street,
+			number: dealer[0].number,
+			phoneNumber: dealer[0].phoneNumber,
+		});
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+}
+
+exports.getDealerInformations = (req, res) => {
+	DealerInformations.findOne({
+		where: {
+			id: 1
+		}
+	}).then(dealer => {
+		if (!dealer) {
+			return res.status(404).send({message: "Les informations du concessionnaire n'existent pas"});
+		}
+		return res.status(200).send(dealer);
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+}
+
 
 function base64_encode(fileUsername) {
 	const files = fs.readdirSync('../pictures/user');

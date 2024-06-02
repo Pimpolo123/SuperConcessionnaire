@@ -88,6 +88,64 @@ class AdminService {
 				return response.data;
 			});
 	}
+
+	updateDealerInformations(data) {
+		return axios
+			.post(API_URL + 'updatedealerinformations', {
+				dealershipName: data.dealershipName,
+				bankAccount: data.bankAccount,
+				country: data.country,
+				region: data.region,
+				postcode: data.postcode,
+				city: data.city,
+				street: data.street,
+				number: data.number
+			},{
+				headers: authHeader(data.accessToken)
+			}).then(response => {
+				return response.data;
+			});
+	}
+
+	getDealerInformations() {
+		return axios
+			.get(API_URL + 'getdealerinformations', {
+				headers: authHeader()
+			}).then(response => {
+				return response.data;
+			});
+	}
+
+	addPdfInfos(data) {
+		return axios
+			.post(API_URL + 'addpdfinfos', {
+				fileName: data.fileName,
+				dealershipName: data.dealershipName,
+				deliveryDate: data.deliveryDate,
+				promiseDate: data.promiseDate,
+				promiseLocation: data.promiseLocation,
+				deposit: data.deposit,
+				bankAccount: data.bankAccount,
+				userId: data.userId,
+				carId: data.carId
+			},{
+				headers: authHeader()
+			}).then(response => {
+				return response.data;
+			});
+	}
+
+	generatePDF(pdfId) {
+		return axios
+			.post(API_URL + 'downloadpdf', {
+				id: pdfId
+			},{
+				headers: authHeader(),
+				responseType: 'blob'
+			}).then(response => {
+				return response;
+			});
+	}
 }
 
 export default new AdminService();

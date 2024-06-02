@@ -46,6 +46,8 @@ db.carpicture = require("./cars/carpicture.model")(sequelize, Sequelize);
 db.favorite = require("./favorite.model")(sequelize, Sequelize);
 db.bid = require("./bid.model")(sequelize, Sequelize);
 db.message = require("./message.model")(sequelize, Sequelize);
+db.dealerinformations = require("./dealerinformations.model")(sequelize, Sequelize);
+db.pdfinfos = require("./pdfinfos.model")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   	through: "user_roles"
@@ -106,6 +108,12 @@ db.message.belongsTo(db.user);
 
 db.car.hasMany(db.message);
 db.message.belongsTo(db.car);
+
+db.user.hasMany(db.pdfinfos);
+db.pdfinfos.belongsTo(db.user);
+
+db.car.hasMany(db.pdfinfos);
+db.pdfinfos.belongsTo(db.car);
 
 
 db.ROLES = [

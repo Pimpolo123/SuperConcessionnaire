@@ -11,8 +11,14 @@ module.exports = function(app) {
     });
 
     app.post(
-        '/pdf', 
-        [], 
+        '/admin/downloadpdf', 
+        [authJwt.verifyToken], 
         controller.generatePDF
+    );
+
+    app.post(
+        '/admin/addpdfinfos', // admin parce que dans admin service front
+        [authJwt.verifyToken], 
+        controller.addPdfInfos
     );
 };

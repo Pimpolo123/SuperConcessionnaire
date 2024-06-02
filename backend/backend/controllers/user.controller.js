@@ -291,7 +291,8 @@ exports.addMessage = (req, res) => {
 		responseTo: req.body.responseTo,
 		read: false,
 		type: req.body.type,
-		isOk: req.body.isOk
+		isOk: req.body.isOk,
+		pdfId: req.body.pdfId
 	}).then(message => {
 		message.setUser(req.body.userId);
 		message.setCar(req.body.carId);

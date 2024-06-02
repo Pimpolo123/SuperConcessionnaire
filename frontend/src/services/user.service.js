@@ -197,6 +197,7 @@ class UserService {
 				read: false,
 				type: data.type,
 				isOk: data.isOk,
+				pdfId: data.pdfId,
 				userId: data.userId,
 				carId: data.carId
 			},{ 

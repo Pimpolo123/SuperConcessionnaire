@@ -58,6 +58,46 @@ export const admin = {
 					return Promise.reject(error);
 				}
 			)
+		},
+		updatedealerinformations({ commit }, data) {
+			return AdminService.updateDealerInformations(data).then(
+				data=> {
+					return Promise.resolve(data);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
+		},
+		getdealerinformations({ commit }) {
+			return AdminService.getDealerInformations().then(
+				data=> {
+					return Promise.resolve(data);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
+		},
+		addpdfinfos({ commit }, data) {
+			return AdminService.addPdfInfos(data).then(
+				data=> {
+					return Promise.resolve(data);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
+		},
+		generatepdf({ commit }, pdfId) {
+			return AdminService.generatePDF(pdfId).then(
+				data=> {
+					return Promise.resolve(data);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
 		}
     }
 };

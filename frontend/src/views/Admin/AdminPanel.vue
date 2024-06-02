@@ -4,6 +4,7 @@
       <UserManagement v-if="currentTab == 'userManagement'"></UserManagement>
       <CarManagement v-if="currentTab == 'stockManagement'"></CarManagement>
       <BidManagement v-if="currentTab == 'bidManagement'"></BidManagement>
+      <DealerInformations v-if="currentTab == 'dealerInformations'"></DealerInformations>
     </div>
 </template>
   
@@ -12,6 +13,7 @@
     import UserManagement from './UserManagement.vue';
     import CarManagement from './CarManagement.vue';
     import BidManagement from './BidManagement.vue';
+    import DealerInformations from './DealerInformations.vue';
     import TabMenu from 'primevue/tabmenu';
     
     export default {
@@ -38,9 +40,16 @@
                     },
                     {
                         label: 'Gestion des Enchères',
-                        icon: 'pi pi-book',
+                        icon: 'pi pi-dollar',
                         command: () => {
                             this.currentTab = 'bidManagement'
+                        }
+                    },
+                    {
+                        label: 'Informations du concessionnaire',
+                        icon: 'pi pi-info',
+                        command: () => {
+                            this.currentTab = 'dealerInformations'
                         }
                     }
                 ]
@@ -50,7 +59,8 @@
             UserManagement,
             TabMenu,
             CarManagement,
-            BidManagement
+            BidManagement,
+            DealerInformations
         },
         mounted() {
         UserService.getAdminBoard().then(

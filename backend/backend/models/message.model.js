@@ -28,6 +28,10 @@ module.exports = (sequelize, Sequelize) => {
       isOk: {
         type: Sequelize.BOOLEAN,
         allowNull: true
+      },
+      pdfId: {
+        type: Sequelize.INTEGER,
+        allowNull: true
       }
     },
     {

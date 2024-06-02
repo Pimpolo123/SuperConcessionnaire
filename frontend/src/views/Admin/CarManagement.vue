@@ -43,7 +43,7 @@
                 </Column>
                 <Column header="Image" style="max-width: 4rem;" :exportable="false">
                     <template #body="slotProps">
-                        <img v-if="slotProps.data.carpictures.length > 0" :src="getImageSource(slotProps.data.carpictures[0]?.base64url)" alt="Photo de voiture" class="rounded-square" style="width: 100px" />
+                        <img v-if="slotProps.data.carpictures.length > 0" :src="getImageSource(slotProps.data.carpictures[0]?.base64url)" alt="Photo de voiture" class="rounded-square" style="width: 200px" />
                         <img v-else src="../../assets/car-placeholder.png" alt="Photo de voiture" class="rounded-square" style="width: 100px" />
                     </template>
                 </Column>

@@ -37,6 +37,7 @@
                                     </vue-countdown>
                                 </span>
                             </div>
+                            <div class="font-weight-bold" v-else-if="!item.bid.isStarted && item.bid.isOver">Enchère terminée</div>
                             <div class="font-weight-bold" v-else>Commence dans : 
                                 <span class="font-weight-normal">
                                     <vue-countdown :time="item.bid.time" :interval="100" v-slot="{ days, hours, minutes, seconds }">
@@ -52,14 +53,14 @@
                             <div class="font-weight-bold" v-else> Enchère actuelle : 
                                 <span class="text-xl font-semibold font-weight-normal text-900 align-self-center">{{ item.bid.currentPrice }}€</span>
                             </div>
-                            <div class="col">
+                            <div class="col"  v-if="!item.bid.isOver">
                                 <label for="bid">Enchère</label>
                                 <InputNumber id="bid" type="number" class="col-2" :placeholder="item.bid.inputText" :invalid="item.bid.bidError" v-model="item.bid.newBid"/>
                                 <small class="p-error" v-if="item.bid.bidError">Entrez une enchère valide</small>
                             </div>
                         </div>
                         <div class="d-flex gap-2 col">
-                            <Button icon="pi pi-euro" outlined rounded class="ml-3" @click="confirmBid(item)" v-tooltip.top="'Enchèrir'"/>
+                            <Button icon="pi pi-euro" outlined rounded class="ml-3" @click="confirmBid(item)" v-tooltip.top="'Enchèrir'"  v-if="!item.bid.isOver"/>
                         </div>
                     </div>
                 </div>
@@ -322,9 +323,12 @@ export default {
                         if(bid.bidStartDate.getTime() > this.now.getTime()){
                             bid.isStarted = false;
                             bid.time = bid.bidStartDate.getTime() - this.now.getTime();
-                        } else {
+                        } else if ((bid.bidStartDate.getTime() < this.now.getTime()) && (bid.bidEndDate.getTime() > this.now.getTime())){
                             bid.isStarted = true;
                             bid.time = bid.bidEndDate.getTime() - this.now.getTime();
+                        } else if(bid.bidEndDate.getTime() < this.now.getTime()){
+                            bid.isStarted = false;
+                            bid.isOver = true;
                         }
                         this.$store.dispatch('user/getuser', bid.userId).then(
                             user => {

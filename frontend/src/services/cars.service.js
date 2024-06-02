@@ -91,6 +91,15 @@ class CarsService {
             });
     }
 
+    setBid(infos) {
+        return axios
+            .post(API_URL + 'setbid', infos, { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+
     getAllCategories() {
         return axios
             .get(API_URL + 'getallcategories', { headers: authHeader() })

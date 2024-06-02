@@ -221,6 +221,20 @@ exports.deleteCars = (req, res) => {
 	res.status(200).send({message: "Voitures supprimées"});
 };
 
+exports.setBid = (req, res) => {
+    Car.findOne({
+        where: {
+            id: req.body.carId
+        }
+    }).then(car => {
+        car.isBid = req.body.isBid;
+        car.save();
+        res.status(200).send({message: "Bid set"});
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+}
+
 exports.getAllMakes = (req, res) => {
     Make.findAll().then(makes => {
         res.status(200).send(makes);

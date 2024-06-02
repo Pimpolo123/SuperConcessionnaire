@@ -37,6 +37,8 @@
                                     </vue-countdown>
                                 </span>
                             </div>
+                            <div class="font-weight-bold" v-else-if="!item.bid.isStarted && item.bid.isOver">Enchère terminée
+                            </div>
                             <div class="font-weight-bold" v-else>Commence dans : 
                                 <span class="font-weight-normal">
                                     <vue-countdown :time="item.bid.time" :interval="100" v-slot="{ days, hours, minutes, seconds, milliseconds }">
@@ -48,6 +50,7 @@
                         <div class="d-flex gap-5">
                             <span class="text-xl font-semibold text-900 align-self-center">€{{ item.bid.currentPrice }}</span>
                             <div class="d-flex gap-2">
+                                <Button icon="pi pi-envelope" rounded class="mr-2" @click="contactWinner(item)" v-tooltip.top="'Contacter le gagnant'" v-if="item.bid.isOver"/>
                                 <Button icon="pi pi-trash" outlined rounded class="mr-2" severity="danger" @click="confirmDeleteBid(item)" v-tooltip.top="'Supprimer l\'enchère'"/>
                             </div>
                         </div>
@@ -56,6 +59,33 @@
             </div>
         </template>
     </DataView>
+    <Dialog v-model:visible="bidMessageDialog" :style="{width: '100%'}" header="Envoyer un message au gagnant" :modal="true" class="container p-fluid m-0 p-0" @after-hide="hideDialog">
+        <div class="container-fluid">
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <div class="font-weight-bold">Destinataire : 
+                                <span class="font-weight-normal">{{ this.car.biggestBidder.name }} {{ this.car.biggestBidder.surname }}</span>
+                            </div>
+                            <div class="font-weight-bold">Véhicule : 
+                                <span class="font-weight-normal">{{ this.car.make.name }} {{ this.car.model.name }} {{ this.car.year }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="font-weight-bold">Votre message : 
+                                <Textarea v-model="messageContent" rows="5" cols="100" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <template #footer>
+            <Button icon="pi pi-envelope" type="button" label="Envoyer" class="flex-auto md:flex-initial white-space-nowrap ml-3" @click="confirmSendMessage(this.car)"></Button>
+            <Button label="Fermer" icon="pi pi-times" text @click="hideDialog"/>
+        </template>
+    </Dialog>
 </template>
 
 <script>
@@ -65,12 +95,15 @@ import Dropdown from 'primevue/dropdown';
 import VueCountdown from '@chenfengyuan/vue-countdown';
 import ConfirmDialog from 'primevue/confirmdialog';
 import Toast from 'primevue/toast';
+import Dialog from 'primevue/dialog';
+import Textarea from 'primevue/textarea';
 
 export default {
     name: "CarManagement",
     data() {
         return {
             data: [],
+            car: {},
             currentUser: JSON.parse(localStorage.getItem('user')),
             sortOptions: [
                 { label: 'Prix décroissant', value: '!price' },
@@ -86,7 +119,10 @@ export default {
             sortOrder: null,
             sortField: null,
             bids: [],
-            now: new Date()
+            now: new Date(),
+            bidMessageDialog: false,
+            messageContent: `Vous avez remporté l\'enchère, veuillez me contacter pour finaliser la transaction.`,
+            dealerInformations: {}
         }
     },
     created() {
@@ -103,9 +139,13 @@ export default {
                         if(bid.bidStartDate.getTime() > this.now.getTime()){
                             bid.isStarted = false;
                             bid.time = bid.bidStartDate.getTime() - this.now.getTime();
-                        } else {
+                        } else if ((bid.bidStartDate.getTime() < this.now.getTime()) && (bid.bidEndDate.getTime() > this.now.getTime())){
                             bid.isStarted = true;
                             bid.time = bid.bidEndDate.getTime() - this.now.getTime();
+                        } else if(bid.bidEndDate.getTime() < this.now.getTime()){
+                            bid.isStarted = false;
+                            bid.isOver = true;
+                            bid.time = this.now.getTime() - bid.bidEndDate.getTime();
                         }
                         this.$store.dispatch('user/getuser', bid.userId).then(
                             user => {
@@ -125,6 +165,15 @@ export default {
                                         this.successful = false;
             }
         );
+        this.$store.dispatch('admin/getdealerinformations').then(
+            res => {
+                this.dealerInformations = res;
+                this.messageContent = `Vous avez remporté l\'enchère, veuillez me contacter au ${this.dealerInformations.phoneNumber} pour finaliser la transaction.`
+            },
+            error => {
+                console.log(error.response);
+            }
+        );
     },
     components: {
         DataView,
@@ -132,7 +181,9 @@ export default {
         Dropdown,
         VueCountdown,
         ConfirmDialog,
-        Toast
+        Toast,
+        Dialog,
+        Textarea
     },
     methods: {
         isAdmin() {
@@ -149,16 +200,8 @@ export default {
             }
         },
         hideDialog() {
-            this.carDialog = false;
-            this.firstReg = {year: null, month: null};
             this.car = {};
-            this.bid = {};
-            this.isBid = false;
-            this.bidDisabled = false;
-            this.imgUrl = '';
-            this.submitted = false;
-            this.imageFiles = [];
-            this.selectedOptions = [];
+            this.bidMessageDialog = false;
         },
         confirmDeleteBid(car) {
             this.$confirm.require({
@@ -167,10 +210,10 @@ export default {
                 icon: 'pi pi-exclamation-triangle',
                 rejectClass: 'p-button-secondary p-button-outlined',
                 rejectLabel: 'Annuler',
-                acceptLabel: 'Enchèrir',
+                acceptLabel: 'Supprimer',
                 accept: () => {
                     this.deleteBid(car.bid);
-                    this.$toast.add({ severity: 'success', summary: 'Succès', detail: 'Enchère envoyée', life: 3000 });
+                    this.$toast.add({ severity: 'success', summary: 'Succès', detail: 'Enchère supprimée', life: 3000 });
                 },
                 reject: () => {
                     this.$toast.add({ severity: 'info', summary: 'Annulé', detail: 'Action annulée', life: 1000 });
@@ -182,6 +225,17 @@ export default {
             this.$store.dispatch('bid/deletebid', bid).then(
                 res => {
                     this.data = this.data.filter(item => item.bid.id !== bid.id);
+                    this.$store.dispatch('cars/setbid', {carId: bid.carId, isBid: false}).then(
+                        res => {
+                            console.log('Voiture mise à jour : ', res)
+                        },
+                        error => {
+                            this.message = (error.response && error.response.data.message) ||
+                                                error.message ||
+                                                error.toString();
+                                                this.successful = false;
+                        }
+                    );
                 },
                 error => {
                     this.message = (error.response && error.response.data.message) ||
@@ -191,6 +245,46 @@ export default {
                 }
             );
         },
+        contactWinner(car) {
+            this.bidMessageDialog = true;
+            console.log(car);
+            this.car = car;
+        },
+        confirmSendMessage(){
+            this.$confirm.require({
+                message: 'Etes-vous sur de vouloir envoyer ce message ?',
+                header: 'Confirmation',
+                icon: 'pi pi-exclamation-triangle',
+                rejectClass: 'p-button-secondary p-button-outlined',
+                rejectLabel: 'Annuler',
+                acceptLabel: 'Envoyer',
+                accept: () => {
+                    this.sendMessage();
+                },
+                reject: () => {
+                    this.$toast.add({ severity: 'info', summary: 'Annulé', detail: 'Action annulée', life: 1000 });
+                }
+            });
+        },
+        sendMessage(){
+            console.log(this.car);
+            this.$store.dispatch('user/addmessage', {
+                content: this.messageContent,
+                toUserId: this.car.biggestBidder.id,
+                type: 'bidwin',
+                userId: this.currentUser.id,
+                carId: this.car.id
+            }).then(
+                res => {
+                    this.$toast.add({severity:'success', summary:'Succès', detail: res.message, life: 3000});
+                    this.hideDialog();
+                },
+                error => {
+                    this.$toast.add({severity:'error', summary:'Erreur', detail: error.message, life: 3000});
+                    this.hideDialog();
+                }
+            );
+        }
     }
 }
 </script>

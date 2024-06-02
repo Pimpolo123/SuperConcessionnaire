@@ -44,6 +44,12 @@ module.exports = function(app) {
         [verifyCarPics.memStorage.array('files', 20), verifyCarPics.validateFiles, authJwt.verifyToken, authJwt.isModeratorOrAdmin], 
         controller.editCar
     );
+    
+    app.post(
+        '/cars/setbid',
+        [authJwt.verifyToken, authJwt.isModeratorOrAdmin],
+        controller.setBid
+    )
 
     app.get(
         '/cars/getallmakes',

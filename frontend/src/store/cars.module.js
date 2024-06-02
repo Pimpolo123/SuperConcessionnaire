@@ -69,6 +69,16 @@ export const cars = {
                 }
             );
         },
+        setbid({ commit }, infos) {
+            return CarsService.setBid(infos).then(
+                infos => {
+                    return Promise.resolve(infos);
+                    },
+                error => {
+                    return Promise.reject(error);
+                }
+            );
+        },
         getallmakes({ commit }) {
             return CarsService.getAllMakes().then(
                 makes => {

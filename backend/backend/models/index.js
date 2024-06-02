@@ -115,6 +115,17 @@ db.pdfinfos.belongsTo(db.user);
 db.car.hasMany(db.pdfinfos);
 db.pdfinfos.belongsTo(db.car);
 
+db.car.hasMany(db.bid);
+db.bid.belongsTo(db.car);
+
+db.user.hasMany(db.bid);
+db.bid.belongsTo(db.user);
+
+db.car.hasMany(db.favorite);
+db.favorite.belongsTo(db.car);
+
+db.user.hasMany(db.favorite);
+db.favorite.belongsTo(db.user);
 
 db.ROLES = [
 	{name:"user", id:1},

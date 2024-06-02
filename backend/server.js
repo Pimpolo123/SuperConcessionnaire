@@ -38,15 +38,15 @@ var corsOptions = {
   };  
 
 
-fs.readdir(pictureDir, (err, files) => {
-	if (err) throw err;
+// fs.readdir(pictureDir, (err, files) => {
+// 	if (err) throw err;
 
-	for (const file of files) {
-		fs.unlink(path.join(pictureDir, file), (err) => {
-			if (err) throw err;
-		});
-	}
-});
+// 	for (const file of files) {
+// 		fs.unlink(path.join(pictureDir, file), (err) => {
+// 			if (err) throw err;
+// 		});
+// 	}
+// });
 
 app.use(cors(corsOptions));
 
@@ -122,11 +122,11 @@ function initial() {
     });
 
 	User.create({
-		username:"toto",
+		username:"harold1",
 		email: "pdupont@gmail.com",
 		password: bcrypt.hashSync("toto", 8),
 		name: "Dupont",
-		surname: "Pierre",
+		surname: "Harold",
 		birthdate: "2000-12-31",
 		phonenumber: "0476091162"
 	}).then(user => {
@@ -134,7 +134,7 @@ function initial() {
     });
 
 	User.create({
-		username:"tata",
+		username:"jc1960",
 		email: "johnnyc@caramail.com",
 		password: bcrypt.hashSync("toto", 8),
 		name: "Cadillac",
@@ -236,81 +236,81 @@ function initial() {
 		});
 	});
 
-	[pictures[0], pictures[0], pictures[0]].forEach(e => {
-		CarPicture.create({
-			base64url: e
-		})
-	})
+	// [pictures[0], pictures[0], pictures[0]].forEach(e => {
+	// 	CarPicture.create({
+	// 		base64url: e
+	// 	})
+	// })
 
-	Car.create({
-		power: 200,
-		year: 2018,
-		price: 20000,
-		kilometers: 200000,
-		description: "T'as vu l'auto mon copain ?",
-		firstReg: "2018-07-01",
-		displacement: 1499,
-		gears: 6,
-		cylinders: 3,
-		doors: 3,
-		co2: 237,
-		urbanCons: 9.5,
-		mixCons: 7.2,
-		hwCons: 5
-	}).then(car => {
-		car.setMake(35);
-		car.setModel(1);
-		car.setCategory(1);
-		car.setAdmissiontype(1);
-		car.setColor(1);
-		car.setDrivetrain(1);
-		car.setGearboxtype(1);
-		car.setFueltype(1);
-		car.setEuro(1);
-		car.setOptions([1, 10, 20]);
-		car.setCarpictures([1,2]);
-	})
+	// Car.create({
+	// 	power: 200,
+	// 	year: 2018,
+	// 	price: 20000,
+	// 	kilometers: 200000,
+	// 	description: "T'as vu l'auto mon copain ?",
+	// 	firstReg: "2018-07-01",
+	// 	displacement: 1499,
+	// 	gears: 6,
+	// 	cylinders: 3,
+	// 	doors: 3,
+	// 	co2: 237,
+	// 	urbanCons: 9.5,
+	// 	mixCons: 7.2,
+	// 	hwCons: 5
+	// }).then(car => {
+	// 	car.setMake(35);
+	// 	car.setModel(1);
+	// 	car.setCategory(1);
+	// 	car.setAdmissiontype(1);
+	// 	car.setColor(1);
+	// 	car.setDrivetrain(1);
+	// 	car.setGearboxtype(1);
+	// 	car.setFueltype(1);
+	// 	car.setEuro(1);
+	// 	car.setOptions([1, 10, 20]);
+	// 	car.setCarpictures([1,2]);
+	// })
 
-	Car.create({
-		power: 70,
-		year: 1998,
-		price: 15000,
-		kilometers: 201000,
-		description: "Jolie voiture mon copain",
-		firstReg: "1998-07-01",
-		displacement: 3000,
-		gears: 4,
-		cylinders: 6,
-		doors: 5,
-		co2: 237,
-		urbanCons: 9.5,
-		mixCons: 7.2,
-		hwCons: 5
-	}).then(car => {
-		car.setMake(2);
-		car.setModel(2);
-		car.setCategory(2);
-		car.setAdmissiontype(2);
-		car.setColor(2);
-		car.setDrivetrain(2);
-		car.setGearboxtype(2);
-		car.setFueltype(2);
-		car.setEuro(2);
-		car.setOptions([2, 11, 21]);
-		car.setCarpictures([3]);
-	})
-	PDFinfos.create({
-		fileName: "test.pdf",
-		dealershipName: "SuperConcessionnaire2000",
-		promiseDate: "1998-07-01",
-		promiseLocation: "Mons",
-		deposit: 500,
-		bankAccount: "BE81 0000 0000 0000"
-	}).then(pdfinfos => {
-		pdfinfos.setUser(1);
-		pdfinfos.setCar(1);
-		pdfinfos.save();
-	});
+	// Car.create({
+	// 	power: 70,
+	// 	year: 1998,
+	// 	price: 15000,
+	// 	kilometers: 201000,
+	// 	description: "Jolie voiture mon copain",
+	// 	firstReg: "1998-07-01",
+	// 	displacement: 3000,
+	// 	gears: 4,
+	// 	cylinders: 6,
+	// 	doors: 5,
+	// 	co2: 237,
+	// 	urbanCons: 9.5,
+	// 	mixCons: 7.2,
+	// 	hwCons: 5
+	// }).then(car => {
+	// 	car.setMake(2);
+	// 	car.setModel(2);
+	// 	car.setCategory(2);
+	// 	car.setAdmissiontype(2);
+	// 	car.setColor(2);
+	// 	car.setDrivetrain(2);
+	// 	car.setGearboxtype(2);
+	// 	car.setFueltype(2);
+	// 	car.setEuro(2);
+	// 	car.setOptions([2, 11, 21]);
+	// 	car.setCarpictures([3]);
+	// })
+	// PDFinfos.create({
+	// 	fileName: "test.pdf",
+	// 	dealershipName: "SuperConcessionnaire2000",
+	// 	promiseDate: "1998-07-01",
+	// 	promiseLocation: "Mons",
+	// 	deposit: 500,
+	// 	bankAccount: "BE81 0000 0000 0000"
+	// }).then(pdfinfos => {
+	// 	pdfinfos.setUser(1);
+	// 	pdfinfos.setCar(1);
+	// 	pdfinfos.save();
+	// });
 	DealerInformations.create({
 		dealershipName: "SuperConcessionnaire2000",
 		bankAccount: "BE00000000000000",

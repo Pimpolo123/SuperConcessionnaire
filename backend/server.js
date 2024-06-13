@@ -79,6 +79,7 @@ db.sequelize.sync({force: true}).then(() => {
 });
 
 function initial() {
+	//VERSION TEST
 	let makes = require('./static/makes_list.json');
 	let models = require('./static/models_list.json');
 	let gearboxTypes = require('./static/gearboxtypes_list.json');

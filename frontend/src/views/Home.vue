@@ -11,11 +11,11 @@
                     <h4>Voir les enchères en cours</h4>
                 </div>
             </div>
-            <div class="col-4">
-                <div class="square-button" @click="goToPage('/available-vehicles')">
+            <!-- <div class="col-4">
+                <div class="square-button" @click="goToPage()">
                     <h4>Vendez votre véhicule</h4>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>

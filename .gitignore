@@ -4,8 +4,8 @@
 /backend/package-lock.json
 /backend/node_modules/*
 /backend/backend/node_modules/*
-/backend/backend/config/*
-/backend/backend/config/db.config.js
+# /backend/backend/config/*
+# /backend/backend/config/db.config.js
 /backend/.env
 /frontend/.env
 /.idea/*

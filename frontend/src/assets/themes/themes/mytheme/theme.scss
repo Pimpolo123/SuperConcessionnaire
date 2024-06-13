@@ -1,0 +1,14 @@
+$primaryColor: #836FFF !default;
+$primaryDarkColor: #059669 !default;
+$primaryDarkerColor: #047857 !default;
+$primaryTextColor: #ffffff !default;
+
+$highlightBg: #ecfdf5 !default;
+$highlightTextColor: $primaryDarkerColor !default;
+$highlightFocusBg: #d1fae5 !default;
+$progressSpinnerColorFour: $primaryColor !default;
+
+@import './variables';
+@import './_fonts';
+@import '../../theme-base/_components';
+@import './_extensions';

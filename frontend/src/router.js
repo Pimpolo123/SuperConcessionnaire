@@ -84,12 +84,18 @@ export const router = createRouter({
             component: () => import('./views/User/MessagesPanel.vue'),
             meta: { title: "Boîte de réception" } 
         },
+        {
+            path: '/conditions',
+            name: 'conditions',
+            component: () => import('./views/Conditions.vue'),
+            meta: { title: "Conditions d'utilisation" } 
+        },
 
     ]
 });
 
 router.beforeEach((to, from, next) => {
-    const publicPages = ['/login', '/register', '/home', '/carlist'];
+    const publicPages = ['/login', '/register', '/home', '/carlist', '/conditions'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
 

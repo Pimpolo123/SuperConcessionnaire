@@ -179,5 +179,35 @@ export const cars = {
                 }
             );
         },
+        addsale({ commit }, sale) {
+            return CarsService.addSale(sale).then(
+                sale => {
+                    return Promise.resolve(sale);
+                    },
+                error => {
+                    return Promise.reject(error);
+                }
+            );
+        },
+        getsales({ commit }) {
+            return CarsService.getSales().then(
+                sales => {
+                    return Promise.resolve(sales);
+                    },
+                error => {
+                    return Promise.reject(error);
+                }
+            );
+        },
+        setcarsasold({ commit }, id) {
+            return CarsService.setCarsAsOld(id).then(
+                res => {
+                    return Promise.resolve(res);
+                    },
+                error => {
+                    return Promise.reject(error);
+                }
+            );
+        }
     }
 };

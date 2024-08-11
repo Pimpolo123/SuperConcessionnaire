@@ -391,18 +391,20 @@ export default {
                                         this.successful = false;
             }
         );
-        this.$store.dispatch('user/getfavorites', this.currentUser.id).then(
-            res => {
-                this.userFavorites = res;
-            },
-            error => {
-                this.message = (error.response && error.response.data.message) ||
-                                        error.message ||
-                                        error.toString();
-                                        this.successful = false;
-            }
-        );
-        this.messageContent = 'Bonjour, \nJe suis intéressé par ce véhicule. Est-il toujours disponible ? \nCordialement, ' + this.currentUser.surname + ' ' + this.currentUser.name;
+        if(this.currentUser){
+            this.$store.dispatch('user/getfavorites', this.currentUser.id).then(
+                res => {
+                    this.userFavorites = res;
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                            error.message ||
+                                            error.toString();
+                                            this.successful = false;
+                }
+            );
+            this.messageContent = 'Bonjour, \nJe suis intéressé par ce véhicule. Est-il toujours disponible ? \nCordialement, ' + this.currentUser.surname + ' ' + this.currentUser.name;
+        }
     },
     components: {
         DataView,

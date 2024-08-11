@@ -21,8 +21,11 @@
                             </div>
                         </div>
                         <div class="col">
-                            <div class="font-weight-bold">Aperçu du message :
-                                <span class="font-weight-normal"> {{ item.content.substring(0, 50) + '...' }}</span>
+                            <div class="font-weight-bold" v-if="!item.showFullMessage">Aperçu du message :
+                                <span class="font-weight-normal"> {{ item.content.substring(0, 100) + '...' }} <span class="font-weight-normal" @click="showFullMessage(item)">plus</span></span>
+                            </div>
+                            <div class="font-weight-bold" v-else>Aperçu du message :
+                                <span class="font-weight-normal"> {{ item.content }}</span>
                             </div>
                         </div>
                         <div class="d-flex gap-2 col">
@@ -53,8 +56,11 @@
                             </div>
                         </div>
                         <div class="col">
-                            <div class="font-weight-bold">Aperçu du message :
-                                <span class="font-weight-normal"> {{ item.content.substring(0, 100) + '...' }}</span>
+                            <div class="font-weight-bold" v-if="!item.showFullMessage">Aperçu du message :
+                                <span class="font-weight-normal"> {{ item.content.substring(0, 100) + '...' }} <span class="font-weight-normal" @click="showFullMessage(item)">plus</span></span>
+                            </div>
+                            <div class="font-weight-bold" v-else>Aperçu du message :
+                                <span class="font-weight-normal"> {{ item.content }}</span>
                             </div>
                         </div>
                         <div class="d-flex gap-2 col">
@@ -108,6 +114,11 @@ export default {
                                                     this.successful = false;
                         }
                     );
+                    if(message.content.length < 100){
+                        message.showFullMessage = true;
+                    } else {
+                        message.showFullMessage = false;
+                    }
                 });
                 console.log(this.messages);
             },
@@ -156,6 +167,9 @@ export default {
                 return this.currentUser.roles.includes('ROLE_ADMIN');
             }
             return false;
+        },
+        showFullMessage(item){
+            item.showFullMessage = true;
         },
     }
 };

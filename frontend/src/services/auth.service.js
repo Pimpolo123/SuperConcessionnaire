@@ -32,7 +32,8 @@ class AuthService {
             name: user.name,
             surname: user.surname,
             phonenumber: user.phonenumber,
-            roles: user.roles
+            roles: user.roles,
+            emailoptin: user.emailoptin
     });
   }
 }

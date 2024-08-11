@@ -17,7 +17,7 @@ const sequelize = new Sequelize(
 			acquire: config.pool.acquire,
 			idle: config.pool.idle
 		},
-		logging: true
+		logging: false
 	}
 );
 
@@ -48,6 +48,8 @@ db.bid = require("./bid.model")(sequelize, Sequelize);
 db.message = require("./message.model")(sequelize, Sequelize);
 db.dealerinformations = require("./dealerinformations.model")(sequelize, Sequelize);
 db.pdfinfos = require("./pdfinfos.model")(sequelize, Sequelize);
+db.sales = require("./sales.model")(sequelize, Sequelize);
+db.newsletterinfos = require("./newsletterinfos.model")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   	through: "user_roles"
@@ -126,6 +128,12 @@ db.favorite.belongsTo(db.car);
 
 db.user.hasMany(db.favorite);
 db.favorite.belongsTo(db.user);
+
+db.user.hasMany(db.sales);
+db.sales.belongsTo(db.user);
+
+db.car.hasOne(db.sales);
+db.sales.belongsTo(db.car);
 
 db.ROLES = [
 	{name:"user", id:1},

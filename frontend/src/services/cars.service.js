@@ -61,9 +61,12 @@ class CarsService {
 
     editCar(car) {
         var formData = new FormData();
-        car.imageFiles.forEach(file => {
-            formData.append("files", file);
-        });
+        if(car.imageFiles && !car.sold){
+            console.log("test");
+            car.imageFiles.forEach(file => {
+                formData.append("files", file);
+            });
+        }
         formData.append("car", JSON.stringify(car));
         return axios
             .post(API_URL + 'editcar', formData, { headers: authHeader() })
@@ -159,6 +162,30 @@ class CarsService {
     getAllOptions() {
         return axios
             .get(API_URL + 'getalloptions', { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    addSale(sale) {
+        return axios
+            .post(API_URL + 'addsale', sale, { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    getSales() {
+        return axios
+            .get(API_URL + 'getsales', { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    setCarsAsOld(carId) {
+        return axios
+            .post(API_URL + 'setcarsasold', { carId: carId }, { headers: authHeader() })
             .then(response => {
                 return response.data;
             });

@@ -3,7 +3,10 @@
       <TabMenu :model="tabItems" />
       <UserManagement v-if="currentTab == 'userManagement'"></UserManagement>
       <CarManagement v-if="currentTab == 'stockManagement'"></CarManagement>
+      <StockHistory v-if="currentTab == 'stockHistory'"></StockHistory>
       <BidManagement v-if="currentTab == 'bidManagement'"></BidManagement>
+      <SendMail v-if="currentTab == 'sendMail'"></SendMail>
+      <Newsletter v-if="currentTab == 'newsletter'"></Newsletter>
       <DealerInformations v-if="currentTab == 'dealerInformations'"></DealerInformations>
     </div>
 </template>
@@ -14,7 +17,10 @@
     import CarManagement from './CarManagement.vue';
     import BidManagement from './BidManagement.vue';
     import DealerInformations from './DealerInformations.vue';
+    import StockHistory from './StockHistory.vue';
     import TabMenu from 'primevue/tabmenu';
+    import SendMail from './SendMail.vue';
+    import Newsletter from './Newsletter.vue';
     
     export default {
         name: 'Admin',
@@ -39,10 +45,31 @@
                         }
                     },
                     {
+                        label: 'Historique des Ventes',
+                        icon: 'pi pi-history',
+                        command: () => {
+                            this.currentTab = 'stockHistory'
+                        }
+                    },
+                    {
                         label: 'Gestion des Enchères',
                         icon: 'pi pi-dollar',
                         command: () => {
                             this.currentTab = 'bidManagement'
+                        }
+                    },
+                    {
+                        label: 'Envoyer un mail',
+                        icon: 'pi pi-envelope',
+                        command: () => {
+                            this.currentTab = 'sendMail'
+                        }
+                    },
+                    {
+                        label: 'Newsletter',
+                        icon: 'pi pi-envelope',
+                        command: () => {
+                            this.currentTab = 'newsletter'
                         }
                     },
                     {
@@ -51,7 +78,7 @@
                         command: () => {
                             this.currentTab = 'dealerInformations'
                         }
-                    }
+                    },
                 ]
             };
         },
@@ -60,7 +87,10 @@
             TabMenu,
             CarManagement,
             BidManagement,
-            DealerInformations
+            DealerInformations,
+            StockHistory,
+            SendMail,
+            Newsletter,
         },
         mounted() {
         UserService.getAdminBoard().then(

@@ -7,6 +7,7 @@ const PORT_FRONT = process.env.PORT_FRONT;
 const HOST = process.env.SERVER_HOST;
 const fs = require('fs');
 const path = require('path');
+const schedule = require('node-schedule');
 const pictureDir = '../pictures/user'
 
 const db = require("./backend/models");
@@ -30,6 +31,7 @@ const CarPicture = db.carpicture;
 const Message = db.message;
 const PDFinfos = db.pdfinfos;
 const DealerInformations = db.dealerinformations;
+const NewsletterInfos = db.newsletterinfos;
 const Op = db.Sequelize.Op;
 var bcrypt = require("bcryptjs");
 
@@ -64,9 +66,15 @@ require('./backend/routes/admin.routes')(app);
 require('./backend/routes/cars.routes')(app);
 require('./backend/routes/bid.routes')(app);
 require('./backend/routes/pdf.routes')(app);
+require('./backend/routes/mailing.routes')(app);
 
 app.listen(PORT_BACK, () => {
     console.log(`Serveur en ligne sur le port ${PORT_BACK}.`);
+});
+
+process.on('SIGINT', function () { 
+	schedule.gracefulShutdown()
+	.then(() => process.exit(0))
 });
 
 // SEULEMENT EN DEV !!! 
@@ -124,12 +132,26 @@ function initial() {
 
 	User.create({
 		username:"harold1",
-		email: "pdupont@gmail.com",
+		email: "tartix69@gmail.com",
 		password: bcrypt.hashSync("toto", 8),
 		name: "Dupont",
 		surname: "Harold",
 		birthdate: "2000-12-31",
-		phonenumber: "0476091162"
+		phonenumber: "0476091162",
+		emailoptin: true
+	}).then(user => {
+        user.setRoles([1, 2])
+    });
+
+	User.create({
+		username:"panoramix",
+		email: "jefjef2222@gmail.com",
+		password: bcrypt.hashSync("toto", 8),
+		name: "Mathonet",
+		surname: "JF",
+		birthdate: "2000-12-31",
+		phonenumber: "0476091162",
+		emailoptin: true
 	}).then(user => {
         user.setRoles([1, 2])
     });
@@ -323,5 +345,5 @@ function initial() {
 		number: "12",
 		phoneNumber: "0476091162"
 	});
-
+	
 }

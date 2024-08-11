@@ -31,7 +31,11 @@ module.exports = (sequelize, Sequelize) => {
         banned: {
             type: Sequelize.BOOLEAN,
             defaultValue: false
-        }
+        },
+        emailoptin: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false
+        },
     },{paranoid: true}
   );
   

@@ -100,4 +100,21 @@ module.exports = function(app) {
         '/cars/getalloptions',
         controller.getAllOptions
     );
+
+    app.post(
+        '/cars/addsale',
+        [authJwt.verifyToken, authJwt.isModeratorOrAdmin],
+        controller.addSale
+    );
+
+    app.get(
+        '/cars/getsales',
+        controller.getSales
+    );
+
+    app.post(
+        '/cars/setcarsasold',
+        [authJwt.verifyToken, authJwt.isModeratorOrAdmin],
+        controller.setCarsAsOld
+    );
 };

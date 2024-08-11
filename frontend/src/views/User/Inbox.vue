@@ -68,6 +68,7 @@
                         <div class="d-flex gap-2 col">
                             <Button icon="pi pi-download" class="flex-auto md:flex-initial white-space-nowrap" @click="downloadPromise(item)" v-tooltip.top="'Télécharger'" v-if="item.type == 'pdf'"></Button>
                             <Button icon="pi pi-envelope" label="Marquer comme lu" class="flex-auto md:flex-initial white-space-nowrap" @click="markAsRead(item)"></Button>
+                            <Button icon="pi pi-envelope" label="Répondre" class="flex-auto md:flex-initial white-space-nowrap" @click="openUserResponseDialog(item)"></Button>
                             <Button icon="pi pi-trash"  class="flex-auto md:flex-initial white-space-nowrap w-20" @click="confirmDeleteMessage(item)" v-tooltip.top="'Supprimer le message'"></Button>
                         </div>
                     </div>
@@ -138,6 +139,33 @@
             <Button label="Fermer" icon="pi pi-times" text @click="hideDialog"/>
         </template>
     </Dialog>
+    <Dialog v-model:visible="userResponseDialog" :style="{width: '100%'}" header="Faire une demande" :modal="true" class="container p-fluid m-0 p-0" @after-hide="hideDialog">
+        <div class="container-fluid">
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <div class="font-weight-bold">Destinataire : 
+                                <span class="font-weight-normal">Administrateur</span>
+                            </div>
+                            <div class="font-weight-bold">Véhicule : 
+                                <span class="font-weight-normal">{{ this.car.make.name }} {{ this.car.model.name }} {{ this.car.year }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="font-weight-bold">Votre message : 
+                                <Textarea v-model="responseContent" rows="5" cols="100" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <template #footer>
+            <Button icon="pi pi-envelope" type="button" label="Envoyer" class="flex-auto md:flex-initial white-space-nowrap ml-3" @click="sendUserResponse(this.selectedMessage)"></Button>
+            <Button label="Fermer" icon="pi pi-times" text @click="hideDialog"/>
+        </template>
+    </Dialog>
 </template>
 
 <script>
@@ -172,7 +200,10 @@ export default {
             isAvailable: false,
             dealerInformations: {},
             deposit: null,
-            submitted: false
+            submitted: false,
+            images: [],
+            userResponseDialog: false,
+            responseContent: 'Je souhaite acheter le véhicule',
         };
     },
     created() {
@@ -263,6 +294,7 @@ export default {
             return false;
         },
         openResponseDialog(item) {
+            console.log(item);
             this.responseDialog = true;
             this.selectedMessage = item;
             this.$store.dispatch('cars/getcar', item.car.id).then(
@@ -405,15 +437,58 @@ export default {
             this.selectedMessage = {};
             this.isMessageReponse = false;
             this.isPromiseResponse = false;
+            this.userResponseDialog = false;
             this.deposit = null;
             this.submitted = false;
         },
         changeDefaultText(){
             if(this.dealerInformations.phoneNumber){
-                this.messageContent = this.isAvailable ? `Le véhicule est toujours disponible, contactez-moi au ${this.dealerInformations.phoneNumber} pour recevoir une promesse de vente.` : 'Le véhicule n\'est plus disponible.';
+                this.messageContent = this.isAvailable ? `Le véhicule est toujours disponible, contactez-moi au ${this.dealerInformations.phoneNumber} ou en répondant à ce message pour recevoir une promesse de vente.` : 'Le véhicule n\'est plus disponible.';
             } else {
-                this.messageContent = this.isAvailable ? 'Le véhicule est toujours disponible, contactez-moi pour recevoir une promesse de vente.' : 'Le véhicule n\'est plus disponible.';
+                this.messageContent = this.isAvailable ? 'Le véhicule est toujours disponible, contactez-moi en répondant à ce message pour recevoir une promesse de vente.' : 'Le véhicule n\'est plus disponible.';
             }
+        },
+        openUserResponseDialog(message){
+            console.log(message);
+            this.selectedMessage = message;
+            this.$store.dispatch('cars/getcar', message.car.id).then(
+                res => {
+                    console.log(res);
+                    this.car = res;
+                    this.$nextTick(() => {
+                        this.userResponseDialog = true;
+                    });
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+                }
+            );
+        },
+        sendUserResponse(messageToRespond) {
+            console.log(messageToRespond);
+            console.log(this.responseContent);
+            messageToRespond.read = true;
+            this.$store.dispatch('user/addmessage', {
+                content: this.responseContent,
+                responseTo: messageToRespond.id,
+                toRoleId: 3,
+                type: 'response',
+                userId: this.currentUser.id,
+                carId: messageToRespond.carId
+            }).then(
+                res => {
+                    this.$toast.add({severity:'success', summary:'Succès', detail: res.message, life: 3000});
+                    this.responseDialog = false;
+                },
+                error => {
+                    this.$toast.add({severity:'error', summary:'Erreur', detail: error.message, life: 3000});
+                }
+            );
+            this.markAsRead(messageToRespond);
+            this.hideDialog();
         },
         showFullMessage(item){
             item.showFullMessage = true;

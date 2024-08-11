@@ -53,6 +53,14 @@
                 </div>
                 <ErrorMessage name="confirm" class="form-control text-danger"/>
             </div>
+            <div class="form-group d-flex align-items-center">
+                <Checkbox :binary="true" name="accept" v-model="checkedConditions"/>
+                <label for="accept">J'accepte les <a class="link-opacity-100" @click="openConditions">conditions d'utilisation</a></label>
+            </div>
+            <div class="form-group d-flex align-items-center">
+                <Checkbox :binary="true" name="accept" v-model="checkedMail"/>
+                <label for="accept">Je souhaite recevoir des e-mails</label>
+            </div>
             <div class="form-group">
                 <button class="btn btn-primary btn-block" type="submit">
                     <span>S'inscrire</span>
@@ -78,6 +86,7 @@
     import { defineRule } from 'vee-validate';
     import FileUpload from 'primevue/fileupload';
     import 'primevue/resources/themes/bootstrap4-light-purple/theme.css'
+    import Checkbox from 'primevue/checkbox';
 
     defineRule('confirmed', (value, [target]) => {
         if (value === target) {
@@ -107,7 +116,9 @@
                     const year = date.getFullYear();
 
                     return `${day}/${month}/${year}`;
-                }
+                },
+                checkedConditions: false,
+                checkedMail: false
             };
         },
         props: {
@@ -119,7 +130,8 @@
             ErrorMessage,
             Datepicker,
             FontAwesomeIcon,
-            FileUpload
+            FileUpload,
+            Checkbox
         },
         methods: {
             onSubmit(values) {
@@ -131,6 +143,18 @@
                   }
                 }
                 if(this.isValid){
+                    console.log('checkedmail', this.checkedMail);
+                    
+                    if(this.checkedMail){
+                        this.user.emailoptin = true;
+                    }
+                    console.log('user', this.user);
+                    
+                    if(!this.checkedConditions){
+                        this.message = "Vous devez accepter les conditions d'utilisation";
+                        this.successful = false;
+                        return;
+                    }
                     this.user.roles = [1];
                     this.$store.dispatch('auth/register', this.user).then(
                         data => {
@@ -150,6 +174,7 @@
                                     }
                                 )
                             }
+                            this.user.emailoptin = false;
                         },
                         error => {
                         this.message = (error.response && error.response.data.message) ||
@@ -215,6 +240,10 @@
                     this.fieldType = "text";
                 } else 
                     this.fieldType = "password";
+            },
+            openConditions(){
+                const routeData = this.$router.resolve({ name: 'conditions' });
+                window.open(routeData.href, '_blank');
             }
         },
         watch:{

@@ -60,6 +60,16 @@ module.exports = (sequelize, Sequelize) => {
 			type: Sequelize.BOOLEAN,
 			allowNull: true,
 		},
+		sold: {
+			type: Sequelize.BOOLEAN,
+			allowNull: true,
+			defaultValue: false,
+		},
+		new: {
+			type: Sequelize.BOOLEAN,
+			allowNull: true,
+			defaultValue: true,
+		},
     });
 
     return Car;

@@ -17,7 +17,8 @@ exports.signup = (req, res) => {
 		birthdate: req.body.birthdate,
 		name: req.body.name,
 		surname: req.body.surname,
-		phonenumber: req.body.phonenumber
+		phonenumber: req.body.phonenumber,
+		emailoptin: req.body.emailoptin
 	})
     .then(user => {
         user.setRoles(req.body.roles).then(() => {

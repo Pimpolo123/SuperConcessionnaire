@@ -6,6 +6,7 @@ import { user } from './user.module';
 import { admin } from './admin.module';
 import { cars } from './cars.module';
 import { bid } from './bid.module';
+import { mailing } from './mailing.module';
 
 
 
@@ -16,7 +17,8 @@ const store = createStore({
     user,
     admin,
     cars,
-    bid
+    bid,
+    mailing
   }
 });
 

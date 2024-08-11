@@ -80,6 +80,7 @@
                 <Column :exportable="false" style="width:8rem">
                     <template #body="slotProps">
                         <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editCar(slotProps.data)" v-tooltip.top="'Editer la voiture'"/>
+                        <Button icon="pi pi-dollar" outlined rounded class="mr-2" @click="confirmMarkAsSold(slotProps.data)" v-tooltip.top="'Marquer comme vendu'"/>
                         <Button icon="pi pi-trash" outlined rounded class="mr-2" severity="danger" @click="confirmDeleteCar(slotProps.data)" v-tooltip.top="'Supprimer la voiture'"/>
                     </template>
                 </Column>
@@ -332,6 +333,28 @@
                     <Button label="Sauvegarder" icon="pi pi-check" text @click="saveCar" />
                 </template>
             </Dialog>
+            <Dialog v-model:visible="pickUserDialog" :style="{width: '50%'}" header="Choisir un utilisateur" :modal="true" class="container p-fluid m-0 p-0" @after-hide="hideDialog">
+                <DataView :value="users" :sortOrder="sortOrder" :sortField="sortField">
+                    <template #header>
+                        <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Trier" @change="onSortChange($event)" />
+                    </template>
+                    <template #list="slotProps">
+                        <div class="flex flex-col">
+                            <div v-for="(item, index) in slotProps.items" :key="index">
+                                <div class="flex flex-col sm:flex-row sm:items-center p-2" :class="{ 'border-t border-surface-200 dark:border-surface-700': index !== 0 }">
+                                    <div class="flex flex-col md:flex-row justify-between md:items-center flex-1">
+                                        <div class="flex flex-row md:flex-col justify-between items-start gap-2">
+                                            <div>
+                                                <Button icon="pi pi-check" label="Sélectionner" class="flex-auto md:flex-initial whitespace-nowrap" @click="markAsSold(item.user)">{{ item.user.surname }} {{ item.user.name }}</Button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </DataView>
+            </Dialog>
         </div>
 	</div>
 </template>
@@ -362,6 +385,7 @@ import Badge from 'primevue/badge';
 import ProgressBar from 'primevue/progressbar';
 import ProgressSpinner from 'primevue/progressspinner';
 import InputSwitch from 'primevue/inputswitch';
+import DataView from 'primevue/dataview';
 
 
 
@@ -377,11 +401,13 @@ export default {
             imgUrl: "",
             filters: {},
             deleteCarsDialog: false,
+            pickUserDialog: false,
             message: '',
             isExistingCar: false,
             carDialog: false,
             submitted: false,
             car: {},
+            carToSell: {},
             format: (date) => {
                     const month = date.getMonth() + 1;
                     const year = date.getFullYear();
@@ -416,7 +442,15 @@ export default {
             bidDisabled: false,
             bid: {},
             bidDateRange: [],
-            uploadedPicsLength: 0
+            uploadedPicsLength: 0,
+            users: null,
+            sortKey: null,
+            sortOrder: null,
+            sortField: null,
+            sortOptions: [
+                { label: 'Nom', value: '!user.surname' },
+                { label: 'Prénom', value: '!user.name' }
+            ]
         }
     },
     created() {
@@ -431,8 +465,23 @@ export default {
                         this.disableGears = true;
                         car.gears = 1;
                     }
+                    if(car.sold){
+                        this.data = this.data.filter(item => item.id !== car.id);
+                    }
                 });
                 console.log('DATA', this.data);
+            },
+            error => {
+                this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+            }
+        );
+        this.$store.dispatch('admin/getallusers').then(
+            res => {
+                console.log(res);
+                this.users = res;
             },
             error => {
                 this.message = (error.response && error.response.data.message) ||
@@ -464,7 +513,8 @@ export default {
         Badge,
         ProgressBar,
         ProgressSpinner,
-        InputSwitch
+        InputSwitch,
+        DataView,
     },
     methods: {
         openNew() {
@@ -770,6 +820,7 @@ export default {
             this.submitted = false;
             this.imageFiles = [];
             this.selectedOptions = [];
+            this.pickUserDialog = false;
         },
         getModels(event){
             this.$store.dispatch('cars/getmodels', event.value.id).then(
@@ -938,6 +989,86 @@ export default {
             if(this.isBid){
                 this.car.price = 0;
                 this.priceDisabled = true;
+            }
+        },
+        confirmMarkAsSold(car) {
+            car.sold = true;
+            this.car = car;
+            this.$confirm.require({
+                message: 'Etes-vous sur de vouloir marquer le véhicule comme vendu ?',
+                header: 'Confirmation',
+                icon: 'pi pi-exclamation-triangle',
+                rejectClass: 'p-button-secondary p-button-outlined',
+                rejectLabel: 'Annuler',
+                acceptLabel: 'Marquer comme vendu',
+                accept: () => {
+                    this.markAsSoldUser(car);
+                },
+                reject: () => {
+                    this.$toast.add({ severity: 'info', summary: 'Annulé', detail: 'Action annulée', life: 1000 });
+                }
+            });
+        },
+        markAsSoldUser(car){
+            this.$store.dispatch('cars/getcar', car.id).then(
+                carToUpdate => {
+                    carToUpdate.sold = true;
+                    console.log(carToUpdate);
+                    this.pickUserDialog = true;
+                    this.carToSell = carToUpdate;
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                            error.message ||
+                                            error.toString();
+                                            this.successful = false;
+                }
+            );
+        },
+        markAsSold(user){
+            console.log(user);
+            console.log(this.carToSell);
+            this.$store.dispatch('cars/editcar', this.carToSell).then(
+                res => {
+                    this.data = this.data.filter(val => val.id != this.car.id);
+                    this.hideDialog();
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+                    this.$toast.add({ severity: 'error', summary: 'Erreur', detail: this.message, life: 3000 });
+                }
+            );
+            this.$store.dispatch('cars/addsale', {carId: this.carToSell.id, userId: user.id}).then(
+                res => {
+                    console.log(res);
+                    this.carToSell = {};
+                    this.$toast.add({ severity: 'success', summary: 'Succès', detail: 'Véhicule marqué comme vendu', life: 3000 });
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+                    this.$toast.add({ severity: 'error', summary: 'Erreur', detail: this.message, life: 3000 });
+                }
+            );
+        },
+        onSortChange(event) {
+            console.log(event);
+            const value = event.value.value;
+            const sortValue = event.value;
+
+            if (value.indexOf('!') === 0) {
+                this.sortOrder = -1;
+                this.sortField = value.substring(1, value.length);
+                this.sortKey = sortValue;
+            } else {
+                this.sortOrder = 1;
+                this.sortField = value;
+                this.sortKey = sortValue;
             }
         }
     }

@@ -1,6 +1,7 @@
 const { where } = require("sequelize");
 const db = require("../models");
 const Car = db.car;
+const User = db.user;
 const AdmissionType = db.admissiontype;
 const Category = db.category;
 const Color = db.color;
@@ -12,6 +13,7 @@ const Model = db.model;
 const Euro = db.euro;
 const Option = db.option;
 const CarPicture = db.carpicture;
+const Sales = db.sales;
 
 const Op = db.Sequelize.Op;
 
@@ -173,6 +175,7 @@ exports.editCar = (req, res) => {
         car.mixCons = editedCar.mixCons;
         car.hwCons = editedCar.hwCons;
         car.isBid = editedCar.isBid;
+        car.sold = editedCar.sold;
 
         return Promise.all([
             car.setMake(editedCar.make.id),
@@ -317,6 +320,42 @@ exports.getAllOptions = (req, res) => {
     }).catch(err => {
         res.status(500).send({ message: err.message });
     });
+}
+
+exports.addSale = (req, res) => {
+    const sale = req.body;
+    Sales.create({
+        carId: sale.carId,
+        userId: sale.userId
+    }).then(sale => {
+        res.status(200).send({message: "Vente ajoutée", id: sale.id});
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
+    })
+}
+
+exports.getSales = (req, res) => {
+    Sales.findAll({
+        include: [User]
+    }).then(sales => {
+        res.status(200).send(sales);
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+}
+
+exports.setCarsAsOld = (req, res) => {
+    Car.update({ 
+            new: false 
+        },{ 
+            where: { new: true } 
+        })
+        .then(() => {
+            res.status(200).send({ message: "Cars updated successfully" });
+        })
+        .catch(err => {
+            res.status(500).send({ message: err.message });
+        });
 }
 
 function base64ToFile(base64, filename) {

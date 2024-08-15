@@ -308,7 +308,8 @@ function initial() {
 		co2: 237,
 		urbanCons: 9.5,
 		mixCons: 7.2,
-		hwCons: 5
+		hwCons: 5,
+		new: false
 	}).then(car => {
 		car.setMake(2);
 		car.setModel(2);

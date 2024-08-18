@@ -90,6 +90,12 @@ export const router = createRouter({
             component: () => import('./views/Conditions.vue'),
             meta: { title: "Conditions d'utilisation" } 
         },
+        {
+            path: '/calendar',
+            name: 'calendar',
+            component: () => import('./views/User/Calendar.vue'),
+            meta: { title: "Calendrier" } 
+        },
 
     ]
 });

@@ -50,6 +50,7 @@ db.dealerinformations = require("./dealerinformations.model")(sequelize, Sequeli
 db.pdfinfos = require("./pdfinfos.model")(sequelize, Sequelize);
 db.sales = require("./sales.model")(sequelize, Sequelize);
 db.newsletterinfos = require("./newsletterinfos.model")(sequelize, Sequelize);
+db.appointment = require("./appointment.model")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   	through: "user_roles"

@@ -12,6 +12,8 @@ import './assets/themes/themes/mytheme/theme.scss';
 import Tooltip from 'primevue/tooltip';
 import ToastService from 'primevue/toastservice';
 import ConfirmationService from 'primevue/confirmationservice';
+import VCalendar from 'v-calendar';
+import 'v-calendar/style.css';
 import {
   faHome,
   faUser,
@@ -21,10 +23,11 @@ import {
   faEye,
   faUserTie,
   faHeart,
-  faEnvelope
+  faEnvelope,
+  faCalendar
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faEye, faUserTie, faHeart, faEnvelope);
+library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faEye, faUserTie, faHeart, faEnvelope, faCalendar);
 
 document.app = createApp(App);
 document.app.use(router);
@@ -32,6 +35,7 @@ document.app.use(PrimeVue);
 document.app.use(ToastService);
 document.app.use(ConfirmationService);
 document.app.use(store);
+document.app.use(VCalendar, {});
 document.app.directive('tooltip', Tooltip);
 document.app.use(materialKit);
 document.app.mount('#app');

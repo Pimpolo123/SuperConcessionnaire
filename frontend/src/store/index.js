@@ -7,6 +7,7 @@ import { admin } from './admin.module';
 import { cars } from './cars.module';
 import { bid } from './bid.module';
 import { mailing } from './mailing.module';
+import { appointment } from './appointment.module';
 
 
 
@@ -18,7 +19,8 @@ const store = createStore({
     admin,
     cars,
     bid,
-    mailing
+    mailing,
+    appointment
   }
 });
 

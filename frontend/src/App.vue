@@ -28,6 +28,11 @@
                 </router-link>
               </li>
               <li class="nav-item">
+                <router-link v-if="currentUser" to="/calendar" class="nav-link">
+                  <font-awesome-icon icon="calendar" /> Calendrier
+                </router-link>
+              </li>
+              <li class="nav-item">
                 <router-link v-if="currentUser" to="/messages" class="nav-link">
                   <font-awesome-icon icon="envelope" /> Messages
                 </router-link>

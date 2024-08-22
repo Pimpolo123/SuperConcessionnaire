@@ -21,4 +21,16 @@ module.exports = function(app) {
         [authJwt.verifyToken],
         controller.getAll
     );
+
+    app.post(
+        "/appointment/setavailability",
+        [authJwt.verifyToken],
+        controller.setAvailability
+    );
+
+    app.get(
+        "/appointment/getavailability",
+        [authJwt.verifyToken],
+        controller.getAvailability
+    );
 };

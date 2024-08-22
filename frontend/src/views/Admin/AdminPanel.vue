@@ -1,13 +1,14 @@
 <template>
     <div v-if="isAdmin()" class="container-fluid w-90 p-2">
-      <TabMenu :model="tabItems" />
-      <UserManagement v-if="currentTab == 'userManagement'"></UserManagement>
-      <CarManagement v-if="currentTab == 'stockManagement'"></CarManagement>
-      <StockHistory v-if="currentTab == 'stockHistory'"></StockHistory>
-      <BidManagement v-if="currentTab == 'bidManagement'"></BidManagement>
-      <SendMail v-if="currentTab == 'sendMail'"></SendMail>
-      <Newsletter v-if="currentTab == 'newsletter'"></Newsletter>
-      <DealerInformations v-if="currentTab == 'dealerInformations'"></DealerInformations>
+        <TabMenu :model="tabItems" />
+        <UserManagement v-if="currentTab == 'userManagement'"></UserManagement>
+        <CarManagement v-if="currentTab == 'stockManagement'"></CarManagement>
+        <StockHistory v-if="currentTab == 'stockHistory'"></StockHistory>
+        <BidManagement v-if="currentTab == 'bidManagement'"></BidManagement>
+        <SendMail v-if="currentTab == 'sendMail'"></SendMail>
+        <Newsletter v-if="currentTab == 'newsletter'"></Newsletter>
+        <DealerInformations v-if="currentTab == 'dealerInformations'"></DealerInformations>
+        <Availability v-if="currentTab == 'availability'"></Availability>
     </div>
 </template>
   
@@ -21,6 +22,7 @@
     import TabMenu from 'primevue/tabmenu';
     import SendMail from './SendMail.vue';
     import Newsletter from './Newsletter.vue';
+    import Availability from './Availability.vue';
     
     export default {
         name: 'Admin',
@@ -79,6 +81,13 @@
                             this.currentTab = 'dealerInformations'
                         }
                     },
+                    {
+                        label: 'Disponibilités',
+                        icon: 'pi pi-calendar',
+                        command: () => {
+                            this.currentTab = 'availability'
+                        }
+                    }
                 ]
             };
         },
@@ -91,6 +100,7 @@
             StockHistory,
             SendMail,
             Newsletter,
+            Availability
         },
         mounted() {
         UserService.getAdminBoard().then(

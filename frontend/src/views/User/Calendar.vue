@@ -16,6 +16,7 @@ import Toast from 'primevue/toast';
 export default {
     data() {
         return {
+            currentUser: JSON.parse(localStorage.getItem('user')),
             highlight: {
                 color: 'blue',
                 fillMode: 'light',
@@ -53,18 +54,45 @@ export default {
         Toast,
     },
     mounted() {
-        this.getWeekdaysUntilEndOfYear();
-        const availableHours = this.appointmentInfos.availableHours; 
-        this.weekdays.forEach(weekday => {
-            weekday.hours = [...this.appointmentInfos.availableHours];
-        });
-
+        this.$store.dispatch('appointment/getavailability').then(
+            res => {
+                res.forEach(element => {
+                    let formattedDays = [];
+                    let formattedHours = [];
+                    
+                    element.openingDays.split(';').forEach(day => {
+                        formattedDays.push(parseInt(day));
+                    });
+                    element.availableHours.split(';').forEach(hour => {
+                        formattedHours.push(parseInt(hour));
+                    });
+                    
+                    if(element.year){
+                        this.getWeekdaysUntilEndOfYear(formattedDays, element.year, formattedHours);
+                    }
+                    if(element.month){
+                        this.getWeekdaysUntilEndOfMonth(formattedDays, element.month, formattedHours);
+                    }
+                    if(element.week){
+                        this.getWeekdaysUntilEndOfWeek(formattedDays, element.week, formattedHours);
+                    }
+                    if(element.day){
+                        this.addTodayToWeekdays(formattedDays, element.day, formattedHours);
+                    }
+                })
+            },
+            error => {
+                this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+            }
+        );
         
         this.$store.dispatch('appointment/getall').then(
             res => {
                 this.bookedAppointments = res;
                 this.weekdays.forEach((weekday) => {
-                    // Vérifiez si la date du weekday correspond à une date dans bookedAppointments
                     this.bookedAppointments.forEach(appointment => {
                         if (
                             new Date(appointment.day).getFullYear() === weekday.date.getFullYear() &&
@@ -122,6 +150,7 @@ export default {
             this.$store.dispatch('appointment/addappointment', {
                 day: this.date,
                 time: this.date.getHours(),
+                userId: this.currentUser.id,
             }).then(
                 res => {
                     console.log(res);
@@ -166,37 +195,170 @@ export default {
                 }
             );
         },
-        getWeekdaysUntilEndOfYear() {
+        getWeekdaysUntilEndOfYear(openingDays, year, formattedHours) {
             const today = new Date();
-            const endOfYear = new Date(today.getFullYear(), 11, 31); 
+            const endOfYear = new Date(year, 11, 31); 
 
             let currentDate = new Date(today);
+            currentDate.setHours(0, 0, 0, 0); 
 
             while (currentDate <= endOfYear) {
-                const dayOfWeek = currentDate.getDay();
+                let dayOfWeek = currentDate.getDay();
+                if(dayOfWeek === 0){
+                    dayOfWeek = 7;
+                }
 
-                if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+                if (openingDays.includes(dayOfWeek)) {
+                    const existingIndex = this.weekdays.findIndex(weekday => 
+                        weekday.date.getFullYear() === currentDate.getFullYear() &&
+                        weekday.date.getMonth() === currentDate.getMonth() &&
+                        weekday.date.getDate() === currentDate.getDate()
+                    );
+
+                    if (existingIndex !== -1) {
+                        this.weekdays.splice(existingIndex, 1);
+                    }
                     this.weekdays.push({
                         date: new Date(currentDate), 
-                        hours: this.appointmentInfos.availableHours
+                        hours: formattedHours
                     });
                 }
 
                 currentDate.setDate(currentDate.getDate() + 1);
             }
         },
+        getWeekdaysUntilEndOfMonth(openingDays, month, formattedHours) {
+            const today = new Date();
+            const year = today.getFullYear();
+            const endOfMonth = new Date(year, month, 0); 
+            console.log(endOfMonth);
+            
+
+            let currentDate = new Date(today);
+            currentDate.setHours(0, 0, 0, 0); 
+
+            if (currentDate.getMonth() + 1 > month) {
+                return; 
+            }
+
+            if (currentDate.getMonth() + 1 !== month) {
+                currentDate = new Date(year, month - 1, 1);
+            }
+
+            while (currentDate <= endOfMonth) {
+                console.log(currentDate);
+                
+                let dayOfWeek = currentDate.getDay();
+                if(dayOfWeek === 0){
+                    dayOfWeek = 7;
+                }
+
+                if (openingDays.includes(dayOfWeek)) {
+                    const existingIndex = this.weekdays.findIndex(weekday => 
+                        weekday.date.getFullYear() === currentDate.getFullYear() &&
+                        weekday.date.getMonth() === currentDate.getMonth() &&
+                        weekday.date.getDate() === currentDate.getDate()
+                    );
+
+                    if (existingIndex !== -1) {
+                        this.weekdays.splice(existingIndex, 1);
+                    }
+                    this.weekdays.push({
+                        date: new Date(currentDate),
+                        hours: formattedHours
+                    });
+                }
+
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+            console.log(this.weekdays);
+            
+        },
+        getWeekdaysUntilEndOfWeek(openingDays, weekNumber, formattedHours) {
+            const today = new Date();
+            const year = today.getFullYear(); 
+
+            const firstDayOfWeek = new Date(year, 0, 1 + (weekNumber) * 7);
+            while (firstDayOfWeek.getDay() !== 1) { 
+                firstDayOfWeek.setDate(firstDayOfWeek.getDate() + 1);
+            }
+
+            let currentDate = new Date(today);
+            currentDate.setHours(0, 0, 0, 0); 
+
+            if (currentDate < firstDayOfWeek) {
+                currentDate = new Date(firstDayOfWeek);
+            }
+
+            const lastDayOfWeek = new Date(firstDayOfWeek);
+            lastDayOfWeek.setDate(firstDayOfWeek.getDate() + 6);
+
+            while (currentDate <= lastDayOfWeek) {
+                let dayOfWeek = currentDate.getDay();
+                if(dayOfWeek === 0){
+                    dayOfWeek = 7;
+                }
+
+                if (openingDays.includes(dayOfWeek)) {
+
+                    const existingIndex = this.weekdays.findIndex(weekday => 
+                        weekday.date.getFullYear() === currentDate.getFullYear() &&
+                        weekday.date.getMonth() === currentDate.getMonth() &&
+                        weekday.date.getDate() === currentDate.getDate()
+                    );
+
+                    if (existingIndex !== -1) {
+                        this.weekdays.splice(existingIndex, 1);
+                    }
+                    this.weekdays.push({
+                        date: new Date(currentDate),
+                        hours: formattedHours
+                    });
+                }
+
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+        },
+        addTodayToWeekdays(openingDays, targetDate, formattedHours) {
+            const today = new Date();
+            const target = new Date(targetDate);
+
+            if (
+                today.getFullYear() === target.getFullYear() &&
+                today.getMonth() === target.getMonth() &&
+                today.getDate() === target.getDate()
+            ) {
+                let dayOfWeek = today.getDay();
+                if(dayOfWeek === 0){
+                    dayOfWeek = 7;
+                }
+                
+                if (openingDays.includes(dayOfWeek)) {
+                    const existingIndex = this.weekdays.findIndex(weekday => 
+                        weekday.date.getFullYear() === currentDate.getFullYear() &&
+                        weekday.date.getMonth() === currentDate.getMonth() &&
+                        weekday.date.getDate() === currentDate.getDate()
+                    );
+
+                    if (existingIndex !== -1) {
+                        this.weekdays.splice(existingIndex, 1);
+                    }
+                    this.weekdays.push({
+                        date: new Date(today),
+                        hours: formattedHours
+                    });
+                }
+            }
+        },
         onClickDay() {
-            // console.log(this.date);
             const weekday = this.weekdays.find(weekday =>
                 this.date?.getFullYear() === weekday.date.getFullYear() &&
                 this.date.getMonth() === weekday.date.getMonth() &&
                 this.date.getDate() === weekday.date.getDate()
             );
-            // console.log(weekday);
             
 
             if (weekday) {
-                // Trouver l'index de l'attribut correspondant dans attrs
                 const attrIndex = this.attrs.findIndex(attr =>
                     attr.dates.getFullYear() === weekday.date.getFullYear() &&
                     attr.dates.getMonth() === weekday.date.getMonth() &&

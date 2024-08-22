@@ -21,6 +21,24 @@ class AppointmentService {
                 return response.data;
             });
     }
+
+    setAvailability(availability) {
+        return axios
+            .post(API_URL + 'setavailability', {
+                availability: availability
+            } , { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    getAvailability() {
+        return axios
+            .get(API_URL + 'getavailability', { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
 }
 
 export default new AppointmentService();

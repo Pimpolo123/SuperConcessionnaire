@@ -176,6 +176,8 @@ export default {
                 message: 'Voulez-vous vraiment sauvegarder les modifications ?',
                 header: 'Confirmation',
                 icon: 'pi pi-exclamation-triangle',
+                rejectLabel: 'Annuler',
+                acceptLabel: 'Sauvegarder',
                 accept: () => {
                     this.saveFrequency()
                     this.$toast.add({severity:'success', summary:'Succès', detail:'Modifications sauvegardées', life: 3000});

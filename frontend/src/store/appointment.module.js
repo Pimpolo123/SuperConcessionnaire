@@ -28,6 +28,26 @@ export const appointment = {
                     return Promise.reject(error);
                 }
             );
+        },
+        setavailability({ commit }, availability) {
+            return AppointmentService.setAvailability(availability).then(
+                availability => {
+                    return Promise.resolve(availability);
+                },
+                error => {
+                    return Promise.reject(error);
+                }
+            );
+        },
+        getavailability({ commit }) {
+            return AppointmentService.getAvailability().then(
+                availability => {
+                    return Promise.resolve(availability);
+                },
+                error => {
+                    return Promise.reject(error);
+                }
+            );
         }
     }
 };

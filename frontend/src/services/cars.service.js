@@ -62,7 +62,6 @@ class CarsService {
     editCar(car) {
         var formData = new FormData();
         if(car.imageFiles && !car.sold){
-            console.log("test");
             car.imageFiles.forEach(file => {
                 formData.append("files", file);
             });

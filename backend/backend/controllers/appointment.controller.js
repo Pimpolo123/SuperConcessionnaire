@@ -3,11 +3,11 @@ const fs = require('fs');
 const path = require('path');
 const Appointment = db.appointment;
 const Availability = db.availability;
+const User = db.user;
 
 const Op = db.Sequelize.Op;
 
 exports.addAppointment = (req, res) => {
-    console.log('REQ', req.body);
     Appointment.create({
         day: req.body.appointment.day,
         time: req.body.appointment.time,
@@ -22,9 +22,28 @@ exports.addAppointment = (req, res) => {
 }
 
 exports.getAll = (req, res) => {
-    Appointment.findAll()
+    Appointment.findAll({
+        include : [User]
+    })
     .then(data => {
         res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+}
+
+exports.deleteAppointment = (req, res) => {
+    const id = req.query.id;
+    Appointment.destroy({
+        where: { id: id }
+    })
+    .then(num => {
+        if (num == 1) {
+            res.send({ message: "Appointment deleted successfully!" });
+        } else {
+            res.send({ message: `Cannot delete Appointment with id=${id}. Maybe Appointment was not found!` });
+        }
     })
     .catch(err => {
         res.status(500).send({ message: err.message });

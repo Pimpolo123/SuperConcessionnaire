@@ -29,6 +29,16 @@ export const appointment = {
                 }
             );
         },
+        deleteappointment({ commit }, id) {
+            return AppointmentService.deleteAppointment(id).then(
+                appointment => {
+                    return Promise.resolve(appointment);
+                },
+                error => {
+                    return Promise.reject(error);
+                }
+            );
+        },
         setavailability({ commit }, availability) {
             return AppointmentService.setAvailability(availability).then(
                 availability => {

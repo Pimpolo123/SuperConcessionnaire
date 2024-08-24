@@ -205,7 +205,7 @@ export default {
         },
         confirmDeleteBid(car) {
             this.$confirm.require({
-                message: 'Etes-vous sur de vouloir enchérir ?',
+                message: 'Etes-vous sur de vouloir supprimer l\'enchère ?',
                 header: 'Confirmation',
                 icon: 'pi pi-exclamation-triangle',
                 rejectClass: 'p-button-secondary p-button-outlined',

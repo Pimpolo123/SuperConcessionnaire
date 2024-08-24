@@ -116,7 +116,6 @@ exports.editCar = (req, res) => {
     } catch (error) {
         return res.status(400).send({ message: "Invalid JSON input" });
     }
-    console.log("EDIT CAR", editedCar);
     const base64Ids = [];
     const filePromises = [];
     optionIds = [];

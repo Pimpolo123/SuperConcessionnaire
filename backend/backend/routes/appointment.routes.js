@@ -22,9 +22,15 @@ module.exports = function(app) {
         controller.getAll
     );
 
+    app.get(
+        "/appointment/deleteappointment",
+        [authJwt.verifyToken, authJwt.isAdmin],
+        controller.deleteAppointment
+    )
+
     app.post(
         "/appointment/setavailability",
-        [authJwt.verifyToken],
+        [authJwt.verifyToken, authJwt.isAdmin],
         controller.setAvailability
     );
 

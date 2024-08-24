@@ -294,7 +294,6 @@ export default {
             return false;
         },
         openResponseDialog(item) {
-            console.log(item);
             this.responseDialog = true;
             this.selectedMessage = item;
             this.$store.dispatch('cars/getcar', item.car.id).then(
@@ -326,6 +325,8 @@ export default {
                             message: 'Voulez-vous vraiment envoyer le PDF de promesse de vente ?',
                             header: 'Confirmation',
                             icon: 'pi pi-exclamation-triangle',
+                            acceptLabel: 'Envoyer',
+                            rejectLabel: 'Annuler',
                             accept: () => {
                                 this.sendPromise(this.selectedMessage);
                             },
@@ -369,9 +370,23 @@ export default {
                         carId: item.carId
                     }).then(
                         res => {
-                            this.responseDialog = false;
-                            this.$toast.add({severity:'success', summary:'Succès', detail: res.message, life: 3000});
-                            console.log(res);
+                            this.$confirm.require({
+                                message: 'Voulez-vous marquer le véhicule comme vendu ?',
+                                header: 'Marquer comme vendu',
+                                icon: 'pi pi-dollar',
+                                acceptLabel: 'Oui',
+                                rejectLabel: 'Non',
+                                accept: () => {
+                                    this.markAsSold(this.selectedMessage.user, this.selectedMessage.car);
+                                    this.$toast.add({severity:'success', summary:'Succès', detail: res.message, life: 3000});
+                                    console.log(res);
+                                },
+                                reject: () => {
+                                    this.responseDialog = false;
+                                    this.$toast.add({severity:'success', summary:'Succès', detail: res.message, life: 3000});
+                                    console.log(res);
+                                }
+                            });
                         },
                         error => {
                             this.$toast.add({severity:'error', summary:'Erreur', detail: error.message, life: 3000});
@@ -511,7 +526,37 @@ export default {
                     console.log(error.response.status);
                 }
             );
-        }
+        },
+        markAsSold(user, car){
+            console.log(user);
+            console.log(car);
+            car.sold = true;
+            this.$store.dispatch('cars/editcar', car).then(
+                res => {
+                    this.hideDialog();
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+                    this.$toast.add({ severity: 'error', summary: 'Erreur', detail: this.message, life: 3000 });
+                }
+            );
+            this.$store.dispatch('cars/addsale', {carId: car.id, userId: user.id}).then(
+                res => {
+                    console.log(res);
+                    this.$toast.add({ severity: 'success', summary: 'Succès', detail: 'Véhicule marqué comme vendu', life: 3000 });
+                },
+                error => {
+                    this.message = (error.response && error.response.data.message) ||
+                                        error.message ||
+                                        error.toString();
+                                        this.successful = false;
+                    this.$toast.add({ severity: 'error', summary: 'Erreur', detail: this.message, life: 3000 });
+                }
+            );
+        },
     }
 };
 </script>

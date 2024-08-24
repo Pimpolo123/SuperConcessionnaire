@@ -1,28 +1,26 @@
 <template>
     <div v-if="isAdmin()" class="container-fluid w-90 p-2">
-        <TabMenu :model="tabItems" />
+        <TabMenu :model="tabItems" :scrollable="true"/>
         <UserManagement v-if="currentTab == 'userManagement'"></UserManagement>
-        <CarManagement v-if="currentTab == 'stockManagement'"></CarManagement>
-        <StockHistory v-if="currentTab == 'stockHistory'"></StockHistory>
-        <BidManagement v-if="currentTab == 'bidManagement'"></BidManagement>
+        <StockPanel v-if="currentTab == 'stockPanel'"></StockPanel>
         <SendMail v-if="currentTab == 'sendMail'"></SendMail>
         <Newsletter v-if="currentTab == 'newsletter'"></Newsletter>
         <DealerInformations v-if="currentTab == 'dealerInformations'"></DealerInformations>
         <Availability v-if="currentTab == 'availability'"></Availability>
+        <Appointments v-if="currentTab == 'appointments'"></Appointments>
     </div>
 </template>
   
 <script>
     import UserService from '../../services/user.service';
     import UserManagement from './UserManagement.vue';
-    import CarManagement from './CarManagement.vue';
-    import BidManagement from './BidManagement.vue';
+    import StockPanel from './StockPanel.vue';
     import DealerInformations from './DealerInformations.vue';
-    import StockHistory from './StockHistory.vue';
     import TabMenu from 'primevue/tabmenu';
     import SendMail from './SendMail.vue';
     import Newsletter from './Newsletter.vue';
     import Availability from './Availability.vue';
+    import Appointments from './Appointments.vue';
     
     export default {
         name: 'Admin',
@@ -40,24 +38,10 @@
                         }
                     },
                     {
-                        label: 'Gestion du Stock',
+                        label: 'Gestion des voitures',
                         icon: 'pi pi-book',
                         command: () => {
-                            this.currentTab = 'stockManagement'
-                        }
-                    },
-                    {
-                        label: 'Historique des Ventes',
-                        icon: 'pi pi-history',
-                        command: () => {
-                            this.currentTab = 'stockHistory'
-                        }
-                    },
-                    {
-                        label: 'Gestion des Enchères',
-                        icon: 'pi pi-dollar',
-                        command: () => {
-                            this.currentTab = 'bidManagement'
+                            this.currentTab = 'stockPanel'
                         }
                     },
                     {
@@ -87,6 +71,13 @@
                         command: () => {
                             this.currentTab = 'availability'
                         }
+                    },
+                    {
+                        label: 'Rendez-vous',
+                        icon: 'pi pi-calendar',
+                        command: () => {
+                            this.currentTab = 'appointments'
+                        }
                     }
                 ]
             };
@@ -94,13 +85,12 @@
         components: {
             UserManagement,
             TabMenu,
-            CarManagement,
-            BidManagement,
             DealerInformations,
-            StockHistory,
             SendMail,
             Newsletter,
-            Availability
+            Availability,
+            Appointments,
+            StockPanel
         },
         mounted() {
         UserService.getAdminBoard().then(

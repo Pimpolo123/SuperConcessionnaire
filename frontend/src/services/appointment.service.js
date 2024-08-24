@@ -22,6 +22,19 @@ class AppointmentService {
             });
     }
 
+    deleteAppointment(id) {
+        return axios
+            .get(API_URL + 'deleteappointment', {
+                params: {
+                    id: id
+                },
+                headers: authHeader()
+            })
+            .then(response => {
+                return response.data;
+            });
+    }
+
     setAvailability(availability) {
         return axios
             .post(API_URL + 'setavailability', {

@@ -137,6 +137,8 @@ export default {
                 message: 'Voulez-vous prendre rendez-vous ?',
                 header: 'Confirmation',
                 icon: 'pi pi-exclamation-triangle',
+                rejectLabel: 'Annuler',
+                acceptLabel: 'Oui',
                 accept: () => {
                     this.bookAppointment();
                     this.$toast.add({severity:'success', summary:'Succès', detail:'Rendez-vous réservé', life: 3000});

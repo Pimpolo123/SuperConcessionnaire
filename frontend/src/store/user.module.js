@@ -172,6 +172,56 @@ export const user = {
 					return Promise.reject(error);
 				}
 			)
+		},
+		addticket({ commit }, data) {
+			return UserService.addTicket(data).then(
+				res => {
+					return Promise.resolve(res);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
+		},
+		getticketsforuser({ commit }, userId) {
+			return UserService.getTicketsForUser(userId).then(
+				res => {
+					return Promise.resolve(res);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
+		},
+		addmessagetoticket({ commit }, message) {
+			return UserService.addMessageToTicket(message).then(
+				res => {
+					return Promise.resolve(res);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
+		},
+		getticket({ commit }, ticketId) {
+			return UserService.getTicket(ticketId).then(
+				res => {
+					return Promise.resolve(res);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
+		},
+		deleteticket({ commit }, ticketId) {
+			return UserService.deleteTicket(ticketId).then(
+				res => {
+					return Promise.resolve(res);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
 		}
 	},
 	mutations: {

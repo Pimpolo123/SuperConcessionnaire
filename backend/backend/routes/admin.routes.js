@@ -57,4 +57,10 @@ module.exports = function(app) {
         [authJwt.verifyToken, authJwt.isAdmin],
         controller.getDealerInformations
     );
+
+    app.get(
+        "/admin/getalltickets",
+        [authJwt.verifyToken, authJwt.isAdmin],
+        controller.getAllTickets
+    )
 };

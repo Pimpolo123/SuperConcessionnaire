@@ -7,7 +7,8 @@
                 <div class="p-text-center p-text-secondary p-text-bold p-text-uppercase p-text-italic">Aucun rendez-vous</div>
             </template>
             <template #header>
-                header
+                <h3>Vos rendez-vous</h3>
+                <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Trier" @change="onSortChange($event)" />
             </template>
             <template #list="slotProps">
                 <div class="container-fluid p-0 m-0">
@@ -56,6 +57,7 @@ import Dialog from 'primevue/dialog';
 import Card from 'primevue/card';
 import Textarea from 'primevue/textarea';
 import ConfirmDialog from 'primevue/confirmdialog';
+import Dropdown from 'primevue/dropdown';
 import 'primeicons/primeicons.css';
 
 export default {
@@ -65,14 +67,8 @@ export default {
             data: [],
             appointmentDialog: false,
             sortOptions: [
-                { label: 'Prix décroissant', value: '!price' },
-                { label: 'Prix croissant', value: 'price' },
-                { label: 'Kilométrage décroissant', value: '!kilometers' },
-                { label: 'Kilométrage croissant', value: 'kilometers' },
-                { label: 'Année décroissante', value: '!year' },
-                { label: 'Année croissante', value: 'year' },
-                { label: 'Puissance décroissante', value: '!power' },
-                { label: 'Puissance croissante', value: 'power' },
+                { label: 'Plus proche', value: 'day' },
+                { label: 'Plus lointain', value: '!day' },
             ],
             sortOrder: null,
             sortField: null,
@@ -83,12 +79,15 @@ export default {
         this.$store.dispatch('appointment/getall').then(
             res => {
                 this.data = res.filter(item => {
-                const appointmentDate = new Date(item.day);
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-
-                return appointmentDate >= today;
-            });
+                    const appointmentDate = new Date(item.day);
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    
+                    return appointmentDate >= today;
+                });
+                this.data.forEach(item => {
+                    item.day = new Date(item.day).toLocaleDateString();
+                });
             },
         )
     },
@@ -99,7 +98,8 @@ export default {
         Dialog,
         Card,
         Textarea,
-        ConfirmDialog
+        ConfirmDialog,
+        Dropdown,
     },
     methods: {
         hideDialog() {
@@ -144,7 +144,21 @@ export default {
                     this.$toast.add({severity:'error', summary:'Erreur', detail:'Erreur lors de la suppression du rendez-vous', life: 3000});
                 }
             );
-        }
+        },
+        onSortChange(event) {
+            const value = event.value.value;
+            const sortValue = event.value;
+
+            if (value.indexOf('!') === 0) {
+                this.sortOrder = -1;
+                this.sortField = value.substring(1, value.length);
+                this.sortKey = sortValue;
+            } else {
+                this.sortOrder = 1;
+                this.sortField = value;
+                this.sortKey = sortValue;
+            }
+        },
     }
 };
 </script>

@@ -1,97 +1,107 @@
 <template>
     <div id="app">
-      <nav class="navbar navbar-expand-lg bg-primary">
-        <div class="container">
-          <h3 class="navbar-brand mb-0 mt-0">SC2000</h3>
-          <Button label="Menu" icon="pi pi-caret-down" class="navbar-toggler p-button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          </Button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <router-link to="/home" class="nav-link">
-                  <font-awesome-icon icon="home" class="pr-1"/> Accueil
-                </router-link>
-              </li>
-              <li v-if="showAdminBoard" class="nav-item">
-                <router-link to="/admin" class="nav-link">
-                  <font-awesome-icon icon="user-tie" /> Panel Admin
-                </router-link>
-              </li>
-              <li v-if="showModeratorBoard" class="nav-item">
-                <router-link to="/mod" class="nav-link">
-                   Panel Modérateur
-                </router-link>
-              </li>
-              <li class="nav-item">
-                <router-link v-if="currentUser" to="/favorites" class="nav-link">
-                  <font-awesome-icon icon="heart" /> Voir les favoris
-                </router-link>
-              </li>
-              <li class="nav-item">
-                <router-link v-if="currentUser" to="/calendar" class="nav-link">
-                  <font-awesome-icon icon="calendar" /> Calendrier
-                </router-link>
-              </li>
-              <li class="nav-item">
-                <router-link v-if="currentUser" to="/messages" class="nav-link">
-                  <font-awesome-icon icon="envelope" /> Messages
-                </router-link>
-              </li>
-            </ul>
-          </div>
-    
-          <div v-if="!currentUser" class="navbar-nav ml-auto">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <router-link to="/register" class="nav-link">
-                  <font-awesome-icon icon="user-plus" class="pr-1"/>S'inscrire
-                </router-link>
-              </li>
-              <li class="nav-item">
-                <router-link to="/login" class="nav-link">
-                  <font-awesome-icon icon="sign-in-alt" class="pr-1"/>Se connecter
-                </router-link>
-              </li>
-            </ul>
-          </div>
-    
-          <div v-if="currentUser" class="navbar-nav ml-auto">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <router-link to="/profile" class="nav-link">
-                  <font-awesome-icon icon="user" class="pr-1"/>
-                  {{ currentUser.username }}
-                </router-link>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href @click.prevent="logOut">
-                  <font-awesome-icon icon="sign-out-alt" class="pr-1" />Se déconnecter
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+		<nav class="navbar navbar-expand-lg bg-primary">
+			<div class="container">
+			<h3 class="navbar-brand mb-0 mt-0">SC2000</h3>
+			<Button label="Menu" icon="pi pi-caret-down" class="navbar-toggler p-button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			</Button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+				<li class="nav-item">
+					<router-link to="/home" class="nav-link">
+					<font-awesome-icon icon="home" class="pr-1"/> Accueil
+					</router-link>
+				</li>
+				<li v-if="showAdminBoard" class="nav-item">
+					<router-link to="/admin" class="nav-link">
+					<font-awesome-icon icon="user-tie" /> Panel Admin
+					</router-link>
+				</li>
+				<li v-if="showModeratorBoard" class="nav-item">
+					<router-link to="/mod" class="nav-link">
+					Panel Modérateur
+					</router-link>
+				</li>
+				<li class="nav-item">
+					<router-link v-if="currentUser" to="/favorites" class="nav-link">
+					<font-awesome-icon icon="heart" /> Voir les favoris
+					</router-link>
+				</li>
+				<li class="nav-item">
+					<router-link v-if="currentUser" to="/calendar" class="nav-link">
+					<font-awesome-icon icon="calendar" /> Calendrier
+					</router-link>
+				</li>
+				<li class="nav-item">
+					<router-link v-if="currentUser" to="/messages" class="nav-link">
+					<font-awesome-icon icon="envelope" /> Messages
+					</router-link>
+				</li>
+				<li class="nav-item">
+					<router-link v-if="currentUser" to="/livechat" class="nav-link">
+					<font-awesome-icon icon="envelope" /> Chat
+					</router-link>
+				</li>
+				</ul>
+			</div>
+		
+			<div v-if="!currentUser" class="navbar-nav ml-auto">
+				<ul class="navbar-nav">
+				<li class="nav-item">
+					<router-link to="/register" class="nav-link">
+					<font-awesome-icon icon="user-plus" class="pr-1"/>S'inscrire
+					</router-link>
+				</li>
+				<li class="nav-item">
+					<router-link to="/login" class="nav-link">
+					<font-awesome-icon icon="sign-in-alt" class="pr-1"/>Se connecter
+					</router-link>
+				</li>
+				</ul>
+			</div>
+		
+			<div v-if="currentUser" class="navbar-nav ml-auto">
+				<ul class="navbar-nav">
+				<li class="nav-item">
+					<router-link to="/profile" class="nav-link">
+					<font-awesome-icon icon="user" class="pr-1"/>
+					{{ currentUser.username }}
+					</router-link>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href @click.prevent="logOut">
+					<font-awesome-icon icon="sign-out-alt" class="pr-1" />Se déconnecter
+					</a>
+				</li>
+				</ul>
+			</div>
+			</div>
+		</nav>
   
-      <div class="container-fluid mt-3">
-        <router-view />
-      </div>
-    </div>
+		<div class="container-fluid mt-3">
+			<router-view />
+		</div>
+	</div>
 </template>
   
 <script>
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import 'primeicons/primeicons.css';
     import Button from 'primevue/button';
-	import Badge from 'primevue/badge';
+	import Card from 'primevue/card';
 
     export default {
 		data() {
 			return {
 				unreadMessages: 0,
+				isAdminConnected: false,
 			};
 		},
 		mounted() {
+			window.addEventListener('beforeunload', this.handleBeforeUnload);
+			if (this.currentUser) {
+				this.$store.dispatch('auth/connect', this.currentUser);
+			}
 		},
 		computed: {
 			currentUser() {
@@ -112,7 +122,8 @@
 		},
 		components: {
 			FontAwesomeIcon,
-			Button
+			Button,
+			Card,
 		},
 		methods: {
 			logOut() {
@@ -125,6 +136,9 @@
 				}
 				return false;
 			},
+			handleBeforeUnload() {
+				this.$store.dispatch('auth/disconnect');
+			}
 		}
 	};
 </script>

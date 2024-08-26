@@ -22,20 +22,40 @@ export const auth = {
       );
     },
     logout({ commit }) {
-      AuthService.logout();
-      commit('logout');
+		AuthService.logout();
+		commit('logout');
     },
+    disconnect({ commit }) {
+		return AuthService.disconnect()?.then(
+			response => {
+				return Promise.resolve(response.data);
+			},
+			error => {
+				return Promise.reject(error);
+			}
+		);
+    },
+	connect({ commit }, user) {
+		return AuthService.connect(user)?.then(
+			response => {
+				return Promise.resolve(response.data);
+			},
+			error => {
+				return Promise.reject(error);
+			}
+		);
+	},
     register({ commit }, user) {
-      return AuthService.register(user).then(
-        response => {
-          commit('registerSuccess');
-          return Promise.resolve(response.data);
-        },
-        error => {
-          commit('registerFailure');
-          return Promise.reject(error);
-        }
-      );
+		return AuthService.register(user).then(
+			response => {
+			commit('registerSuccess');
+			return Promise.resolve(response.data);
+			},
+			error => {
+			commit('registerFailure');
+			return Promise.reject(error);
+			}
+		);
     }
   },
   mutations: {

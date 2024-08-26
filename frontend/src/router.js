@@ -96,7 +96,19 @@ export const router = createRouter({
             component: () => import('./views/User/Calendar.vue'),
             meta: { title: "Calendrier" } 
         },
-
+        {
+            path: '/livechat',
+            name: 'livechat',
+            component: () => import('./views/LiveChat.vue'),
+            meta: { title: "Chat en direct" } 
+        },
+        {
+            path: '/tickets',
+            name: 'tickets',
+            component: () => import('./views/TicketView.vue'),
+            meta: { title: "Mes tickets" } 
+        },
+        
     ]
 });
 

@@ -1,17 +1,24 @@
 <template>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-4">
+            <div class="col-6">
                 <div class="square-button" @click="goToPage('/carlist')">
                     <h4>Voir les véhicules disponibles</h4>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-6">
                 <div class="square-button" @click="goToPage('/bidlist')">
                     <h4>Voir les enchères en cours</h4>
                 </div>
             </div>
-            <div class="col-4">
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="square-button" @click="goToPage('/tickets')">
+                    <h4>Support</h4>
+                </div>
+            </div>
+            <div class="col-6">
                 <div class="square-button" @click="goToPage()">
                     <h4>Vendez votre véhicule</h4>
                 </div>
@@ -45,7 +52,7 @@
             );
         },
         methods: {
-                goToPage(route) {
+            goToPage(route) {
                 this.$router.push(route);
             }
         }

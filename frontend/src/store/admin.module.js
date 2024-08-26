@@ -98,6 +98,16 @@ export const admin = {
 					return Promise.reject(error);
 				}
 			)
+		},
+		getalltickets({ commit }) {
+			return AdminService.getAllTickets().then(
+				data=> {
+					return Promise.resolve(data);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
 		}
     }
 };

@@ -2,6 +2,8 @@ const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
 const Address = db.address;
+const Ticket = db.ticket;
+const Message = db.message;
 const DealerInformations = db.dealerinformations;
 const fs = require('fs');
 
@@ -254,6 +256,15 @@ exports.getDealerInformations = (req, res) => {
 	});
 }
 
+exports.getAllTickets = (req, res) => {
+	Ticket.findAll({
+		include: [Message, User]
+	}).then(tickets => {
+		res.status(200).send(tickets);
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+}
 
 function base64_encode(fileUsername) {
 	const files = fs.readdirSync('../pictures/user');

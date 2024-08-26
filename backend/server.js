@@ -1,4 +1,6 @@
-const express = require('express')
+const express = require('express');
+const socketIo = require('socket.io');
+const http = require('http');
 require("dotenv").config();
 const cors = require("cors");
 const app = express();
@@ -69,7 +71,91 @@ require('./backend/routes/pdf.routes')(app);
 require('./backend/routes/mailing.routes')(app);
 require('./backend/routes/appointment.routes')(app);
 
-app.listen(PORT_BACK, () => {
+const server = http.createServer(app);
+const io = socketIo(server, {
+	cors: {
+		origin: `http://${HOST}:${PORT_FRONT}`,
+		methods: ['GET', 'POST']
+	}
+});
+
+let connectedClients = 0;
+let connectedAdmins = 0;
+
+// Gestion des connexions et déconnexions
+io.on('connection', (socket) => {
+
+    socket.on('authenticated', (userData) => {
+		if(connectedAdmins > 0){
+			console.log('Un admin est connecté');
+			socket.emit('openChat');
+		}
+		if(userData.roles.includes('ROLE_ADMIN') || userData.roles.includes('ROLE_MODERATOR')) {
+			connectedAdmins++;
+		}
+		connectedClients++;
+		socket.emit('connected clients', connectedClients);
+    });
+
+    socket.on('logout', (userData) => {
+		if((userData.roles.includes('ROLE_ADMIN') || userData.roles.includes('ROLE_MODERATOR')) && connectedAdmins > 0) {
+			connectedAdmins--;
+		}
+		if(connectedClients > 0){
+			connectedClients--;
+		}
+		console.log(connectedClients);
+    });
+
+	socket.on('disconnected', (userData) => {
+		if(userData.roles.includes('ROLE_ADMIN') || userData.roles.includes('ROLE_MODERATOR')) {
+			connectedAdmins--;
+		}
+		if(connectedClients > 0){
+			connectedClients--;
+		}
+		console.log(connectedClients);
+    });
+
+	socket.on('get connected clients', () => {
+		socket.emit('connected clients', connectedClients);
+	});
+	socket.on('join room', (roomId) => {
+        socket.join(roomId);
+        console.log(`L'utilisateur a rejoint la room: ${roomId}`);
+    });
+
+	socket.on('leave room', (roomId) => {
+        socket.leave(roomId);
+        console.log(`L'utilisateur a quitté la room: ${roomId}`);
+    });
+
+    socket.on('chat message', (data) => {
+        const { user, text, roomId } = data;
+
+        // Émettre le message uniquement dans la room spécifiée
+        io.to(roomId).emit('chat message', {
+            user: user,
+            text: text
+        });
+    });
+
+	socket.on('get rooms', () => {
+        const rooms = Array.from(io.sockets.adapter.rooms.keys());
+
+        // Filtrer les rooms pour exclure les rooms individuelles (qui ont le même ID que le socket)
+        const filteredRooms = rooms.filter(room => !io.sockets.sockets.get(room));
+
+        socket.emit('rooms list', filteredRooms);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Un utilisateur est déconnecté');
+    });
+});
+
+
+server.listen(PORT_BACK, () => {
     console.log(`Serveur en ligne sur le port ${PORT_BACK}.`);
 });
 

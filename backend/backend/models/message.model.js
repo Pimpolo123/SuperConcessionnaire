@@ -32,7 +32,11 @@ module.exports = (sequelize, Sequelize) => {
       pdfId: {
         type: Sequelize.INTEGER,
         allowNull: true
-      }
+      },
+      roleId: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
     },
     {
         paranoid: false,

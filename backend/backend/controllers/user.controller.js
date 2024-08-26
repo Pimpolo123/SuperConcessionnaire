@@ -7,6 +7,7 @@ const Country = db.country;
 const Favorite = db.favorite;
 const Region = db.region;
 const Message = db.message;
+const Ticket = db.ticket;
 const Car = db.car;
 const Op = db.Sequelize.Op;
 const fs = require('fs');
@@ -22,7 +23,8 @@ exports.getUser = (req, res) => {
 	User.findOne({
 		where: {
 			id: req.body.userId
-		}
+		},
+		include: [Role, Address]
 	}).then(user => {
 		res.status(200).send(user);
 	}).catch(err => {
@@ -323,6 +325,99 @@ exports.deleteMessage = (req, res) => {
 		}
 	}).then(() => {
 		res.status(200).send({message: "Message supprimé"});
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+}
+
+exports.addTicket = (req, res) => {
+	console.log(req.body);
+	
+	Ticket.create({
+		subject: req.body.subject,
+		userId: req.body.userId,
+		responseTo: req.body.responseTo
+	}).then(ticket => {
+		Message.create({
+			content: req.body.message,
+			read: false,
+			type: "ticket",
+		}).then(message => {
+			message.setTicket(ticket.id);
+			message.setUser(req.body.userId);
+		});
+		res.status(200).send({message: "Ticket ajouté", ticket: ticket});
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+}
+
+exports.getTicketsForUser = (req, res) => {
+	const userId = req.query.userId;
+	Ticket.findAll({
+		where: {
+			userId: userId
+		},
+		include: [Message, User]
+	}).then(tickets => {
+		res.status(200).send(tickets);
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+}
+
+exports.addMessageToTicket = (req, res) => {
+	console.log(req.body);
+	
+	Ticket.findOne({
+		where: {
+			id: req.body.ticketId
+		}
+	}).then(ticket => {
+		if(req.body.adminResponded){
+			ticket.adminResponded = true;
+		} else {
+			ticket.adminResponded = false;
+		}
+		ticket.save();
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+
+	Message.create({
+		content: req.body.content,
+		read: false,
+		type: "ticket",
+	}).then(message => {
+		message.setTicket(req.body.ticketId);
+		message.setUser(req.body.userId);
+		res.status(200).send({message: "Message ajouté", mesId: message.id});
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+}
+
+exports.getTicket = (req, res) => {
+	const ticketId = req.query.ticketId
+	Ticket.findOne({
+		where: {
+			id: ticketId
+		},
+		include: [Message, User]
+	}).then(ticket => {
+		res.status(200).send(ticket);
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+}
+
+exports.deleteTicket = (req, res) => {
+	Ticket.destroy({
+		where: {
+			id: req.body.ticketId
+		}
+	}).then(() => {
+		res.status(200).send({message: "Ticket supprimé"});
 	}).catch(err => {
 		res.status(500).send({ message: err.message });
 	});

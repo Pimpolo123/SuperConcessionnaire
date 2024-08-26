@@ -146,6 +146,15 @@ class AdminService {
 				return response;
 			});
 	}
+
+	getAllTickets() {
+		return axios
+			.get(API_URL + 'getalltickets', {
+				headers: authHeader()
+			}).then(response => {
+				return response.data;
+			});
+	}
 }
 
 export default new AdminService();

@@ -228,6 +228,67 @@ class UserService {
 				return res.data;
 			});
 	}
+
+	addTicket(data) {
+		return axios
+			.post(API_URL + 'addticket', {
+				userId: data.userId,
+				subject: data.subject,
+				message: data.message
+			},{ 
+				headers: authHeader()
+			}).then(res => {
+				return res.data;
+			});
+	}
+
+	getTicketsForUser(userId) {
+		return axios
+			.get(API_URL + 'getticketsforuser', { 
+				params: { userId: userId }, 
+				headers: authHeader() 
+			})
+			.then(response => {
+				return response.data;
+			});
+	}
+
+	addMessageToTicket(message) {
+		return axios
+			.post(API_URL + 'addmessagetoticket', {
+				ticketId: message.ticketId,
+				content: message.content,
+				userId: message.userId,
+				adminResponded: message.adminResponded
+			},{ 
+				headers: authHeader()
+			}).then(res => {
+				return res.data;
+			});
+	}
+
+	getTicket(ticketId) {
+		return axios
+			.get(API_URL + 'getticket', {
+				params: { ticketId: ticketId }, 
+				headers: authHeader() 
+			},{ 
+				headers: authHeader()
+			}).then(res => {
+				return res.data;
+			});
+	}
+
+	deleteTicket(ticketId) {
+		return axios
+			.post(API_URL + 'deleteticket', {
+				ticketId: ticketId
+			},{ 
+				headers: authHeader()
+			}).then(res => {
+				return res.data;
+			});
+	}
 }
 
 export default new UserService();

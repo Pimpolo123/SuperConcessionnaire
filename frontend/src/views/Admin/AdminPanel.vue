@@ -8,6 +8,8 @@
         <DealerInformations v-if="currentTab == 'dealerInformations'"></DealerInformations>
         <Availability v-if="currentTab == 'availability'"></Availability>
         <Appointments v-if="currentTab == 'appointments'"></Appointments>
+        <Statistics v-if="currentTab == 'statistics'"></Statistics>
+        <AdminTicketView v-if="currentTab == 'tickets'"></AdminTicketView>
     </div>
 </template>
   
@@ -21,6 +23,8 @@
     import Newsletter from './Newsletter.vue';
     import Availability from './Availability.vue';
     import Appointments from './Appointments.vue';
+    import Statistics from './Statistics.vue';
+    import AdminTicketView from './AdminTicketView.vue';
     
     export default {
         name: 'Admin',
@@ -78,7 +82,21 @@
                         command: () => {
                             this.currentTab = 'appointments'
                         }
-                    }
+                    },
+                    {
+                        label: 'Statistiques',
+                        icon: 'pi pi-chart-bar',
+                        command: () => {
+                            this.currentTab = 'statistics'
+                        }
+                    },
+                    {
+                        label: 'Tickets',
+                        icon: 'pi pi-eye',
+                        command: () => {
+                            this.currentTab = 'tickets'
+                        }
+                    },
                 ]
             };
         },
@@ -90,7 +108,9 @@
             Newsletter,
             Availability,
             Appointments,
-            StockPanel
+            StockPanel,
+            Statistics,
+            AdminTicketView
         },
         mounted() {
         UserService.getAdminBoard().then(

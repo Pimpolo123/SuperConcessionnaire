@@ -110,4 +110,34 @@ module.exports = function(app) {
         [authJwt.verifyToken],
         controller.deleteMessage
     )
+
+    app.post(
+        "/addticket",
+        [authJwt.verifyToken],
+        controller.addTicket
+    )
+
+    app.get(
+        "/getticketsforuser",
+        [authJwt.verifyToken],
+        controller.getTicketsForUser
+    )
+
+    app.post(
+        "/addmessagetoticket",
+        [authJwt.verifyToken],
+        controller.addMessageToTicket
+    )
+
+    app.get(
+        "/getticket",
+        [authJwt.verifyToken],
+        controller.getTicket
+    )
+
+    app.post(
+        "/deleteticket",
+        [authJwt.verifyToken],
+        controller.deleteTicket
+    )
 };

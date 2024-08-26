@@ -52,6 +52,7 @@ db.sales = require("./sales.model")(sequelize, Sequelize);
 db.newsletterinfos = require("./newsletterinfos.model")(sequelize, Sequelize);
 db.appointment = require("./appointment.model")(sequelize, Sequelize);
 db.availability = require("./availability.model")(sequelize, Sequelize);
+db.ticket = require("./ticket.model")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   	through: "user_roles"
@@ -139,6 +140,12 @@ db.sales.belongsTo(db.car);
 
 db.user.hasOne(db.appointment);
 db.appointment.belongsTo(db.user);
+
+db.user.hasOne(db.ticket);
+db.ticket.belongsTo(db.user);
+
+db.ticket.hasMany(db.message);
+db.message.belongsTo(db.ticket);
 
 db.ROLES = [
 	{name:"user", id:1},

@@ -3,11 +3,9 @@
         <TabMenu :model="tabItems" :scrollable="true"/>
         <UserManagement v-if="currentTab == 'userManagement'"></UserManagement>
         <StockPanel v-if="currentTab == 'stockPanel'"></StockPanel>
-        <SendMail v-if="currentTab == 'sendMail'"></SendMail>
-        <Newsletter v-if="currentTab == 'newsletter'"></Newsletter>
+        <MailsPanel v-if="currentTab == 'mailsPanel'"></MailsPanel>
         <DealerInformations v-if="currentTab == 'dealerInformations'"></DealerInformations>
-        <Availability v-if="currentTab == 'availability'"></Availability>
-        <Appointments v-if="currentTab == 'appointments'"></Appointments>
+        <AppointmentsPanel v-if="currentTab == 'appointmentsPanel'"></AppointmentsPanel>
         <Statistics v-if="currentTab == 'statistics'"></Statistics>
         <AdminTicketView v-if="currentTab == 'tickets'"></AdminTicketView>
     </div>
@@ -19,10 +17,8 @@
     import StockPanel from './StockPanel.vue';
     import DealerInformations from './DealerInformations.vue';
     import TabMenu from 'primevue/tabmenu';
-    import SendMail from './SendMail.vue';
-    import Newsletter from './Newsletter.vue';
-    import Availability from './Availability.vue';
-    import Appointments from './Appointments.vue';
+    import MailsPanel from './MailsPanel.vue';
+    import AppointmentsPanel from './AppointmentsPanel.vue';
     import Statistics from './Statistics.vue';
     import AdminTicketView from './AdminTicketView.vue';
     
@@ -49,17 +45,10 @@
                         }
                     },
                     {
-                        label: 'Envoyer un mail',
+                        label: 'Mails',
                         icon: 'pi pi-envelope',
                         command: () => {
-                            this.currentTab = 'sendMail'
-                        }
-                    },
-                    {
-                        label: 'Newsletter',
-                        icon: 'pi pi-envelope',
-                        command: () => {
-                            this.currentTab = 'newsletter'
+                            this.currentTab = 'mailsPanel'
                         }
                     },
                     {
@@ -70,17 +59,10 @@
                         }
                     },
                     {
-                        label: 'Disponibilités',
-                        icon: 'pi pi-calendar',
-                        command: () => {
-                            this.currentTab = 'availability'
-                        }
-                    },
-                    {
                         label: 'Rendez-vous',
                         icon: 'pi pi-calendar',
                         command: () => {
-                            this.currentTab = 'appointments'
+                            this.currentTab = 'appointmentsPanel'
                         }
                     },
                     {
@@ -104,10 +86,8 @@
             UserManagement,
             TabMenu,
             DealerInformations,
-            SendMail,
-            Newsletter,
-            Availability,
-            Appointments,
+            MailsPanel,
+            AppointmentsPanel,
             StockPanel,
             Statistics,
             AdminTicketView

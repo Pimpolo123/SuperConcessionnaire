@@ -1,5 +1,6 @@
 const { where } = require("sequelize");
 const db = require("../models");
+const mailingController = require("./mailing.controller");
 const Car = db.car;
 const User = db.user;
 const AdmissionType = db.admissiontype;
@@ -150,6 +151,46 @@ exports.editCar = (req, res) => {
     }).then(car => {
         if (!car) {
             return res.status(404).send({ message: "Erreur : Voiture introuvable" });
+        }
+
+        if(car.price != editedCar.price){
+            let mailingList = [];
+            User.findAll({
+                where: {
+                    emailPriceChange: true
+                }
+            }).then(users => {
+                if(users.length > 0){
+                    users.forEach(user => {
+                        mailingList.push(user.email);
+                    });
+                    Car.findOne({
+                        where: {
+                            id: car.id
+                        },
+                        include: [Make, Model]
+                    }).then(car => {
+                        let message = "La voiture " + car.make.name + " " + car.model.name + " a changé de prix " + "\nPrix précédent : " + car.price + "€, Nouveau prix : " + editedCar.price + "€";
+                        mailingController.sendEmail({
+                            body: {
+                                email: {
+                                    addresses: mailingList,
+                                    mail: {
+                                        subject: "Nouveau prix",
+                                        message: message,
+                                    }
+                                },
+                            }
+                        });
+                    }).catch(err => {
+                        res.status(500).send({ message: err.message });
+                        return;
+                    });
+                }
+            }).catch(err => {
+                res.status(500).send({ message: err.message });
+                return;
+            });
         }
 
         car.carpictures.forEach(pic => {
@@ -323,13 +364,50 @@ exports.getAllOptions = (req, res) => {
 
 exports.addSale = (req, res) => {
     const sale = req.body;
-    Sales.create({
-        carId: sale.carId,
-        userId: sale.userId
-    }).then(sale => {
-        res.status(200).send({message: "Vente ajoutée", id: sale.id});
+    let mailingList = [];
+    User.findAll({
+        where: {
+            emailCarSold: true
+        }
+    }).then(users => {
+        users.forEach(user => {
+            mailingList.push(user.email);
+        });
+        Car.findOne({
+            where: {
+                id: sale.carId
+            },
+            include: [Make, Model]
+        }).then(car => {
+            let message = "La voiture " + car.make.name + " " + car.model.name + " a été vendue pour " + car.price + "€";
+            mailingController.sendEmail({
+                body: {
+                    email: {
+                        addresses: mailingList,
+                        mail: {
+                            subject: "Véhicule vendu",
+                            message: message,
+                        }
+                    },
+                }
+            });
+            Sales.create({
+                carId: sale.carId,
+                userId: sale.userId
+            }).then(sale => {
+                res.status(200).send({message: "Vente ajoutée", id: sale.id});
+                return;
+            }).catch(err => {
+                res.status(500).send({ message: err.message });
+                return;
+            });
+        }).catch(err => {
+            res.status(500).send({ message: err.message });
+            return;
+        });
     }).catch(err => {
         res.status(500).send({ message: err.message });
+        return;
     })
 }
 

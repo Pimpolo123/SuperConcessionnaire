@@ -1,15 +1,31 @@
 <template>
     <div class="container" v-if="currentUser !== null">
 	<Toast/>
-      <header class="jumbotron">
-		<img
-          id="profile-img"
-          :src="imgSrc"
-          class="profile-img-card mb-2 img-max"
-        />
-        <h3>
-          <strong>Profil de {{currentUser.surname + ' ' + currentUser.name}}</strong>
-        </h3>
+		<header class="jumbotron d-flex">
+			<div>
+			<img
+			id="profile-img"
+			:src="imgSrc"
+			class="profile-img-card mb-2 img-max"
+			/>
+			<h3>
+			<strong>Profil de {{currentUser.surname + ' ' + currentUser.name}}</strong>
+			</h3>
+			</div>
+			<div class="ml-5">
+				<Card class="p-4">
+					<template #header>
+						<h3>Je souhaite recevoir des mails : </h3>
+					</template>
+					<template #content>
+						<div v-for="option of options" :key="option.key" class="d-flex items-center">
+                            <Checkbox v-model="selectedMailOptions" :inputId="option.key" name="category" :value="option.key" />
+                            <label :for="option.key">{{ option.name }}</label>
+                        </div>
+						<Button label="Enregistrer" class="mt-3" @click="setPreferences"/>
+					</template>
+				</Card>
+			</div>
 		</header>
 		<p>
 			<strong>Nom d'utilisateur :</strong>
@@ -55,6 +71,8 @@
 	import Button from 'primevue/button';
 	import 'primeicons/primeicons.css';
 	import Toast from 'primevue/toast';
+	import Checkbox from 'primevue/checkbox';
+	import Card from 'primevue/card';
 
 	const ROLE_MAPPINGS = {
 		"ROLE_USER": "Utilisateur",
@@ -72,7 +90,13 @@
 				user: JSON.parse(localStorage.getItem('user')),
 				userRoles: [],
 				imgSrc: '',
-				deleteAccountDialog: false
+				deleteAccountDialog: false,
+				options: [
+					{key: 'priceChange', name: 'Quand un véhicule change de prix'},
+					{key: 'vehicleSold', name: 'Quand un véhicule est vendu'},
+					{key: 'bidWin', name: 'Quand une enchère est gagnée'}
+				],
+				selectedMailOptions: [],
             };
         },
         computed: {
@@ -83,9 +107,13 @@
 		components: {
 			Dialog,
 			Button,
-			Toast
+			Toast,
+			Checkbox,
+			Card
 		},
         mounted() {
+			console.log(this.user);
+			
 			const raw = toRaw(this.$store.state.auth.user.roles);
             for (const r in raw){
 				this.userRoles.push(ROLE_MAPPINGS[raw[r]]);
@@ -98,6 +126,17 @@
             } else {
                 this.imgSrc = 'data:image/png;base64,' + this.user.imgUrl;
             }
+			if(this.user.emailPriceChange){
+				this.selectedMailOptions.push('priceChange');
+			}
+			if(this.user.emailCarSold){
+				this.selectedMailOptions.push('vehicleSold');
+			}
+			if(this.user.emailBidWon){
+				this.selectedMailOptions.push('bidWin');
+			}
+			console.log(this.selectedMailOptions);
+			
         },
 		methods: {
 			confirmDeleteAccount(){
@@ -109,6 +148,31 @@
 						this.$toast.add({severity:'success', summary: 'Succès', detail: response, life: 3000});
 						this.$store.dispatch('auth/logout');
 						this.$router.push('/home');
+					},
+					error => {
+						this.loading = false;
+						this.message = (error.response && error.response.data.message) ||
+						error.message ||
+						error.toString();
+					}
+				)
+			},
+			setPreferences(){
+				console.log(this.selectedMailOptions);
+				
+				this.$store.dispatch('user/setpreferences', {
+					userId: this.user.id,
+					emailPriceChange: this.selectedMailOptions.includes('priceChange'),
+					emailCarSold: this.selectedMailOptions.includes('vehicleSold'),
+					emailBidWon: this.selectedMailOptions.includes('bidWin')
+				}).then(
+					response => {
+						this.$toast.add({severity:'success', summary: 'Succès', detail: response.message, life: 3000});
+						let updatedUser = JSON.parse(localStorage.getItem('user'));
+						updatedUser.emailPriceChange = this.selectedMailOptions.includes('priceChange');
+						updatedUser.emailCarSold = this.selectedMailOptions.includes('vehicleSold');
+						updatedUser.emailBidWon = this.selectedMailOptions.includes('bidWin');
+						localStorage.setItem('user', JSON.stringify(updatedUser));
 					},
 					error => {
 						this.loading = false;

@@ -140,4 +140,10 @@ module.exports = function(app) {
         [authJwt.verifyToken],
         controller.deleteTicket
     )
+
+    app.post(
+        "/setpreferences",
+        [authJwt.verifyToken],
+        controller.setPreferences
+    )
 };

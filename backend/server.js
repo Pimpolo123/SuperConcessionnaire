@@ -225,7 +225,8 @@ function initial() {
 		surname: "Harold",
 		birthdate: "2000-12-31",
 		phonenumber: "0476091162",
-		emailoptin: true
+		emailoptin: true,
+		emailCarSold: true,
 	}).then(user => {
         user.setRoles([1, 2])
     });
@@ -238,7 +239,8 @@ function initial() {
 		surname: "JF",
 		birthdate: "2000-12-31",
 		phonenumber: "0476091162",
-		emailoptin: true
+		emailoptin: true,
+		emailCarSold: true,
 	}).then(user => {
         user.setRoles([1, 2])
     });

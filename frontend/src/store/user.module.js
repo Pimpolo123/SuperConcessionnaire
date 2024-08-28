@@ -222,6 +222,16 @@ export const user = {
 					return Promise.reject(error);
 				}
 			)
+		},
+		setpreferences({ commit }, data) {
+			return UserService.setPreferences(data).then(
+				res => {
+					return Promise.resolve(res);
+				},
+				error => {
+					return Promise.reject(error);
+				}
+			)
 		}
 	},
 	mutations: {

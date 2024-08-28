@@ -289,6 +289,20 @@ class UserService {
 				return res.data;
 			});
 	}
+
+	setPreferences(data) {
+		return axios
+			.post(API_URL + 'setpreferences', {
+				userId: data.userId,
+				emailPriceChange: data.emailPriceChange,
+				emailCarSold: data.emailCarSold,
+				emailBidWon: data.emailBidWon,
+			},{ 
+				headers: authHeader()
+			}).then(res => {
+				return res.data;
+			});
+	}
 }
 
 export default new UserService();

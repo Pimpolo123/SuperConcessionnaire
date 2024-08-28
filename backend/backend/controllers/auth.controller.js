@@ -89,7 +89,11 @@ exports.signin = (req, res) => {
 					roles: authorities,
 					accessToken: token,
 					address: address,
-					imgUrl: base64_encode(user.username)
+					imgUrl: base64_encode(user.username),
+					emailoptin: user.emailoptin,
+					emailPriceChange: user.emailPriceChange,
+					emailCarSold: user.emailCarSold,
+					emailBidWon: user.emailBidWon
 				});
 			})
 		});

@@ -36,6 +36,18 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.BOOLEAN,
             defaultValue: false
         },
+        emailPriceChange: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false
+        },
+        emailCarSold: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false
+        },
+        emailBidWon: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false
+        },
     },{paranoid: true}
   );
   

@@ -1,5 +1,11 @@
 const db = require("../models");
 const Bid = db.bid;
+const User = db.user;
+const Car = db.car;
+const Model = db.model;
+const Make = db.make;
+const schedule = require('node-schedule');
+const mailingController = require("./mailing.controller");
 
 const Op = db.Sequelize.Op;
 
@@ -49,6 +55,42 @@ exports.updateBid = (req, res) => {
         if(!bid){
             return res.status(404).send({message: "Enchère non trouvée"});
         }
+        let mailingList = [];
+        User.findOne({
+            where: {
+                id: req.body.userId,
+                emailBidWon: true
+            }
+        }).then(user => {
+            mailingList.push(user.email);
+            console.log(mailingList);
+            
+            Car.findOne({
+                where: {
+                    id: bid.carId
+                },
+                include : [Make, Model]
+            }).then(car => {
+                const bidEndDate = new Date(bid.bidEndDate);
+                let message = `L'enchère pour la voiture ${car.make.name} ${car.model.name} est terminée, rendez-vous sur le site pour voir les résultats`;
+                
+                const job = schedule.scheduleJob(`${bidEndDate.getMinutes()} ${bidEndDate.getHours()} ${bidEndDate.getDate()} ${bidEndDate.getMonth()+1} *`, function(){
+                    console.log("Enchère terminée");
+                    
+                    mailingController.sendEmail({
+                        body: {
+                            email: {
+                                addresses: mailingList,
+                                mail: {
+                                    subject: "Enchère terminée",
+                                    message: message,
+                                }
+                            },
+                        }
+                    });
+                });
+                });
+		});
         bid.currentPrice = req.body.currentPrice;
         bid.userId = req.body.userId;
         bid.save();

@@ -422,3 +422,19 @@ exports.deleteTicket = (req, res) => {
 		res.status(500).send({ message: err.message });
 	});
 }
+
+exports.setPreferences = (req, res) => {
+	User.findOne({
+		where: {
+			id: req.body.userId
+		}
+	}).then(user => {
+		user.emailPriceChange = req.body.emailPriceChange;
+		user.emailCarSold = req.body.emailCarSold;
+		user.emailBidWon = req.body.emailBidWon;
+		user.save();
+		res.status(200).send({message: "Préférences modifiées"});
+	}).catch(err => {
+		res.status(500).send({ message: err.message });
+	});
+}

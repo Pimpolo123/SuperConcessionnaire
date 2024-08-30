@@ -53,6 +53,7 @@ var corsOptions = {
 // });
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); 
 
 app.use(express.json({limit: '200mb'}));
 
@@ -166,12 +167,12 @@ process.on('SIGINT', function () {
 
 // SEULEMENT EN DEV !!! 
 // PROD : 
-// db.sequelize.sync();
+db.sequelize.sync();
 // et créer tout manuellement
-db.sequelize.sync({force: true}).then(() => {
-    console.log('Drop and Resync Db');
-    initial();
-});
+// db.sequelize.sync({force: true}).then(() => {
+//     console.log('Drop and Resync Db');
+//     initial();
+// });
 
 function initial() {
 	//VERSION TEST

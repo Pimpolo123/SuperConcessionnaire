@@ -99,7 +99,8 @@ class AdminService {
 				postcode: data.postcode,
 				city: data.city,
 				street: data.street,
-				number: data.number
+				number: data.number,
+				phoneNumber: data.phoneNumber
 			},{
 				headers: authHeader(data.accessToken)
 			}).then(response => {

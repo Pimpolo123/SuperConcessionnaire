@@ -17,11 +17,11 @@
 					<font-awesome-icon icon="user-tie" /> Panel Admin
 					</router-link>
 				</li>
-				<li v-if="showModeratorBoard" class="nav-item">
+				<!-- <li v-if="showModeratorBoard" class="nav-item">
 					<router-link to="/mod" class="nav-link">
 					Panel Modérateur
 					</router-link>
-				</li>
+				</li> -->
 				<li class="nav-item">
 					<router-link v-if="currentUser" to="/favorites" class="nav-link">
 					<font-awesome-icon icon="heart" /> Voir les favoris

@@ -13,7 +13,7 @@
                     <div v-for="(item, index) in slotProps.items" :key="index" class="col-12">
                         <div class="d-flex column align-items-center p-4 gap-3">
                             <div class="col">
-                                <img :src="getImageSource(item.carpictures[0]?.base64url)" alt="photo" width="100"/>
+                                <img :src="getImageSource(item.carpictures[0]?.base64url)" alt="photo" width="200"/>
                             </div>
                             <div class="col">
                                 <div class="font-weight-bold">Modèle : 

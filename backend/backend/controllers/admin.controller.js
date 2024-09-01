@@ -197,6 +197,7 @@ exports.editProfile = (req, res) => {
 };
 
 exports.updateDealerInformations = (req, res) => {
+	console.log(req.body);
 	DealerInformations.findOrCreate({
 		where: {id: 1},
 		defaults: {

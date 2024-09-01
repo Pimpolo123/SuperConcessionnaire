@@ -24,15 +24,6 @@
                                     <span class="font-weight-normal">{{ item.createdAt }}</span>
                                 </div>
                             </div>
-                            <!-- <div class="col">
-                                <div class="font-weight-bold">Nom du client : 
-                                    <span class="font-weight-normal">{{ item.user.name }} {{ item.user.surname }}</span>
-                                </div>
-                                <div class="font-weight-bold">Numéro de téléphone du client : 
-                                    <span class="font-weight-normal" v-if="item.user.phonenumber">{{ item.user.phonenumber }}</span>
-                                    <span class="font-weight-normal" v-else>N/A</span>
-                                </div>
-                            </div> -->
                             <div class="d-flex gap-5">
                                 <div class="d-flex gap-2">
                                     <Button icon="pi pi-eye" label="Voir le ticket" class="flex-auto md:flex-initial white-space-nowrap" @click="openViewTicket(item)"></Button>
@@ -47,11 +38,11 @@
         <Dialog v-model:visible="ticketDialog" :style="{width: '100%'}" header="Créer un ticket" :modal="true" class="container p-fluid m-0 p-0" @after-hide="hideDialog">
             <div class="p-field">
                 <label for="subject">Sujet</label>
-                <Dropdown v-model="selectedSubject" :options="subjects" optionLabel="label" placeholder="Sujet" @change="onSubjectChange()" />
+                <Dropdown v-model="selectedSubject" :options="subjects" optionLabel="label" placeholder="Sujet" @change="onSubjectChange()" :invalid="submitted && !selectedSubject"/>
             </div>
             <div class="p-field">
                 <label for="message">Message</label>
-                <Textarea id="message" v-model="message" autoResize rows="5" :autoComplete="false" />
+                <Textarea id="message" v-model="message" autoResize rows="5" :autoComplete="false" :invalid="submitted && !message"/>
             </div>
             <template #footer>
                 <Button label="Envoyer" icon="pi pi-check" @click="confirmSendTicket"/>
@@ -66,7 +57,7 @@
                 <li v-for="message in openTicket.messages">{{ message.user?.surname }} {{ message.user?.name }} : {{ message.content }}</li>
             </div>
             <div class="p-field">
-                <Textarea id="response" v-model="responseMessage" autoResize rows="5" :autoComplete="false" class="mt-3" placeholder="Votre réponse"/>
+                <Textarea id="response" v-model="responseMessage" autoResize rows="5" :autoComplete="false" class="mt-3" placeholder="Votre réponse" :invalid="submitted && !responseMessage"/>
             </div>
             <template #footer>
                 <Button label="Répondre" icon="pi pi-check" @click="confirmSendResponse"/>
@@ -106,6 +97,7 @@ export default {
                 { label: 'Autre', value: 'other' },
             ],
             responseMessage: '',
+            submitted: false
         };
     },
     mounted() {
@@ -137,7 +129,9 @@ export default {
             this.ticketViewDialog = false;
             this.newTicket = {};
             this.openTicket = {};
-            this.message = '';
+            this.message = null;
+            this.selectedSubject = null;
+            this.submitted = false;
         },
         openNew() {
             this.ticketDialog = true;
@@ -148,19 +142,27 @@ export default {
             
         },
         confirmSendTicket() {
-            this.$confirm.require({
-                message: `Voulez-vous envoyer le ticket ?`,
-                header: 'Confirmation',
-                icon: 'pi pi-exclamation-triangle',
-                rejectLabel: 'Annuler',
-                acceptLabel: 'Envoyer',
-                accept: () => {
-                    this.sendTicket(this.newTicket);
-                },
-                reject: () => {
-                    this.$toast.add({severity:'info', summary:'Annulé', detail:'Action annulée', life: 3000});
-                }
-            });
+            this.submitted = true;
+            if((this.submitted && this.message) || (this.submitted && this.selectedSubject))
+            {
+                this.$confirm.require({
+                    message: `Voulez-vous envoyer le ticket ?`,
+                    header: 'Confirmation',
+                    icon: 'pi pi-exclamation-triangle',
+                    rejectLabel: 'Annuler',
+                    acceptLabel: 'Envoyer',
+                    accept: () => {
+                        this.sendTicket(this.newTicket);
+                    },
+                    reject: () => {
+                        this.$toast.add({severity:'info', summary:'Annulé', detail:'Action annulée', life: 3000});
+                    }
+                });
+            } else {
+                this.$toast.add({severity:'info', summary:'Informaions manquantes', detail:'Veuillez remplir tous les champs', life: 3000});
+                return;
+            }
+            
         },
         sendTicket(ticket) {
             ticket.subject = this.selectedSubject.value;
@@ -204,21 +206,28 @@ export default {
             );
         },
         confirmSendResponse() {
-            console.log(this.openTicket);
-            
-            this.$confirm.require({
-                message: `Voulez-vous envoyer le ticket ?`,
-                header: 'Confirmation',
-                icon: 'pi pi-exclamation-triangle',
-                rejectLabel: 'Annuler',
-                acceptLabel: 'Envoyer',
-                accept: () => {
-                    this.sendResponse();
-                },
-                reject: () => {
-                    this.$toast.add({severity:'info', summary:'Annulé', detail:'Action annulée', life: 3000});
-                }
-            });
+            this.submitted = true;
+            if((this.submitted && this.responseMessage))
+            {
+                console.log(this.openTicket);
+                
+                this.$confirm.require({
+                    message: `Voulez-vous envoyer le ticket ?`,
+                    header: 'Confirmation',
+                    icon: 'pi pi-exclamation-triangle',
+                    rejectLabel: 'Annuler',
+                    acceptLabel: 'Envoyer',
+                    accept: () => {
+                        this.sendResponse();
+                    },
+                    reject: () => {
+                        this.$toast.add({severity:'info', summary:'Annulé', detail:'Action annulée', life: 3000});
+                    }
+                });
+            } else {
+                this.$toast.add({severity:'info', summary:'Informaions manquantes', detail:'Veuillez remplir tous les champs', life: 3000});
+                return;
+            }
         },
         sendResponse(){
             console.log(this.responseMessage);

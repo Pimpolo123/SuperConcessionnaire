@@ -989,6 +989,8 @@ export default {
             if(this.isBid){
                 this.car.price = 0;
                 this.priceDisabled = true;
+            } else {
+                this.priceDisabled = false;
             }
         },
         confirmMarkAsSold(car) {

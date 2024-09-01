@@ -54,7 +54,7 @@
                 <li v-for="message in openTicket.messages">{{ message.user?.surname }} {{ message.user?.name }} : {{ message.content }}</li>
             </div>
             <div class="p-field">
-                <Textarea id="response" v-model="responseMessage" autoResize rows="5" :autoComplete="false" class="mt-3" placeholder="Votre réponse"/>
+                <Textarea id="response" v-model="responseMessage" autoResize rows="5" :autoComplete="false" class="mt-3" placeholder="Votre réponse" :invalid="submitted && !responseMessage"/>
             </div>
             <template #footer>
                 <Button label="Répondre" icon="pi pi-check" @click="confirmSendResponse"/>
@@ -92,6 +92,7 @@ export default {
                 { label: 'Question à propos des véhicules', value: 'vehicle' },
                 { label: 'Autre', value: 'other' },
             ],
+            submitted: false
         };
     },
     mounted() {
@@ -122,6 +123,7 @@ export default {
             this.ticketViewDialog = false;
             this.openTicket = {};
             this.responseMessage = '';
+            this.submitted = false;
         },
         onSubjectChange() {
             console.log(this.selectedSubject);
@@ -149,21 +151,28 @@ export default {
             );
         },
         confirmSendResponse() {
-            console.log(this.openTicket);
-            
-            this.$confirm.require({
-                message: `Voulez-vous envoyer le ticket ?`,
-                header: 'Confirmation',
-                icon: 'pi pi-exclamation-triangle',
-                rejectLabel: 'Annuler',
-                acceptLabel: 'Envoyer',
-                accept: () => {
-                    this.sendResponse();
-                },
-                reject: () => {
-                    this.$toast.add({severity:'info', summary:'Annulé', detail:'Action annulée', life: 3000});
-                }
-            });
+            this.submitted = true;
+            if(this.submitted && this.responseMessage)
+            {
+                console.log(this.openTicket);
+                
+                this.$confirm.require({
+                    message: `Voulez-vous envoyer le ticket ?`,
+                    header: 'Confirmation',
+                    icon: 'pi pi-exclamation-triangle',
+                    rejectLabel: 'Annuler',
+                    acceptLabel: 'Envoyer',
+                    accept: () => {
+                        this.sendResponse();
+                    },
+                    reject: () => {
+                        this.$toast.add({severity:'info', summary:'Annulé', detail:'Action annulée', life: 3000});
+                    }
+                });
+            } else {
+                this.$toast.add({severity:'info', summary:'Informaions manquantes', detail:'Veuillez remplir tous les champs', life: 3000});
+                return;
+            }
         },
         sendResponse(){
             this.openTicket.messages.push({content: this.responseMessage, user: this.currentUser, userId: this.currentUser.id});

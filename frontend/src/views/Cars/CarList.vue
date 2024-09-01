@@ -376,13 +376,13 @@ export default {
         this.getAll();
         this.$store.dispatch('cars/getallcars').then(
             res => {
+                console.log(res);
                 res.forEach(car => {
-                    if (!car.isBid) {
+                    if (!car.isBid && !car.sold) {
                         this.data.push(car);
                         this.staticData.push(car);
                     }
                 });
-                console.log('DATA', this.data);
             },
             error => {
                 this.message = (error.response && error.response.data.message) ||

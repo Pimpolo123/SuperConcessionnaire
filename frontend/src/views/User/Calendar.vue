@@ -68,16 +68,16 @@ export default {
                     });
                     
                     if(element.year){
-                        this.getWeekdaysUntilEndOfYear(formattedDays, element.year, formattedHours);
+                        this.getWeekdaysUntilEndOfYear([...formattedDays], element.year, [...formattedHours]);
                     }
                     if(element.month){
-                        this.getWeekdaysUntilEndOfMonth(formattedDays, element.month, formattedHours);
+                        this.getWeekdaysUntilEndOfMonth([...formattedDays], element.month, [...formattedHours]);
                     }
                     if(element.week){
-                        this.getWeekdaysUntilEndOfWeek(formattedDays, element.week, formattedHours);
+                        this.getWeekdaysUntilEndOfWeek([...formattedDays], element.week, [...formattedHours]);
                     }
                     if(element.day){
-                        this.addTodayToWeekdays(formattedDays, element.day, formattedHours);
+                        this.addTodayToWeekdays([...formattedDays], element.day, [...formattedHours]);
                     }
                 })
             },
@@ -93,18 +93,20 @@ export default {
             res => {
                 this.bookedAppointments = res;
                 this.weekdays.forEach((weekday) => {
+                    let hoursClone = [...weekday.hours];
                     this.bookedAppointments.forEach(appointment => {
                         if (
                             new Date(appointment.day).getFullYear() === weekday.date.getFullYear() &&
                             new Date(appointment.day).getMonth() === weekday.date.getMonth() &&
                             new Date(appointment.day).getDate() === weekday.date.getDate()
                         ) {
-                            const index = weekday.hours.indexOf(appointment.time);
+                            const index = hoursClone.indexOf(appointment.time);
                             if (index > -1) {
-                                weekday.hours.splice(index, 1);
+                                hoursClone.splice(index, 1);
                             }
                         }
                     });
+                    weekday.hours = hoursClone;
 
                     // Ajouter l'attribut pour la date
                     if (weekday.hours.length === 0) {
@@ -157,37 +159,35 @@ export default {
                 res => {
                     console.log(res);
 
-                const weekday = this.weekdays.find(weekday => 
-                    this.date.getFullYear() === weekday.date.getFullYear() &&
-                    this.date.getMonth() === weekday.date.getMonth() &&
-                    this.date.getDate() === weekday.date.getDate()
-                );
-                
-                if (weekday) {
-                    const index = weekday.hours.indexOf(this.date.getHours());
-                    if (index > -1) {
-                        weekday.hours.splice(index, 1); 
-                    }
-                    if (weekday.hours.length === 0) {
-                        // Trouver l'attribut correspondant dans `attrs`
-                        const attrIndex = this.attrs.findIndex(attr => 
-                            attr.dates.getFullYear() === weekday.date.getFullYear() &&
-                            attr.dates.getMonth() === weekday.date.getMonth() &&
-                            attr.dates.getDate() === weekday.date.getDate()
-                        );
+                    const weekday = this.weekdays.find(weekday => 
+                        this.date.getFullYear() === weekday.date.getFullYear() &&
+                        this.date.getMonth() === weekday.date.getMonth() &&
+                        this.date.getDate() === weekday.date.getDate()
+                    );
+                    
+                    if (weekday) {
+                        const index = weekday.hours.indexOf(this.date.getHours());
+                        if (index > -1) {
+                            weekday.hours.splice(index, 1); 
+                        }
+                        if (weekday.hours.length === 0) {
+                            const attrIndex = this.attrs.findIndex(attr => 
+                                attr.dates.getFullYear() === weekday.date.getFullYear() &&
+                                attr.dates.getMonth() === weekday.date.getMonth() &&
+                                attr.dates.getDate() === weekday.date.getDate()
+                            );
 
-                        if (attrIndex !== -1) {
-                            // Modifier le `highlight` de cet attribut particulier
-                            this.attrs[attrIndex] = {
-                                ...this.attrs[attrIndex],
-                                highlight: {
-                                    ...this.attrs[attrIndex].highlight,
-                                    color: 'red'
-                                }
-                            };
+                            if (attrIndex !== -1) {
+                                this.attrs[attrIndex] = {
+                                    ...this.attrs[attrIndex],
+                                    highlight: {
+                                        ...this.attrs[attrIndex].highlight,
+                                        color: 'red'
+                                    }
+                                };
+                            }
                         }
                     }
-                }
                 },
                 error => {
                     this.message = (error.response && error.response.data.message) ||
